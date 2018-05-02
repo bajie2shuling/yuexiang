@@ -1,58 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>登录</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
 </head>
-<body>
-    <div class="m-padding-tb-max">
-        <img class="ui image" src="../static/image/logo.png">
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+<body th:object="${userSignIn}">
     <div class="m-container-small" style="max-width: 30em !important;">
-        <div class="ui middle aligned center aligned grid">
-            <div class="column">
-                <h2 class="ui teal header">
-                    <div class="content">
-                        登  录
-                    </div>
-                </h2>
-                <form class="ui large form">
-                    <div class="ui stacked segment">
-                        <div class="field">
-                            <div class="ui left icon input">
-                                <i class="user icon"></i>
-                                <input type="text" name="email" placeholder="邮箱">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui left icon input">
-                                <i class="lock icon"></i>
-                                <input type="password" name="password" placeholder="密码">
-                            </div>
-                        </div>
-                        <div class="ui fluid large teal submit button">登  录</div>
-                    </div>
-
-                    <div class="ui error message"></div>
-
-                </form>
-
-                <div class="ui message">
-                    新用户? <a href="#">注  册</a>
-                </div>
+        <div class="ui container center aligned m-padding-top-max">
+            <div class="m-padding-tb-max">
+                <img src="../static/image/logo.png" th:src="@{/image/logo.png}">
             </div>
+            <h2 class="ui teal centered header">
+                <div class="content">
+                    登  录
+                </div>
+            </h2>
+            <form class="ui large form" action="#" th:action="@{/user/sign_in}" method="post">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="email" placeholder="邮箱" th:value="*{email}">
+                        </div>
+                        <div class="ui pointing red basic label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">邮箱不能为空</div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="密码" th:value="*{password}">
+                        </div>
+                        <div class="ui pointing red basic label" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">密码不能为空</div>
+                    </div>
+                    <button class="ui fluid large teal submit button">登  录</button>
+                    <div class="ui message">
+                        新用户? <a href="#" th:href="@{/user/sign_up}">登  录</a>
+                    </div>
+                </div>
+                <div class="ui error message"></div>
+                <div class="ui mini negative message" th:unless="${#strings.isEmpty(loginMessage)}" th:text="${loginMessage}">用户名和密码错误</div>
+            </form>
         </div>
     </div>
 
@@ -60,24 +49,24 @@
     <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 
     <script>
-        $('.ui.form').form({
-            fields : {
-                username : {
-                    identifier: 'email',
-                    rules: [{
-                        type : 'empty',
-                        prompt: '请输入邮箱'
-                    }]
-                },
-                password : {
-                    identifier: 'password',
-                    rules: [{
-                        type : 'empty',
-                        prompt: '请输入密码'
-                    }]
-                }
-            }
-        });
+        // $('.ui.form').form({
+        //     fields : {
+        //         email : {
+        //             identifier: 'email',
+        //             rules: [{
+        //                 type : 'empty',
+        //                 prompt: '请输入邮箱'
+        //             }]
+        //         },
+        //         password : {
+        //             identifier: 'password',
+        //             rules: [{
+        //                 type : 'empty',
+        //                 prompt: '请输入密码'
+        //             }]
+        //         }
+        //     }
+        // });
     </script>
 </body>
 </html>

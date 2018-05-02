@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 /**
  * Created by Jinzi Wu at 17:53 on 2018/5/2.
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class UserSignUp {
 
     @NotBlank(message = "用户名不能为空")
-    private String nickname;
+    private String nickName;
 
     @NotBlank(message = "邮箱不能为空")
     @Email(message = "邮箱格式不正确")
@@ -27,12 +28,12 @@ public class UserSignUp {
     public UserSignUp() {
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getEmail() {
@@ -65,6 +66,7 @@ public class UserSignUp {
 
     public User convertToUser(){
         User user = new User();
+        user.setCreateTime(new Date());
         BeanUtils.copyProperties(this,user);
         return user;
     }
