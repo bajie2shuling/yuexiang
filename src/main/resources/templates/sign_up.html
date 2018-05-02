@@ -33,7 +33,7 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="lock icon"></i>
-                                <input type="text" name="nickname" placeholder="昵称">
+                                <input type="text" name="nickName" placeholder="昵称">
                             </div>
                         </div>
                         <div class="field">
@@ -50,7 +50,7 @@
                         </div><div class="field">
                         <div class="ui left icon input">
                             <i class="lock icon"></i>
-                            <input type="password" name="confirmpwd" placeholder="确认密码">
+                            <input type="password" name="confirmPwd" placeholder="确认密码">
                         </div>
                     </div>
                         <div class="ui fluid large teal submit button">注  册</div>
@@ -69,8 +69,8 @@
     <script>
         $('.ui.form').form({
             fields : {
-                username : {
-                    identifier: 'nickname',
+                nickName : {
+                    identifier: 'nickName',
                     rules: [{
                         type : 'empty',
                         prompt: '请输入昵称'
@@ -90,8 +90,8 @@
                         prompt: '请输入密码'
                     }]
                 },
-                confirmpwd : {
-                    identifier: 'confirmpwd',
+                confirmPwd : {
+                    identifier: 'confirmPwd',
                     rules: [{
                         type : 'empty',
                         prompt: '请再次输入密码'
