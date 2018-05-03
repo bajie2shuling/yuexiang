@@ -60,7 +60,7 @@ public class UserSignUp {
         this.confirmPwd = confirmPwd;
     }
 
-    public boolean isConfirmed(){
+    public Boolean isConfirmed(){
         return password.equals(confirmPwd) ? true : false;
     }
 

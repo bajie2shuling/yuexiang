@@ -5,6 +5,7 @@ import com.wjz.yuexiang.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 /**
  * Created by Jinzi Wu at 17:24 on 2018/5/2.
  */
@@ -15,9 +16,21 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User checkUser(String email, String password) {
+    public User signInCheckUser(String email, String password) {
 
         return userRepository.findByEmailAndPassword(email,password);
+    }
+
+    @Override
+    public Boolean isEmailExist(String email) {
+        User user = userRepository.findByEmail(email);
+        return user == null ? false : true;
+    }
+
+    @Override
+    public Boolean isNickNameExist(String nickName) {
+        User user = userRepository.findByNickName(nickName);
+        return user == null ? false : true;
     }
 
     @Override

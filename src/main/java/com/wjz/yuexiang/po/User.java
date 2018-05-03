@@ -17,7 +17,7 @@ public class User {
     private String email;
     private String password;
     private String avatar;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date createTime;
 
     public User() {

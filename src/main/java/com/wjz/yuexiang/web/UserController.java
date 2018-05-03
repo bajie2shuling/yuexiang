@@ -46,15 +46,22 @@ public class UserController {
     public String signUp(@Valid UserSignUp userSignUp,
                          BindingResult result,
                          Model model){
+
+        if(userService.isNickNameExist(userSignUp.getNickName())){
+            result.rejectValue("nickName","nickNameError","用户名已存在");
+        }
+        if(userService.isEmailExist(userSignUp.getEmail())){
+            result.rejectValue("email","emailError","邮箱已注册");
+        }
         if(!userSignUp.isConfirmed()){
             result.rejectValue("confirmPwd","ConfirmError","两次密码不一致");
         }
         if(result.hasErrors()){
             model.addAttribute("userSignUp",userSignUp);
-            return "sign_up";
+            return "sign_up";       //注册失败
         }
         userService.saveUser(userSignUp.convertToUser());
-        return "redirect:/user/sign_in";
+        return "redirect:/user/sign_in";        //注册成功
     }
 
     /**
@@ -74,20 +81,20 @@ public class UserController {
     public String signIn(@Valid UserSignIn userSignIn,
                          BindingResult result,
                          HttpSession session,
-                         RedirectAttributes attributes,Model model){
+                         Model model){
         if(result.hasErrors()){
             model.addAttribute("userSignIn",userSignIn);
             return "sign_in";
         }
-        User user = userService.checkUser(userSignIn.getEmail(),userSignIn.getPassword());
+        User user = userService.signInCheckUser(userSignIn.getEmail(),userSignIn.getPassword());        //登录验证
         if(user != null){
             user.setPassword(null);
             session.setAttribute("user",user);
-            return "index";
+            return "redirect:/index";       //登陆成功
         }else {
-            attributes.addFlashAttribute("loginMessage","邮箱和密码错误");
-//            attributes.addFlashAttribute("userSignIn",userSignIn);
-            return "redirect:/user/sign_in";
+            model.addAttribute("loginMessage","邮箱或密码输入错误");
+            model.addAttribute("userSignIn",userSignIn);
+            return "sign_in";       //登录失败
         }
 
     }
