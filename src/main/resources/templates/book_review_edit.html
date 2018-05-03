@@ -15,10 +15,10 @@
     <div class="container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
-            <a href="#" class="item m-mobile-hide m-item"><i class="mini home icon"></i>探索</a>
-            <a href="#" class="item m-mobile-hide m-item"><i class="mini  idea icon"></i>关注</a>
-            <a href="#" class="item m-mobile-hide m-item"><i class="mini  idea icon"></i>书林</a>
-            <a href="#" class="active item m-mobile-hide m-item"><i class="mini  idea icon"></i>写书评</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>探索</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini  book icon"></i>书林</a>
+            <a href="#" class="active item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
             <div class="right menu m-mobile-hide m-item">
                 <div class="ui input icon transparent inverted">
                     <input type="text" placeholder="Search......">
@@ -32,11 +32,11 @@
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <a href="#" class="item" target="_blank">
-                            <i class="user icon"></i>
+                            <i class="file icon"></i>
                             我的书评
                         </a>
                         <a href="#" class="item" target="_blank">
-                            <i class="user icon"></i>
+                            <i class="book icon"></i>
                             我的共享书籍
                         </a>
                         <a href="#" class="item" target="_blank">
@@ -58,27 +58,16 @@
 <div class="m-padding-tb-big m-container">
     <div class="ui container">
         <form action="#" class="ui form" method="post">
-
             <div class="field">
                 <div class="ui left labeled input">
-                    <div class="ui selection compact dropdown basic teal label">
-                        <input type="hidden" value="原创" name="source">
-                        <div class="text">原创</div>
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item" data-value="原创">原创</div>
-                            <div class="item" data-value="装载">装载</div>
-                            <div class="item" data-value="翻译">翻译</div>
-                        </div>
-                    </div>
+                    <label class="ui teal basic label">书评</label>
                     <input type="text" name="title" placeholder="书评标题">
                 </div>
             </div>
-
             <div class="field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">书名</label>
-                    <input type="text" name="book" placeholder="你阅读的书籍名称，如：《受戒》">
+                    <input type="text" name="bookName" placeholder="你阅读的书籍名称，如：《受戒》">
                 </div>
             </div>
 
@@ -96,14 +85,14 @@
             </div>
 
             <div class="field">
-                <textarea name="description" th:text="*{description}" placeholder="书评描述..." maxlength="200"></textarea>
+                <textarea name="description"  placeholder="书评描述..." maxlength="200"></textarea>
             </div>
 
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" class="hidden" name="comment" id="comment">
-                        <label for="comment">允许评论</label>
+                        <input type="checkbox" class="hidden" name="allowComment" checked id="allowComment">
+                        <label for="allowComment">允许评论</label>
                     </div>
                 </div>
             </div>
@@ -176,12 +165,21 @@
                     rules: [
                         {
                             type   : 'empty',
-                            prompt : '标题不能为空'
+                            prompt : '书评标题不能为空'
                         }
                     ]
                 },
-                indexUrl: {
-                    identifier: 'indexUrl',
+                bookName: {
+                    identifier: 'bookName',
+                    rules: [
+                        {
+                            type   : 'empty',
+                            prompt : '书名不能为空'
+                        }
+                    ]
+                },
+                firstPicture: {
+                    identifier: 'firstPicture',
                     rules: [
                         {
                             type   : 'empty',
@@ -195,6 +193,15 @@
                         {
                             type   : 'empty',
                             prompt : '文章内容不能为空'
+                        }
+                    ]
+                },
+                description: {
+                    identifier: 'description',
+                    rules: [
+                        {
+                            type   : 'empty',
+                            prompt : '书评描述不能为空'
                         }
                     ]
                 }

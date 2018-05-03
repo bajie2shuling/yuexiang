@@ -2,7 +2,9 @@ package com.wjz.yuexiang.po;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Jinzi Wu at 14:14 on 2018/5/2.
@@ -19,6 +21,9 @@ public class User {
     private String avatar;
     @Temporal(TemporalType.DATE)
     private Date createTime;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookReview> bookReviews = new ArrayList<>();
 
     public User() {
     }
@@ -72,15 +77,24 @@ public class User {
         this.createTime = createTime;
     }
 
+    public List<BookReview> getBookReviews() {
+        return bookReviews;
+    }
+
+    public void setBookReviews(List<BookReview> bookReviews) {
+        this.bookReviews = bookReviews;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", nickname='" + nickName + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", createTime=" + createTime +
+                ", bookReviews=" + bookReviews +
                 '}';
     }
 }

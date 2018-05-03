@@ -22,14 +22,14 @@
                 <div class="ui stacked segment">
                     <div class="field">
                         <div class="ui left icon input">
-                            <i class="lock icon"></i>
+                            <i class="user icon"></i>
                             <input type="text" name="nickName" placeholder="用户名" th:value="*{nickName}">
                         </div>
                         <div class="ui pointing red basic label" th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}">用户名不能为空</div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <i class="user icon"></i>
+                            <i class="envelope outline icon"></i>
                             <input type="text" name="email" placeholder="邮箱" th:value="*{email}">
                         </div>
                         <div class="ui pointing red basic label" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">邮箱不能为空</div>
