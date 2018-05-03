@@ -90,12 +90,21 @@ public class UserController {
         if(user != null){
             user.setPassword(null);
             session.setAttribute("user",user);
-            return "redirect:/index";       //登陆成功
+            return "redirect:/user/index";       //登陆成功
         }else {
             model.addAttribute("loginMessage","邮箱或密码输入错误");
             model.addAttribute("userSignIn",userSignIn);
             return "sign_in";       //登录失败
         }
 
+    }
+
+    /**
+     * 注销登录
+     */
+    @GetMapping("/sign_out")
+    public String signOut(HttpSession session){
+        session.removeAttribute("user");
+        return "redirect:/user/sign_in";
     }
 }

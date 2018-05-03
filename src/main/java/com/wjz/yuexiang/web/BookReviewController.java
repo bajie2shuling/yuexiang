@@ -1,6 +1,7 @@
 package com.wjz.yuexiang.web;
 
 import com.wjz.yuexiang.po.BookReview;
+import com.wjz.yuexiang.po.User;
 import com.wjz.yuexiang.service.BookReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,13 @@ public class BookReviewController {
     public String bookReviewPost(BookReview bookReview,
                                  RedirectAttributes attributes,
                                  HttpSession session){
-        
+        bookReview.setUser((User)session.getAttribute("user"));
+        if(bookReview.getId() == null){
+            bookReviewService.saveBookReview(bookReview);
+        }else{
+            bookReviewService.updateBookReview(bookReview.getId(),bookReview);
+        }
+        attributes.addFlashAttribute("message","书评操作成功");
+        return "redirect:/book_review_list";
     }
 }

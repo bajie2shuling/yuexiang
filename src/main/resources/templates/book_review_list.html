@@ -60,7 +60,7 @@
         <form id="bookReview_form" action="#" th:action="@{/user/book_review_edit}" class="ui form" method="post" th:object="${bookReview}">
 
             <input type="hidden" name="publishStatus" th:value="*{publishStatus}">
-            <input type="hidden" name="verifyStatus" th:value="*{verifyStatus}">
+            <input type="text" name="verifyStatus" th:value="*{verifyStatus}">
 
             <div class="field">
                 <div class="ui left labeled input">
@@ -84,18 +84,18 @@
 
             <div class="field">
                 <div id="md-content" style="z-index: 1 !important;">
-                        <textarea name="content" placeholder="请输入文章内容...." style="display:none;" th:text="*{content}"></textarea>
+                        <textarea name="content" placeholder="请输入文章内容...." style="display:none;" th:text="content"></textarea>
                 </div>
             </div>
 
             <div class="field">
-                <textarea name="description"  placeholder="书评描述..." maxlength="200" th:text="*{description}"></textarea>
+                <textarea name="description"  placeholder="书评描述..." maxlength="200" th:text="description"></textarea>
             </div>
 
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" class="hidden" name="allowComment" checked id="allowComment" th:checked="*{allowComment}">
+                        <input type="checkbox" class="hidden" name="allowComment" checked id="allowComment">
                         <label for="allowComment">允许评论</label>
                     </div>
                 </div>
@@ -149,8 +149,8 @@
             width   : "100%",
             height  : 900,
             syncScrolling : "single",
-//            path    : "../static/lib/editormd/lib/"
-            path    : "/lib/editormd/lib/"
+            path    : "../static/lib/editormd/lib/"
+//            path    : "/lib/editormd/lib/"
         });
     });
 
@@ -161,18 +161,6 @@
         .dropdown({
             on: 'hover'
         });
-
-    $('#save-btn').click(function () {
-        $('[name="publishStatus"]').val(false);
-        $('[name="verifyStatus"]').val(0);
-        $('#blog-form').submit();
-    });
-    $('#publish-btn').click(function () {
-        $('[name="publishStatus"]').val(true);
-        $('[name="verifyStatus"]').val(0);
-        $('#blog-form').submit();
-    });
-
     $('.ui.form')
         .form({
             fields: {
