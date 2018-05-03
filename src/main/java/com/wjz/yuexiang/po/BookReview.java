@@ -31,8 +31,7 @@ public class BookReview {
 
     private String description;
 
-    private Boolean allowComment;
-
+    private Boolean allowComment;   //允许评论：1代表允许，0代表保存
     private Boolean publishStatus;  //发布状态：1代表发布，0代表保存
 
     private Integer verifyStatus;   //审核状态：2代表审核通过，1代表审核未通过，0代表待审核
