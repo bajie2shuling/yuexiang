@@ -6,7 +6,6 @@
     <title th:replace="${title}">Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
-    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
     <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
 </head>
 <body>
@@ -15,8 +14,10 @@
         <div class="container">
             <div class="ui inverted stackable menu secondary">
                 <h2 class="ui teal header item">RdShare</h2>
-                <a href="#" class="item m-mobile-hide m-item" th:href="@{/}" th:classappend="${index == 1} ? 'active'"><i class="mini home icon"></i>首页</a>
-                <a href="#" class="item m-mobile-hide m-item" th:href="@{/}" th:classappend="${index == 2} ? 'active'"><i class="mini  idea icon"></i>关注</a>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/explore}" th:classappend="${index == 1} ? 'active'"><i class="mini home icon"></i>探索</a>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/follows}" th:classappend="${index == 2} ? 'active'"><i class="mini  idea icon"></i>关注</a>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/book_forest}" th:classappend="${index == 3} ? 'active'"></i>书林</a>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/book_review}" th:classappend="${index == 4} ? 'active'"><i class="mini  idea icon"></i>写书评</a>
                 <div class="right menu m-mobile-hide m-item">
                     <div class="ui input icon transparent inverted">
                         <input type="text" placeholder="Search......">
@@ -31,7 +32,11 @@
                         <div class="menu">
                             <a href="#" class="item" target="_blank">
                                 <i class="user icon"></i>
-                                我的主页
+                                我的书评
+                            </a>
+                            <a href="#" class="item" target="_blank">
+                                <i class="user icon"></i>
+                                我的共享书籍
                             </a>
                             <a href="#" class="item" target="_blank">
                                 <i class="sign out alternate icon"></i>
@@ -50,6 +55,23 @@
     <!--底部-->
     <footer class="ui segment inverted attached " th:fragment="footer">
         <div class="ui container center aligned m-padding-tb-max">
+            <div class="ui divided grid inverted stackable">
+                <div class="eight wide column">
+                    <h4 class="ui header inverted">开发者推荐</h4>
+                    <div class="ui link list inverted m-opacity-mini m-text-lined">
+                        <a href="#" class="item">用户故事(User Story)</a>
+                        <a href="#" class="item">关于刻意练习的清单</a>
+                        <a href="#" class="item">失败要趁早</a>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <h4 class="ui header inverted">联系开发者</h4>
+                    <div class="ui link list inverted m-opacity-mini m-text-lined">
+                        <a href="#" class="item">Email:279660577@qq.com</a>
+                        <a href="#" class="item">QQ:279660577</a>
+                    </div>
+                </div>
+            </div>
             <div class="ui section divider inverted"></div>
             <P class="m-text-spaced m-opacity-tiny">Copyright © 2018 WuJinzi. All Rights Reserved!</P>
         </div>
