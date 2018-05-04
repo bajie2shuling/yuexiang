@@ -8,5 +8,5 @@ import com.wjz.yuexiang.po.BookReview;
 public interface BookReviewService {
     BookReview saveBookReview(BookReview bookReview);
     BookReview updateBookReview(Long id,BookReview bookReview);
-    BookReview findBookReviewById(Long id);
+    BookReview getBookReviewAndConvert(Long id);
 }

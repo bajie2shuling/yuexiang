@@ -45,6 +45,8 @@ public class BookReview {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
+    private Integer views;      //浏览次数
+
     @ManyToOne
     private User user;
 
@@ -155,6 +157,14 @@ public class BookReview {
         this.user = user;
     }
 
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
     @Override
     public String toString() {
         return "BookReview{" +
@@ -170,6 +180,7 @@ public class BookReview {
                 ", verifyStatus=" + verifyStatus +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", views=" + views +
                 ", user=" + user +
                 '}';
     }

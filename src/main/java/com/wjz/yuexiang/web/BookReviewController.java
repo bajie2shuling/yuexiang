@@ -44,22 +44,20 @@ public class BookReviewController {
                                  HttpSession session){
         bookReview.setUser((User)session.getAttribute("user"));
         if(bookReview.getId() == null){
-            bookReview.setCreateTime(new Date());   //创建时间
             bookReviewService.saveBookReview(bookReview);
         }else{
-            bookReview.setUpdateTime(new Date());   //修改时间
             bookReviewService.updateBookReview(bookReview.getId(),bookReview);
         }
         attributes.addFlashAttribute("message","书评操作成功");
-        return "redirect:/book_review";
+        return "redirect:/book_review_list";
     }
 
     /**
      * 书评详情页面
      */
-    @GetMapping("/book_review/{id}/detail")
+    @GetMapping("/book_review/{id}")
     public String bookReviewPage(@PathVariable Long id,Model model){
-        BookReview bookReview = bookReviewService.findBookReviewById(id);
+        BookReview bookReview = bookReviewService.getBookReviewAndConvert(id);
         model.addAttribute("bookReview",bookReview);
         return "book_review";
     }
