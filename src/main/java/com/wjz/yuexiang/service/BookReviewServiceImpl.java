@@ -38,4 +38,15 @@ public class BookReviewServiceImpl implements BookReviewService {
             return bookReviewRepository.save(bookReview);
         }
     }
+
+    @Override
+    public BookReview findBookReviewById(Long id) {
+        Optional<BookReview> bookReviewOptional = bookReviewRepository.findById(id);
+        if(!bookReviewOptional.isPresent()){
+            throw new NotFoundException("该书评不存在");
+        }else{
+
+            return bookReviewOptional.get();
+        }
+    }
 }

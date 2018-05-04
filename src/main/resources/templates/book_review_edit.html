@@ -74,6 +74,12 @@
                     <input type="text" name="bookName" placeholder="你阅读的书籍名称，如：《受戒》" th:value="*{bookName}">
                 </div>
             </div>
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">作者</label>
+                    <input type="text" name="bookAuthor" placeholder="你阅读的书籍作者，如：汪曾祺" th:value="*{bookAuthor}">
+                </div>
+            </div>
 
             <div class="field">
                 <div class="ui left labeled input">
@@ -191,6 +197,15 @@
                         {
                             type   : 'empty',
                             prompt : '书名不能为空'
+                        }
+                    ]
+                },
+                bookAuthor: {
+                    identifier: 'bookAuthor',
+                    rules: [
+                        {
+                            type   : 'empty',
+                            prompt : '作者不能为空'
                         }
                     ]
                 },

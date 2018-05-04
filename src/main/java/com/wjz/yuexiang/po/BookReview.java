@@ -22,6 +22,8 @@ public class BookReview {
     //@Pattern(regexp = BOOKNAME_REGEXP , message = "手机号格式不正确")
     private String bookName;
 
+    private String bookAuthor;
+
     //@Pattern(regexp = FIRSTPICTURE_REGEXP , message = "手机号格式不正确")
     private String firstPicture;
 
@@ -32,6 +34,7 @@ public class BookReview {
     private String description;
 
     private Boolean allowComment;   //允许评论：1代表允许，0代表保存
+
     private Boolean publishStatus;  //发布状态：1代表发布，0代表保存
 
     private Integer verifyStatus;   //审核状态：2代表审核通过，1代表审核未通过，0代表待审核
@@ -70,6 +73,14 @@ public class BookReview {
 
     public void setBookName(String bookName) {
         this.bookName = bookName;
+    }
+
+    public String getBookAuthor() {
+        return bookAuthor;
+    }
+
+    public void setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
     }
 
     public String getFirstPicture() {
@@ -150,6 +161,7 @@ public class BookReview {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", bookName='" + bookName + '\'' +
+                ", bookAuthor='" + bookAuthor + '\'' +
                 ", firstPicture='" + firstPicture + '\'' +
                 ", content='" + content + '\'' +
                 ", description='" + description + '\'' +
