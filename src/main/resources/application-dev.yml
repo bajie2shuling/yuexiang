@@ -10,7 +10,7 @@ spring:
     show-sql: true
 
 logging:
-  file: logs/log_dev.log
+  file: D:/logs/yuexiang/log_dev.log
   level:
       root: info
       com.wjz.blog: debug
