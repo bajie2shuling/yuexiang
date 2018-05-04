@@ -59,8 +59,7 @@
     <div class="ui container">
         <form id="bookReview_form" action="#" th:action="@{/user/book_review_edit}" class="ui form" method="post" th:object="${bookReview}">
 
-            <input type="hidden" name="publishStatus" th:value="*{publishStatus}">
-            <input type="hidden" name="verifyStatus" th:value="*{verifyStatus}">
+            <input type="hidden" name="status" th:value="*{status}">
 
             <div class="field">
                 <div class="ui left labeled input">
@@ -169,13 +168,11 @@
         });
 
     $('#save_btn').click(function () {
-        $('[name="publishStatus"]').val(false);
-        $('[name="verifyStatus"]').val(0);
+        $('[name="status"]').val(0);
         $('#blog-form').submit();
     });
     $('#publish_btn').click(function () {
-        $('[name="publishStatus"]').val(true);
-        $('[name="verifyStatus"]').val(0);
+        $('[name="status"]').val(1);
         $('#blog-form').submit();
     });
 

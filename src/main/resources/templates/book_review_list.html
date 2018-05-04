@@ -55,60 +55,47 @@
 
 
 <!--中间内容-->
-<div class="m-padding-tb-big m-container">
+<div class="m-padding-tb-max m-container">
     <div class="ui container">
-        <form id="bookReview_form" action="#" th:action="@{/user/book_review_edit}" class="ui form" method="post" th:object="${bookReview}">
-
-            <input type="hidden" name="publishStatus" th:value="*{publishStatus}">
-            <input type="text" name="verifyStatus" th:value="*{verifyStatus}">
-
-            <div class="field">
-                <div class="ui left labeled input">
-                    <label class="ui teal basic label">书评</label>
-                    <input type="text" name="title" placeholder="书评标题" th:value="*{title}">
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui left labeled input">
-                    <label class="ui teal basic label">书名</label>
-                    <input type="text" name="bookName" placeholder="你阅读的书籍名称，如：《受戒》" th:value="*{bookName}">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="ui left labeled input">
-                    <label class="ui teal basic label">首图</label>
-                    <input type="text" name="firstPicture" placeholder="首图引用地址" th:value="*{firstPicture}">
-                </div>
-            </div>
-
-            <div class="field">
-                <div id="md-content" style="z-index: 1 !important;">
-                        <textarea name="content" placeholder="请输入文章内容...." style="display:none;" th:text="content"></textarea>
-                </div>
-            </div>
-
-            <div class="field">
-                <textarea name="description"  placeholder="书评描述..." maxlength="200" th:text="description"></textarea>
-            </div>
-
-            <div class="inline fields">
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" class="hidden" name="allowComment" checked id="allowComment">
-                        <label for="allowComment">允许评论</label>
+        <table class="ui teal table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>标题</th>
+                <th>书名</th>
+                <th>作者</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>书有清香 | 莫以成败论英雄</td>
+                <td>《受戒》</td>
+                <td>汪曾祺</td>
+                <td>待发布</td>
+                <td>
+                    <a href="#" class="ui teal basic mini button">编辑</a>
+                    <a href="#" class="ui red basic mini button">删除</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui pagination mini menu">
+                        <a class="item">上一页</a>
+                        <a class="item">下一页</a>
                     </div>
-                </div>
-            </div>
-
-            <div class="ui error message"></div>
-
-            <div class="ui right aligned container">
-                <button class="ui button" onclick="window.history.go(-1)">返回</button>
-                <button class="ui orange button" id="save_btn">保存</button>
-                <button class="ui teal button" id="publish_btn">发布</button>
-            </div>
-        </form>
+                    <a class="ui right floated teal basic mini button" href="#" th:href="@{/user/book_review_edit}">
+                        <i class="edit icon"></i>
+                        新增
+                    </a>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
     </div>
 </div>
 <!--底部-->

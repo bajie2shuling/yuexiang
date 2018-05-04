@@ -35,9 +35,8 @@ public class BookReview {
 
     private Boolean allowComment;   //允许评论：1代表允许，0代表保存
 
-    private Boolean publishStatus;  //发布状态：1代表发布，0代表保存
 
-    private Integer verifyStatus;   //审核状态：2代表审核通过，1代表审核未通过，0代表待审核
+    private Integer status;   //书评状态：2代表审核通过，1代表审核未通过，0代表待发布
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
@@ -117,20 +116,12 @@ public class BookReview {
         this.allowComment = allowComment;
     }
 
-    public Boolean getPublishStatus() {
-        return publishStatus;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setPublishStatus(Boolean publishStatus) {
-        this.publishStatus = publishStatus;
-    }
-
-    public Integer getVerifyStatus() {
-        return verifyStatus;
-    }
-
-    public void setVerifyStatus(Integer verifyStatus) {
-        this.verifyStatus = verifyStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -176,8 +167,7 @@ public class BookReview {
                 ", content='" + content + '\'' +
                 ", description='" + description + '\'' +
                 ", allowComment=" + allowComment +
-                ", publishStatus=" + publishStatus +
-                ", verifyStatus=" + verifyStatus +
+                ", status=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", views=" + views +

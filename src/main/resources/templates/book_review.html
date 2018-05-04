@@ -85,7 +85,7 @@
                     <div class="ui medium orange header centered m-text" th:text="${bookReview.bookAuthor}">汪曾祺</div>
                 </div>
 
-                <div class="content m-padding-lr m-padding-lr-clear typo typo-selection" th:text="${bookReview.content}">
+                <div class="content m-padding-lr m-padding-lr-clear typo typo-selection" th:utext="${bookReview.content}">
                     <h2 id="section1">一、关于 <i class="serif">Typo.css</i></h2>
 
                     <p><i class="serif">Typo.css</i> 的目的是，在一致化浏览器排版效果的同时，构建最适合中文阅读的网页排版。</p>
