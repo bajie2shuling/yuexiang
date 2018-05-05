@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -16,7 +17,8 @@ import javax.validation.Valid;
 /**
  * Created by Jinzi Wu at 19:34 on 2018/5/5.
  */
-@Controller("/admin")
+@Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -27,8 +29,8 @@ public class AdminController {
      */
     @GetMapping("/sign_in")
     public String signInPage(Model model){
-        Admin admin = new Admin();
-        model.addAttribute("admin",admin);
+        AdminSignIn adminSignIn = new AdminSignIn();
+        model.addAttribute("adminSignIn",adminSignIn);
         return "admin/sign_in";
     }
 
@@ -47,12 +49,12 @@ public class AdminController {
         Admin admin = adminService.signInCheckAdmin(adminSignIn.getIdNumber(),adminSignIn.getPassword());
         if(admin == null){
             model.addAttribute("adminSignIn",adminSignIn);
-            model.addAttribute("message","用户名或密码输入错误");
+            model.addAttribute("signInMessage","用户名或密码输入错误");
             return "admin/sign_in";
         }else {
             admin.setPassword(null);
             session.setAttribute("admin",admin);
-            return "redirect:/admin/book_review_verify";
+            return "redirect:/admin/book_review_verify_list";
         }
     }
 }

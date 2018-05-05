@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
  */
 public class AdminSignIn {
 
-    private final static String REGEX_IDNUMBER = "(^\\\\d{18}$)|(^\\\\d{15}$)";
+    private final static String REGEX_IDNUMBER = "(^\\d{18}$)|(^\\d{15}$)";
 
     @Pattern(regexp = REGEX_IDNUMBER,message = "身份证号无效")
     private String idNumber;

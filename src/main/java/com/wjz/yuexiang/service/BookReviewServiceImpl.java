@@ -84,4 +84,15 @@ public class BookReviewServiceImpl implements BookReviewService {
     public void deleteSelfBookReview(Long id, Long userId) {
         bookReviewRepository.deleteByIdAndUserId(id,userId);
     }
+
+    /**
+     * 根据书评状态查询
+     * @param status
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<BookReview> bookReviews(Integer status, Pageable pageable) {
+        return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Integer>get("status"),status),pageable);
+    }
 }
