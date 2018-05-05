@@ -6,9 +6,10 @@ import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.utils.MarkdownUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 import java.util.Optional;
 
@@ -62,5 +63,16 @@ public class BookReviewServiceImpl implements BookReviewService {
 
             return bookReview;
         }
+    }
+
+    /**
+     * 根据用户ID分页查询书评
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<BookReview> bookReviews(Long userId, Pageable pageable) {
+        return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Long>get("user").get("id"),userId),pageable);
     }
 }

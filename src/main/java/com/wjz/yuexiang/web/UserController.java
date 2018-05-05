@@ -84,7 +84,7 @@ public class UserController {
                          Model model){
         if(result.hasErrors()){
             model.addAttribute("userSignIn",userSignIn);
-            return "sign_in";
+            return "sign_in";  //登录失败(数据输入不合法)
         }
         User user = userService.signInCheckUser(userSignIn.getEmail(),userSignIn.getPassword());        //登录验证
         if(user != null){
