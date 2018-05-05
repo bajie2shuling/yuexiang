@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+</head>
+<body>
+    <!--用户导航-->
+    <nav th:fragment="menu(index)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+        <div class="ui container">
+            <div class="ui inverted stackable menu secondary">
+                <h2 class="ui teal header item">RdShare</h2>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/explore}" th:classappend="${index == 1} ? 'active'"><i class="mini idea icon"></i>探索</a>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/follows}" th:classappend="${index == 2} ? 'active'"><i class="mini  eye icon"></i>关注</a>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/book_forest}" th:classappend="${index == 3} ? 'active'"><i class="mini  book icon"></i>书林</a>
+                <a href="#" class="item m-mobile-hide m-item" th:href="@{/user/book_review_edit}" th:classappend="${index == 4} ? 'active'"><i class="mini  edit icon"></i>写书评</a>
+                <div class="right menu m-mobile-hide m-item">
+                    <div class="ui input icon transparent inverted">
+                        <input type="text" placeholder="Search......">
+                        <i class="search icon link"></i>
+                    </div>
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img class="ui avatar image" src="https://source.unsplash.com/random/100x100">
+                            <span th:text="${session.user.nickName}">吴晋子</span>
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" class="item"  th:href="@{/user/book_review_list}">
+                                <i class="file icon"></i>
+                                我的书评
+                            </a>
+                            <a href="#" class="item">
+                                <i class="book icon"></i>
+                                我的共享书籍
+                            </a>
+                            <a href="#" class="item" th:href="@{/user/sign_out}">
+                                <i class="sign out alternate icon"></i>
+                                注销
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="ui icon black button m-right-top m-mobile-show m-menu-toggle">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <!--底部-->
+    <footer class="ui segment inverted attached " th:fragment="footer">
+        <div class="ui container center aligned m-padding-tb-max">
+            <div class="ui divided grid inverted stackable">
+                <div class="eight wide column">
+                    <h4 class="ui header inverted">开发者推荐</h4>
+                    <div class="ui link list inverted m-opacity-mini m-text-lined">
+                        <a href="#" class="item">用户故事(User Story)</a>
+                        <a href="#" class="item">关于刻意练习的清单</a>
+                        <a href="#" class="item">失败要趁早</a>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <h4 class="ui header inverted">联系开发者</h4>
+                    <div class="ui link list inverted m-opacity-mini m-text-lined">
+                        <a href="#" class="item">Email:279660577@qq.com</a>
+                        <a href="#" class="item">QQ:279660577</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui section divider inverted"></div>
+            <P class="m-text-spaced m-opacity-tiny">Copyright © 2018 WuJinzi. All Rights Reserved!</P>
+        </div>
+    </footer>
+
+
+</body>
+</html>

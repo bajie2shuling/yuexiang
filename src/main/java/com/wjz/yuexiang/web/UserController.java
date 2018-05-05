@@ -11,9 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -40,11 +39,12 @@ public class UserController {
     }
 
     /**
-     * 注册处理
+     * 注册
      */
     @PostMapping("/sign_up")
     public String signUp(@Valid UserSignUp userSignUp,
                          BindingResult result,
+                         RedirectAttributes attributes,
                          Model model){
 
         if(userService.isNickNameExist(userSignUp.getNickName())){
@@ -61,6 +61,7 @@ public class UserController {
             return "sign_up";       //注册失败
         }
         userService.saveUser(userSignUp.convertToUser());
+        attributes.addFlashAttribute("signUpMessage","恭喜你，注册成功");
         return "redirect:/user/sign_in";        //注册成功
     }
 
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     /**
-     * 登录处理
+     * 登录
      */
     @PostMapping("/sign_in")
     public String signIn(@Valid UserSignIn userSignIn,
@@ -92,7 +93,7 @@ public class UserController {
             session.setAttribute("user",user);
             return "redirect:/user/index";       //登陆成功
         }else {
-            model.addAttribute("loginMessage","邮箱或密码输入错误");
+            model.addAttribute("signInMessage","邮箱或密码输入错误");
             model.addAttribute("userSignIn",userSignIn);
             return "sign_in";       //登录失败
         }
