@@ -4,6 +4,7 @@ import com.wjz.yuexiang.dao.BookReviewRepository;
 import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.utils.MarkdownUtils;
+import com.wjz.yuexiang.utils.MyBeanUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class BookReviewServiceImpl implements BookReviewService {
         }else{
             BookReview bookReview = bookReviewOptional.get();
             b.setUpdateTime(new Date());   //修改时间
-            BeanUtils.copyProperties(b,bookReview);
+            BeanUtils.copyProperties(b,bookReview, MyBeanUtils.getNullPropertyNames(b));
             return bookReviewRepository.save(bookReview);
         }
     }
@@ -47,22 +48,24 @@ public class BookReviewServiceImpl implements BookReviewService {
 
     @Transactional
     @Override
-    public BookReview getBookReviewAndConvert(Long id) {
-        Optional<BookReview> bookReviewOptional = bookReviewRepository.findById(id);
-        if(!bookReviewOptional.isPresent()){
-            throw new NotFoundException("该书评不存在");
+    public BookReview getSelfBookReviewAndConvert(Long id,Long userId) {
+        BookReview bookReview = bookReviewRepository.findByIdAndUserId(id,userId);
+        if(bookReview == null){
+            return bookReview;              //为空就交给上层，让上层处理异常
         }else{
-            BookReview bookReview = new BookReview();
-            BookReview b = bookReviewOptional.get();
-            BeanUtils.copyProperties(b,bookReview);     //防止事务误操作，将数据库中取出的数据赋给新的对象
+            BookReview b = new BookReview();
+            BeanUtils.copyProperties(bookReview,b);     //防止事务误操作，将数据库中取出的数据赋给新的对象
 
-            String content = bookReview.getContent();
-            bookReview.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+            String content = b.getContent();
+            b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
 
-            bookReviewRepository.updateViews(id);
-
-            return bookReview;
+            return b;
         }
+    }
+
+    @Override
+    public BookReview getSelfBookReview(Long id, Long userId) {
+        return bookReviewRepository.findByIdAndUserId(id,userId);              //不管是否为空直接交给上层，让上层处理异常
     }
 
     /**
@@ -74,5 +77,11 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Override
     public Page<BookReview> bookReviews(Long userId, Pageable pageable) {
         return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Long>get("user").get("id"),userId),pageable);
+    }
+
+    @Transactional
+    @Override
+    public void deleteSelfBookReview(Long id, Long userId) {
+        bookReviewRepository.deleteByIdAndUserId(id,userId);
     }
 }

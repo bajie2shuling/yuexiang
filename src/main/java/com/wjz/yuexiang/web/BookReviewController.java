@@ -4,15 +4,13 @@ import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.po.User;
 import com.wjz.yuexiang.service.BookReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 
@@ -57,22 +55,68 @@ public class BookReviewController {
      * 书评列表页面
      */
     @GetMapping("/book_review_list")
-    public String bookReviewList(@PageableDefault(size = 8,sort = {"updateTime"},direction = Sort.Direction.DESC) Pageable pageable,
+    public String bookReviewList(@PageableDefault(size = 8,sort = {"updateTime","createTime"},direction = Sort.Direction.DESC) Pageable pageable,
                                  HttpSession session,
+                                 RedirectAttributes attributes,
                                  Model model){
         User user = (User) session.getAttribute("user");
-        pageable.
-        model.addAttribute("page",bookReviewService.bookReviews(user.getId(),pageable));
+        Page<BookReview> page = bookReviewService.bookReviews(user.getId(),pageable);
+        if(page.getPageable().getPageNumber() > page.getTotalPages()-1){
+            attributes.addFlashAttribute("lostMessage","很遗憾，第" + page.getPageable().getPageNumber()+1 + "页不存在！");  //spring从0页开始
+            return "redirect:/user/book_review_list";
+        }
+        model.addAttribute("page",page);
         return "book_review_list";
     }
 
     /**
-     * 书评详情页面
+     * 书评修改
      */
-    @GetMapping("/book_review/{id}")
-    public String bookReviewPage(@PathVariable Long id,Model model){
-        BookReview bookReview = bookReviewService.getBookReviewAndConvert(id);
-        model.addAttribute("bookReview",bookReview);
-        return "book_review";
+    @GetMapping("/book_review/{id}/change")
+    public String bookReviewChange(@PathVariable Long id,
+                                   HttpSession session,
+                                   RedirectAttributes attributes,
+                                   Model model){
+        User user = (User) session.getAttribute("user");
+        BookReview bookReview = bookReviewService.getSelfBookReview(id,user.getId());
+        if(bookReview == null){
+            attributes.addFlashAttribute("lostMessage","很遗憾，该篇书评不存在！");         //防止恶意用户在地址栏随意输入id
+            return "redirect:/user/book_review_list";
+        }else{
+            model.addAttribute("bookReview",bookReview);
+            return "book_review_edit";
+        }
+    }
+
+    /**
+     * 书评详情预览
+     */
+    @GetMapping("/book_review/{id}/preview")
+    public String bookReviewPage(@PathVariable Long id,
+                                 HttpSession session,
+                                 RedirectAttributes attributes,
+                                 Model model){
+        User user = (User) session.getAttribute("user");
+        BookReview bookReview = bookReviewService.getSelfBookReviewAndConvert(id,user.getId());
+        if(bookReview == null){
+            attributes.addFlashAttribute("lostMessage","很遗憾，该篇书评不存在！");          //防止恶意用户在地址栏随意输入id
+            return "redirect:/user/book_review_list";
+        }else{
+            model.addAttribute("bookReview",bookReview);
+            return "book_review";
+        }
+    }
+
+    /**
+     * 删除书评
+     */
+    @GetMapping("/book_review/{id}/delete")
+    public String bookReviewPage(@PathVariable Long id,
+                                 HttpSession session,
+                                 RedirectAttributes attributes){
+        User user = (User) session.getAttribute("user");
+        bookReviewService.deleteSelfBookReview(id,user.getId());
+        attributes.addFlashAttribute("message","删除书评成功！");
+        return "redirect:/user/book_review_list";
     }
 }

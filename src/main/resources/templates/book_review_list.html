@@ -3,7 +3,7 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>写书评</title>
+    <title>我的书评</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css">
     <link rel="stylesheet" href="../static/css/me.css">
@@ -11,7 +11,7 @@
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(4)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(0)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
@@ -81,8 +81,9 @@
                     <span th:case="3">审核通过</span>
                 </td>
                 <td>
-                    <a href="#" th:href="@{/user/book_review_edit/{id}/change(id=${bookReview.id})}" class="ui teal basic mini button">编辑</a>
-                    <a href="#" th:href="@{/user/book_review_delete/{id}(id=${bookReview.id})}" class="ui red basic mini button">删除</a>
+                    <a href="#" th:href="@{/user/book_review/{id}/change(id=${bookReview.id})}" class="ui teal basic mini button">编辑</a>
+                    <a href="#" th:href="@{/user/book_review/{id}/preview(id=${bookReview.id})}" class="ui teal basic mini button">预览</a>
+                    <a href="#" th:href="@{/user/book_review/{id}/delete(id=${bookReview.id})}" class="ui red basic mini button">删除</a>
                 </td>
             </tr>
             </tbody>
@@ -104,10 +105,15 @@
             </tfoot>
         </table>
 
-        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+        <div class="ui positive message" th:unless="${#strings.isEmpty(message)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>
             <p th:text="${message}">恭喜，操作成功！</p>
+        </div>
+        <div class="ui negative message" th:unless="${#strings.isEmpty(lostMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${lostMessage}">很遗憾，该页不存在！</p>
         </div>
     </div>
 </div>
@@ -142,18 +148,6 @@
 <script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
 
 <script>
-    var testEditor;
-
-    $(function() {
-        testEditor = editormd("md-content", {
-            width   : "100%",
-            height  : 900,
-            syncScrolling : "single",
-            path    : "../static/lib/editormd/lib/"
-//            path    : "/lib/editormd/lib/"
-        });
-    });
-
     $('.m-menu-toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
@@ -161,55 +155,11 @@
         .dropdown({
             on: 'hover'
         });
-    $('.ui.form')
-        .form({
-            fields: {
-                title: {
-                    identifier: 'title',
-                    rules: [
-                        {
-                            type   : 'empty',
-                            prompt : '书评标题不能为空'
-                        }
-                    ]
-                },
-                bookName: {
-                    identifier: 'bookName',
-                    rules: [
-                        {
-                            type   : 'empty',
-                            prompt : '书名不能为空'
-                        }
-                    ]
-                },
-                firstPicture: {
-                    identifier: 'firstPicture',
-                    rules: [
-                        {
-                            type   : 'empty',
-                            prompt : '首图地址不能为空'
-                        }
-                    ]
-                },
-                content: {
-                    identifier: 'content',
-                    rules: [
-                        {
-                            type   : 'empty',
-                            prompt : '文章内容不能为空'
-                        }
-                    ]
-                },
-                description: {
-                    identifier: 'description',
-                    rules: [
-                        {
-                            type   : 'empty',
-                            prompt : '书评描述不能为空'
-                        }
-                    ]
-                }
-            }
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
         });
 </script>
 </body>

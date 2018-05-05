@@ -59,6 +59,7 @@
     <div class="ui container">
         <form id="bookReview_form" action="#" th:action="@{/user/book_review_edit}" class="ui form" method="post" th:object="${bookReview}">
 
+            <input type="hidden" name="id" th:value="*{id}">
             <input type="hidden" name="status" th:value="*{status}">
 
             <div class="field">
