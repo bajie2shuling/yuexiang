@@ -36,7 +36,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     public BookReview updateBookReview(Long id, BookReview b) {
         Optional<BookReview> bookReviewOptional = bookReviewRepository.findById(id);
         if(!bookReviewOptional.isPresent()){
-            throw new NotFoundException("该书评不存在");
+            throw new NotFoundException("该书评不存在");   //此处在直接返回空对象在上层处理更人性化
         }else{
             BookReview bookReview = bookReviewOptional.get();
             b.setUpdateTime(new Date());   //修改时间
@@ -45,11 +45,12 @@ public class BookReviewServiceImpl implements BookReviewService {
         }
     }
 
-
-    @Transactional
-    @Override
-    public BookReview getSelfBookReviewAndConvert(Long id,Long userId) {
-        BookReview bookReview = bookReviewRepository.findByIdAndUserId(id,userId);
+    /**
+     * 书评获取时的结果分发器
+     * @param bookReview
+     * @return
+     */
+    private BookReview bookReviewDispatcher(BookReview bookReview){
         if(bookReview == null){
             return bookReview;              //为空就交给上层，让上层处理异常
         }else{
@@ -63,8 +64,15 @@ public class BookReviewServiceImpl implements BookReviewService {
         }
     }
 
+    @Transactional
     @Override
-    public BookReview getSelfBookReview(Long id, Long userId) {
+    public BookReview getBookReviewAndConvert(Long id,Long userId) {
+        BookReview bookReview = bookReviewRepository.findByIdAndUserId(id,userId);
+        return bookReviewDispatcher(bookReview);
+    }
+
+    @Override
+    public BookReview getBookReview(Long id, Long userId) {
         return bookReviewRepository.findByIdAndUserId(id,userId);              //不管是否为空直接交给上层，让上层处理异常
     }
 
@@ -94,5 +102,17 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Override
     public Page<BookReview> bookReviews(Integer status, Pageable pageable) {
         return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Integer>get("status"),status),pageable);
+    }
+
+    /**
+     * 根据书评状态和id查询查询书评
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public BookReview getBookReviewAndConvert(Long id, Integer status) {
+        BookReview bookReview = bookReviewRepository.findByIdAndStatus(id,status);
+        return bookReviewDispatcher(bookReview);
     }
 }

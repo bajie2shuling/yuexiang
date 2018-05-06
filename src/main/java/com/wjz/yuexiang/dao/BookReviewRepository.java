@@ -28,4 +28,7 @@ public interface BookReviewRepository extends JpaRepository<BookReview,Long>,Jpa
     @Query("delete from BookReview b where b.id = ?1 and b.user.id =?2")
     void deleteByIdAndUserId(Long id,Long userId);
 
+    BookReview findByIdAndStatus(Long id,Integer status);
+
+
 }

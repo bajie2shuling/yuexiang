@@ -20,7 +20,7 @@ public class Admin {
     private String Phone;
     private String address;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date createTime;
 
     public Admin() {

@@ -61,9 +61,9 @@ public class AdminController {
     /**
      * 管理员注销
      */
-    @GetMapping("/sign_out ")
+    @GetMapping("/sign_out")
     public String signOut(HttpSession session){
-        session.removeAttribute("user");
+        session.removeAttribute("admin");
         return "redirect:/admin/sign_in";
     }
 }

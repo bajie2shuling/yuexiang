@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="_fragments :: head(~{::title})">
+<head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>书评详情</title>
+    <title>审核详情</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="../static/css/typo.css">
-    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../../static/css/typo.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
 
     <!--导航-->
-    <nav th:replace="_fragments :: menu(0)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+    <nav th:replace="admin/_fragments :: menu(0)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
         <div class="ui container">
             <div class="ui inverted stackable menu secondary">
                 <h2 class="ui teal header item">RdShare</h2>
-                <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>探索</a>
-                <a href="#" class="item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
-                <a href="#" class="item m-mobile-hide m-item"><i class="mini  book icon"></i>书林</a>
-                <a href="#" class="item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
+                <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>书评审核</a>
                 <div class="right menu m-mobile-hide m-item">
                     <div class="ui input icon transparent inverted">
                         <input type="text" placeholder="Search......">
@@ -31,15 +28,7 @@
                         </div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a href="#" class="item" target="_blank">
-                                <i class="file icon"></i>
-                                我的书评
-                            </a>
-                            <a href="#" class="item" target="_blank">
-                                <i class="book icon"></i>
-                                我的共享书籍
-                            </a>
-                            <a href="#" class="item" target="_blank">
+                            <a href="#" class="item">
                                 <i class="sign out alternate icon"></i>
                                 注销
                             </a>
@@ -62,7 +51,7 @@
                 <div class="ui horizontal link list">
                     <div class="item">
                         <img src="https://source.unsplash.com/random/100x100" class="ui avatar image">
-                        <div class="content"><a href="#" class="header" th:text="${bookReview.user.nickName}">吴晋子</a></div>
+                        <div class="content"><span href="#" class="header" th:text="${bookReview.user.nickName}">吴晋子</span></div>
                     </div>
                     <div class="item">
                         <i class="calendar icon"></i>
@@ -80,7 +69,7 @@
                 <img src="https://source.unsplash.com/random/800x400"  class="ui rounded image fluid" th:src="@{${bookReview.firstPicture}}">
             </div>
             <!--文章内容-->
-            <div class="ui piled segment">
+            <div class="ui piled  segment">
                 <!--文章标题-->
                 <div class="m-padding-tb-huge">
                     <div class="ui huge header centered" th:text="${bookReview.title}">书有清香 | 莫以成败论英雄</div>
@@ -218,105 +207,14 @@
                     <p>总之，本章提出以学习为乐事，做到人不知而不愠，反映出孔子学而不厌、诲人不倦、注重修养、严格要求自己的主张。这些思想主张在《论语》书中多处可见，有助于对第一章内容的深入了解。</p>
                 </div>
             </div>
-            <!--留言区域-->
-            <div id="comment-container" class="ui teal segment">
-                <!--留言区域列表-->
-                <div class="ui segment">
-                    <div class="ui threaded comments" style="max-width: 100%;">
-                        <h3 class="ui dividing header">评论</h3>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://source.unsplash.com/random/100x100">
-                            </a>
-                            <div class="content">
-                                <a class="author">小吴</a>
-                                <div class="metadata">
-                                    <span class="date">今天 5:42PM</span>
-                                </div>
-                                <div class="text">
-                                    How artistic!
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://source.unsplash.com/random/100x100">
-                            </a>
-                            <div class="content">
-                                <a class="author">小王</a>
-                                <div class="metadata">
-                                    <span class="date">昨天 12:30AM</span>
-                                </div>
-                                <div class="text">
-                                    <p>This has been very useful for my research. Thanks as well!</p>
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
-                                </div>
-                            </div>
-                            <div class="comments">
-                                <div class="comment">
-                                    <a class="avatar">
-                                        <img src="https://source.unsplash.com/random/100x100">
-                                    </a>
-                                    <div class="content">
-                                        <a class="author">小张</a>
-                                        <div class="metadata">
-                                            <span class="date">刚刚</span>
-                                        </div>
-                                        <div class="text">
-                                            Elliot you are always so right :)
-                                        </div>
-                                        <div class="actions">
-                                            <a class="reply">回复</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://source.unsplash.com/random/100x100">
-                            </a>
-                            <div class="content">
-                                <a class="author">小黄</a>
-                                <div class="metadata">
-                                    <span class="date">5天前</span>
-                                </div>
-                                <div class="text">
-                                    Dude, this is awesome. Thanks so much
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
-                                </div>
-                            </div>
-                        </div>
+            <!--审核操作-->
+            <div class="ui teal segment" >
+                <div class="ui middle aligned two column grid">
+                    <div class="column">
+                        <a href="#" class="ui red basic button">未通过</a>
                     </div>
-                </div>
-                <!--提交留言区域-->
-                <div class="ui form">
-                    <div class="field">
-                        <textarea name="comment" placeholder="请输入评论...."></textarea>
-                    </div>
-                    <div class="fields">
-                        <div class="field m-mobile-wide m-mobile-margin-bottom-small">
-                            <div class="ui left icon input">
-                                <i class="user icon"></i>
-                                <input type="text" name="name" placeholder="姓名">
-                            </div>
-                        </div>
-                        <div class="field m-mobile-wide m-mobile-margin-bottom-small">
-                            <div class="ui left icon input">
-                                <i class="mail icon"></i>
-                                <input type="text" name="email" placeholder="邮箱">
-                            </div>
-                        </div>
-                        <div class="field m-mobile-wide m-mobile-margin-bottom-small">
-                            <button class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
-                        </div>
+                    <div class="right aligned column">
+                        <a href="#" class="ui teal basic button">通过</a>
                     </div>
                 </div>
             </div>
@@ -324,7 +222,7 @@
     </div>
 
     <!--底部-->
-    <footer class="ui segment inverted " th:replace="_fragments :: footer">
+    <footer class="ui segment inverted " th:replace="admin/_fragments :: footer">
         <div class="ui container center aligned m-padding-tb-max">
             <div class="ui divided grid inverted stackable">
                 <div class="eight wide column">

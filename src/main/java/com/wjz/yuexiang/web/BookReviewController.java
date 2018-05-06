@@ -62,6 +62,7 @@ public class BookReviewController {
         User user = (User) session.getAttribute("user");
         Page<BookReview> page = bookReviewService.bookReviews(user.getId(),pageable);
         if(page.getTotalPages() == 0){
+            model.addAttribute("page",page);   //前端模版要取page
             model.addAttribute("lostMessage","还没有书评,赶紧拿起笔行动吧！");
             return "book_review_list";
         }
@@ -74,7 +75,7 @@ public class BookReviewController {
     }
 
     /**
-     * 书评修改
+     * 书评修改页面
      */
     @GetMapping("/book_review/{id}/change")
     public String bookReviewChange(@PathVariable Long id,
@@ -82,7 +83,7 @@ public class BookReviewController {
                                    RedirectAttributes attributes,
                                    Model model){
         User user = (User) session.getAttribute("user");
-        BookReview bookReview = bookReviewService.getSelfBookReview(id,user.getId());
+        BookReview bookReview = bookReviewService.getBookReview(id,user.getId());
         if(bookReview == null){
             attributes.addFlashAttribute("lostMessage","很遗憾，该篇书评不存在！");         //防止恶意用户在地址栏随意输入id
             return "redirect:/user/book_review_list";
@@ -93,7 +94,7 @@ public class BookReviewController {
     }
 
     /**
-     * 书评详情预览
+     * 书评详情预览页面
      */
     @GetMapping("/book_review/{id}/preview")
     public String bookReviewPage(@PathVariable Long id,
@@ -101,7 +102,7 @@ public class BookReviewController {
                                  RedirectAttributes attributes,
                                  Model model){
         User user = (User) session.getAttribute("user");
-        BookReview bookReview = bookReviewService.getSelfBookReviewAndConvert(id,user.getId());
+        BookReview bookReview = bookReviewService.getBookReviewAndConvert(id,user.getId());
         if(bookReview == null){
             attributes.addFlashAttribute("lostMessage","很遗憾，该篇书评不存在！");          //防止恶意用户在地址栏随意输入id
             return "redirect:/user/book_review_list";
