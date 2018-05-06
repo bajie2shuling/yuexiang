@@ -61,6 +61,10 @@ public class BookReviewController {
                                  Model model){
         User user = (User) session.getAttribute("user");
         Page<BookReview> page = bookReviewService.bookReviews(user.getId(),pageable);
+        if(page.getTotalPages() == 0){
+            model.addAttribute("lostMessage","还没有书评,赶紧拿起笔行动吧！");
+            return "book_review_list";
+        }
         if(page.getPageable().getPageNumber() > page.getTotalPages()-1){
             attributes.addFlashAttribute("lostMessage","很遗憾，第" + page.getPageable().getPageNumber()+1 + "页不存在！");  //spring从0页开始
             return "redirect:/user/book_review_list";

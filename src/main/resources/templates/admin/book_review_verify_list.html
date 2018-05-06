@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="_fragments :: head(~{::title})">
+<head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>书评审核</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(1)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+<nav th:replace="admin/_fragments :: menu(1)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
@@ -81,7 +80,7 @@
             </tfoot>
         </table>
 
-        <div class="ui positive message" th:unless="${#strings.isEmpty(message)}">
+        <div class="ui positive message" th:unless="${#strings.isEmpty(verifyMessage)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>
             <p th:text="${verifyMessage}">恭喜，操作成功！</p>
@@ -94,7 +93,7 @@
     </div>
 </div>
 <!--底部-->
-<footer class="ui segment inverted attached " th:replace="_fragments :: footer">
+<footer class="ui segment inverted attached " th:replace="admin/_fragments :: footer">
     <div class="ui container center aligned m-padding-tb-max">
         <div class="ui divided grid inverted stackable">
             <div class="eight wide column">
@@ -121,7 +120,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
-<script src="../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
 
 <script>
     $('.m-menu-toggle').click(function () {

@@ -57,4 +57,13 @@ public class AdminController {
             return "redirect:/admin/book_review_verify_list";
         }
     }
+
+    /**
+     * 管理员注销
+     */
+    @GetMapping("/sign_out ")
+    public String signOut(HttpSession session){
+        session.removeAttribute("user");
+        return "redirect:/admin/sign_in";
+    }
 }
