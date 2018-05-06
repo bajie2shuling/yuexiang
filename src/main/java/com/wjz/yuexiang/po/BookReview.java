@@ -1,7 +1,9 @@
 package com.wjz.yuexiang.po;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Jinzi Wu at 16:16 on 2018/5/3.
@@ -10,21 +12,16 @@ import java.util.Date;
 @Table(name = "t_book_review")
 public class BookReview {
 
-    //private static final String FIRSTPICTURE_REGEXP = null;
-    //private static final String BOOKNAME_REGEXP = null;
-
     @Id
     @GeneratedValue
     private Long id;
 
     private String title;
 
-    //@Pattern(regexp = BOOKNAME_REGEXP , message = "手机号格式不正确")
     private String bookName;
 
     private String bookAuthor;
 
-    //@Pattern(regexp = FIRSTPICTURE_REGEXP , message = "手机号格式不正确")
     private String firstPicture;
 
     @Basic(fetch = FetchType.LAZY)
@@ -36,7 +33,7 @@ public class BookReview {
     private Boolean allowComment;   //允许评论：1代表允许，0代表保存
 
 
-    private Integer status;   //书评状态：2代表审核通过，1代表审核未通过，0代表待发布
+    private Integer status;   //书评状态：3代表审核通过，2代表审核未通过，1代表待审核，0代表待发布
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
@@ -48,6 +45,9 @@ public class BookReview {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "bookReview")
+    private List<BookReviewVerifyRecord> bookReviewVerifyRecords = new ArrayList<>();
 
     public BookReview() {
     }
@@ -156,6 +156,14 @@ public class BookReview {
         this.views = views;
     }
 
+    public List<BookReviewVerifyRecord> getBookReviewVerifyRecords() {
+        return bookReviewVerifyRecords;
+    }
+
+    public void setBookReviewVerifyRecords(List<BookReviewVerifyRecord> bookReviewVerifyRecords) {
+        this.bookReviewVerifyRecords = bookReviewVerifyRecords;
+    }
+
     @Override
     public String toString() {
         return "BookReview{" +
@@ -172,6 +180,7 @@ public class BookReview {
                 ", updateTime=" + updateTime +
                 ", views=" + views +
                 ", user=" + user +
+                ", bookReviewVerifyRecords=" + bookReviewVerifyRecords +
                 '}';
     }
 }

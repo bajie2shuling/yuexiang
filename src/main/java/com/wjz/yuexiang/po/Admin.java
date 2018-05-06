@@ -1,7 +1,9 @@
 package com.wjz.yuexiang.po;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Jinzi Wu at 19:59 on 2018/5/5.
@@ -22,6 +24,9 @@ public class Admin {
 
     @Temporal(TemporalType.DATE)
     private Date createTime;
+
+    @OneToMany(mappedBy = "admin")
+    private List<BookReviewVerifyRecord> bookReviewVerifyRecords = new ArrayList<>();
 
     public Admin() {
     }
@@ -90,6 +95,14 @@ public class Admin {
         this.createTime = createTime;
     }
 
+    public List<BookReviewVerifyRecord> getBookReviewVerifyRecords() {
+        return bookReviewVerifyRecords;
+    }
+
+    public void setBookReviewVerifyRecords(List<BookReviewVerifyRecord> bookReviewVerifyRecords) {
+        this.bookReviewVerifyRecords = bookReviewVerifyRecords;
+    }
+
     @Override
     public String toString() {
         return "Admin{" +
@@ -101,6 +114,7 @@ public class Admin {
                 ", Phone='" + Phone + '\'' +
                 ", address='" + address + '\'' +
                 ", createTime=" + createTime +
+                ", bookReviewVerifyRecords=" + bookReviewVerifyRecords +
                 '}';
     }
 }

@@ -60,7 +60,7 @@ public class BookReviewController {
                                  RedirectAttributes attributes,
                                  Model model){
         User user = (User) session.getAttribute("user");
-        Page<BookReview> page = bookReviewService.bookReviews(user.getId(),pageable);
+        Page<BookReview> page = bookReviewService.bookReviews(user,pageable);
         if(page.getTotalPages() == 0){
             model.addAttribute("page",page);   //前端模版要取page
             model.addAttribute("lostMessage","还没有书评,赶紧拿起笔行动吧！");

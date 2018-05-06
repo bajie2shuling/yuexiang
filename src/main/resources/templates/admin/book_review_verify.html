@@ -211,10 +211,10 @@
             <div class="ui teal segment" >
                 <div class="ui middle aligned two column grid">
                     <div class="column">
-                        <a href="#" class="ui red basic button">未通过</a>
+                        <a href="#" th:href="@{/admin/book_review/verify/{id}/npass(id=${bookReview.id})}" class="ui red basic button">未通过</a>
                     </div>
                     <div class="right aligned column">
-                        <a href="#" class="ui teal basic button">通过</a>
+                        <a href="#" th:href="@{/admin/book_review/verify/{id}/pass(id=${bookReview.id})}" class="ui teal basic button">通过</a>
                     </div>
                 </div>
             </div>

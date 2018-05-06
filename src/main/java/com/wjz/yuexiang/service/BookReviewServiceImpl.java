@@ -3,6 +3,7 @@ package com.wjz.yuexiang.service;
 import com.wjz.yuexiang.dao.BookReviewRepository;
 import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.BookReview;
+import com.wjz.yuexiang.po.User;
 import com.wjz.yuexiang.utils.MarkdownUtils;
 import com.wjz.yuexiang.utils.MyBeanUtils;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +25,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Autowired
     private BookReviewRepository bookReviewRepository;
 
+    @Transactional
     @Override
     public BookReview saveBookReview(BookReview bookReview) {
         bookReview.setCreateTime(new Date());   //创建时间
@@ -78,13 +80,15 @@ public class BookReviewServiceImpl implements BookReviewService {
 
     /**
      * 根据用户ID分页查询书评
-     * @param userId
+     * @param user
      * @param pageable
      * @return
      */
     @Override
-    public Page<BookReview> bookReviews(Long userId, Pageable pageable) {
-        return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Long>get("user").get("id"),userId),pageable);
+    public Page<BookReview> bookReviews(User user, Pageable pageable) {
+        //该方法也行，不过大材小用了
+        //return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Long>get("user").get("id"),userId),pageable);
+        return bookReviewRepository.findAllByUser(user,pageable);
     }
 
     @Transactional
@@ -101,7 +105,9 @@ public class BookReviewServiceImpl implements BookReviewService {
      */
     @Override
     public Page<BookReview> bookReviews(Integer status, Pageable pageable) {
-        return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Integer>get("status"),status),pageable);
+        //该方法也行，不过大材小用了
+        // return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Integer>get("status"),status),pageable);
+        return bookReviewRepository.findAllByStatus(status,pageable);
     }
 
     /**

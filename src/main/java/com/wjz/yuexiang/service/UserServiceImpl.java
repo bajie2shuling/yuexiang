@@ -4,6 +4,7 @@ import com.wjz.yuexiang.dao.UserRepository;
 import com.wjz.yuexiang.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
         return user == null ? false : true;
     }
 
+    @Transactional
     @Override
     public User saveUser(User user) {
         return userRepository.save(user);
