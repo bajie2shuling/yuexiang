@@ -27,9 +27,7 @@ public interface BookReviewRepository extends JpaRepository<BookReview,Long>{
     BookReview findByIdAndUserId(Long id,Long userId);
 
     @Transactional
-    @Modifying
-    @Query("delete from BookReview b where b.id = ?1 and b.user.id =?2")
-    void deleteByIdAndUserId(Long id,Long userId);
+    void deleteByIdAndUser(Long id,User user);
 
     //以上三个JPQ语句定义的方法也可以用user对象为参数去查，此处仅仅为了练习，不要局限
 

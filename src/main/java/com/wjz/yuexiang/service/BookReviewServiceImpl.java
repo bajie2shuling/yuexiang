@@ -3,6 +3,7 @@ package com.wjz.yuexiang.service;
 import com.wjz.yuexiang.dao.BookReviewRepository;
 import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.BookReview;
+import com.wjz.yuexiang.po.BookReviewVerifyRecord;
 import com.wjz.yuexiang.po.User;
 import com.wjz.yuexiang.utils.MarkdownUtils;
 import com.wjz.yuexiang.utils.MyBeanUtils;
@@ -93,8 +94,8 @@ public class BookReviewServiceImpl implements BookReviewService {
 
     @Transactional
     @Override
-    public void deleteSelfBookReview(Long id, Long userId) {
-        bookReviewRepository.deleteByIdAndUserId(id,userId);
+    public void deleteSelfBookReview(Long id, User user) {
+        bookReviewRepository.deleteByIdAndUser(id,user);
     }
 
     /**

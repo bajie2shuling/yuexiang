@@ -55,7 +55,7 @@ public class BookReviewController {
      * 书评列表页面
      */
     @GetMapping("/book_review_list")
-    public String bookReviewList(@PageableDefault(size = 8,sort = {"updateTime","createTime"},direction = Sort.Direction.DESC) Pageable pageable,
+    public String bookReviewList(@PageableDefault(size = 20,sort = {"updateTime","createTime"},direction = Sort.Direction.DESC) Pageable pageable,
                                  HttpSession session,
                                  RedirectAttributes attributes,
                                  Model model){
@@ -120,7 +120,7 @@ public class BookReviewController {
                                  HttpSession session,
                                  RedirectAttributes attributes){
         User user = (User) session.getAttribute("user");
-        bookReviewService.deleteSelfBookReview(id,user.getId());
+        bookReviewService.deleteSelfBookReview(id,user);
         attributes.addFlashAttribute("message","删除书评成功！");
         return "redirect:/user/book_review_list";
     }

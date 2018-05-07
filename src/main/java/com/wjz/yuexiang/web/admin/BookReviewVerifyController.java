@@ -41,7 +41,7 @@ public class BookReviewVerifyController {
      * @return
      */
     @GetMapping("/book_review_verify_list")
-    public String bookReviewVerifyListPage(@PageableDefault(size = 8,sort = {"updateTime","createTime"},direction = Sort.Direction.ASC) Pageable pageable,
+    public String bookReviewVerifyListPage(@PageableDefault(size = 20,sort = {"updateTime","createTime"},direction = Sort.Direction.ASC) Pageable pageable,
                                        RedirectAttributes attributes,
                                        Model model){
         Page<BookReview> page = bookReviewService.bookReviews(1,pageable);   //只取待审核状态的书评
@@ -112,7 +112,7 @@ public class BookReviewVerifyController {
      * 书评审核记录列表页面
      */
     @GetMapping("/book_review_verify_record_list")
-    public String bookReviewVerifyRecordList(@PageableDefault(size = 8,sort = {"createTime"},direction = Sort.Direction.DESC) Pageable pageable,
+    public String bookReviewVerifyRecordList(@PageableDefault(size = 20,sort = {"createTime"},direction = Sort.Direction.DESC) Pageable pageable,
                                              RedirectAttributes attributes,
                                              HttpSession session,
                                              Model model){

@@ -39,6 +39,8 @@ public class BookReviewVerifyRecordServiceImpl implements BookReviewVerifyRecord
             bookReviewVerifyRecord.setBookReview(bookReview);
             bookReviewVerifyRecord.setAdmin(admin);
             bookReviewVerifyRecord.setResult(result);
+            bookReviewVerifyRecord.setNickName(bookReview.getUser().getNickName());
+            bookReviewVerifyRecord.setTitle(bookReview.getTitle());
             return bookReviewVerifyRecordRepository.save(bookReviewVerifyRecord);
         }
     }

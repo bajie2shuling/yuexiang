@@ -19,6 +19,10 @@ public class BookReviewVerifyRecord {
 
     private Integer result; //处理结果：3代表审核通过，2代表审核未通过
 
+    private String nickName;
+
+    private String title;
+
     @ManyToOne
     private BookReview bookReview;
 
@@ -52,6 +56,22 @@ public class BookReviewVerifyRecord {
         this.result = result;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public BookReview getBookReview() {
         return bookReview;
     }
@@ -74,6 +94,8 @@ public class BookReviewVerifyRecord {
                 "id=" + id +
                 ", createTime=" + createTime +
                 ", result=" + result +
+                ", nickName='" + nickName + '\'' +
+                ", title='" + title + '\'' +
                 ", bookReview=" + bookReview +
                 ", admin=" + admin +
                 '}';

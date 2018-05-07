@@ -14,7 +14,7 @@
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
-            <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>书评审核</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini filter icon"></i>书评审核</a>
             <div class="right menu m-mobile-hide m-item">
                 <div class="ui dropdown item">
                     <div class="text">
@@ -45,20 +45,21 @@
             <thead>
             <tr>
                 <th></th>
-                <th>标题</th>
-                <th>书名</th>
-                <th>作者</th>
-                <th>操作</th>
+                <th>书评标题</th>
+                <th>用户昵称</th>
+                <th>审核时间</th>
+                <th>审核结果</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="bookReview,iterStat : ${page.content}">
+            <tr th:each="bookReviewVerifyRecord,iterStat : ${page.content}">
                 <td th:text="${iterStat.count}">1</td>
-                <td th:text="${bookReview.title}">书有清香 | 莫以成败论英雄</td>
-                <td th:text="${bookReview.bookName}">《受戒》</td>
-                <td th:text="${bookReview.bookAuthor}">汪曾祺</td>
-                <td>
-                    <a href="#" th:href="@{/admin/book_review/{id}/verify(id=${bookReview.id})}" class="ui orange basic mini button">审核</a>
+                <td th:text="${bookReviewVerifyRecord.title}">书有清香 | 莫以成败论英雄</td>
+                <td th:text="${bookReviewVerifyRecord.nickName}">lsl</td>
+                <td th:text="${#dates.format(bookReviewVerifyRecord.createTime,'yyyy-MM-dd HH:mm:ss')}">2018-05-05 17:26:10</td>
+                <td th:switch="${bookReviewVerifyRecord.result}" th:classappend="${bookReviewVerifyRecord.result == 2} ? 'negative' : 'positive'">
+                    <span th:case="2">未通过</span>
+                    <span th:case="3">通过</span>
                 </td>
             </tr>
             </tbody>
@@ -68,10 +69,10 @@
                     <div class="ui segment" th:if="${page.totalPages}>1">
                         <div class="ui middle aligned two column grid">
                             <div class="column">
-                                <a href="#" th:href="@{/admin/book_review_verify_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                                <a href="#" th:href="@{/admin/book_review_verify_record_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
                             </div>
                             <div class="right aligned column">
-                                <a href="#" th:href="@{/admin/book_review_verify_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                                <a href="#" th:href="@{/admin/book_review_verify_record_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
                             </div>
                         </div>
                     </div>

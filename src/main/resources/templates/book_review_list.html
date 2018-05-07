@@ -60,7 +60,7 @@
             <thead>
             <tr>
                 <th></th>
-                <th>标题</th>
+                <th>书评标题</th>
                 <th>书名</th>
                 <th>作者</th>
                 <th>状态</th>
@@ -73,7 +73,7 @@
                 <td th:text="${bookReview.title}">书有清香 | 莫以成败论英雄</td>
                 <td th:text="${bookReview.bookName}">《受戒》</td>
                 <td th:text="${bookReview.bookAuthor}">汪曾祺</td>
-                <td th:switch="${bookReview.status}">
+                <td th:switch="${bookReview.status}" th:classappend="${bookReview.status == 3} ? 'positive' : 'negative'">
                     <span th:case="0">待发布</span>
                     <span th:case="1">待审核</span>
                     <span th:case="2">审核未通过</span>
@@ -81,8 +81,9 @@
                 </td>
                 <td>
                     <a href="#" th:href="@{/user/book_review/{id}/change(id=${bookReview.id})}" class="ui teal basic mini button">编辑</a>
-                    <a href="#" th:href="@{/user/book_review/{id}/preview(id=${bookReview.id})}" class="ui orange basic mini button">预览</a>
+                    <a href="#" th:href="@{/user/book_review/{id}/preview(id=${bookReview.id})}" class="ui purple basic mini button">预览</a>
                     <a href="#" th:href="@{/user/book_review/{id}/delete(id=${bookReview.id})}" class="ui red basic mini button">删除</a>
+                    <a href="#" th:href="@{/user/book_review/{id}/add_book_forest(id=${bookReview.id})}" class="ui blue basic mini button">加入书林</a>
                 </td>
             </tr>
             </tbody>
