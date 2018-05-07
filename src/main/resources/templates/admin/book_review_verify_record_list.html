@@ -47,7 +47,8 @@
                 <th></th>
                 <th>书评标题</th>
                 <th>用户昵称</th>
-
+                <th>书籍名称</th>
+                <th>书记作者</th>
                 <th>审核时间</th>
                 <th>审核结果</th>
             </tr>
@@ -57,6 +58,8 @@
                 <td th:text="${iterStat.count}">1</td>
                 <td th:text="${bookReviewVerifyRecord.title}">书有清香 | 莫以成败论英雄</td>
                 <td th:text="${bookReviewVerifyRecord.nickName}">lsl</td>
+                <td th:text="${bookReviewVerifyRecord.bookName}">《逃离》</td>
+                <td th:text="${bookReviewVerifyRecord.bookAuthor}">爱丽丝门罗</td>
                 <td th:text="${#dates.format(bookReviewVerifyRecord.createTime,'yyyy-MM-dd HH:mm:ss')}">2018-05-05 17:26:10</td>
                 <td th:switch="${bookReviewVerifyRecord.result}" th:classappend="${bookReviewVerifyRecord.result == 2} ? 'negative' : 'positive'">
                     <span th:case="2">未通过</span>
@@ -66,7 +69,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="6">
+                <th colspan="7">
                     <div class="ui segment" th:if="${page.totalPages}>1">
                         <div class="ui middle aligned two column grid">
                             <div class="column">

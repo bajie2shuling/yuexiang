@@ -54,9 +54,6 @@ public class BookReviewServiceImpl implements BookReviewService {
         if(bookReview == null){
             return null;              //为空就交给上层，让上层处理异常
         }else{
-//            BookReview b = new BookReview();
-//            BeanUtils.copyProperties(bookReview,b);     //防止事务误操作，将数据库中取出的数据赋给新的对象
-
             String content = bookReview.getContent();
             bookReview.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
 

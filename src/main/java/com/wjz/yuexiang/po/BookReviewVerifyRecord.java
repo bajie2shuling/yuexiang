@@ -23,7 +23,7 @@ public class BookReviewVerifyRecord {
 
     private String bookName;
 
-    private String authorName;
+    private String bookAuthor;
 
     private String title;
 
@@ -76,6 +76,14 @@ public class BookReviewVerifyRecord {
         this.bookName = bookName;
     }
 
+    public String getBookAuthor() {
+        return bookAuthor;
+    }
+
+    public void setBookAuthor(String bookAuthor) {
+        this.bookAuthor = bookAuthor;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -108,6 +116,7 @@ public class BookReviewVerifyRecord {
                 ", result=" + result +
                 ", nickName='" + nickName + '\'' +
                 ", bookName='" + bookName + '\'' +
+                ", bookAuthor='" + bookAuthor + '\'' +
                 ", title='" + title + '\'' +
                 ", bookReview=" + bookReview +
                 ", admin=" + admin +
