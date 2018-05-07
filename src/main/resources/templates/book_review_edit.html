@@ -61,6 +61,7 @@
 
             <input type="hidden" name="id" th:value="*{id}">
             <input type="hidden" name="status" th:value="*{status}">
+            <input type="hidden" name="publishTime" th:value="*{publishTime}">
 
             <div class="field">
                 <div class="ui left labeled input">
@@ -170,10 +171,12 @@
 
     $('#save_btn').click(function () {
         $('[name="status"]').val(0);
+        $('[name="publishTime"]').val(new Date());
         $('#blog-form').submit();
     });
     $('#publish_btn').click(function () {
         $('[name="status"]').val(1);
+        $('[name="publishTime"]').val(new Date());
         $('#blog-form').submit();
     });
 

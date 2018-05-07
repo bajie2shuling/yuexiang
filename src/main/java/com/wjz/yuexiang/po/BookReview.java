@@ -36,10 +36,7 @@ public class BookReview {
     private Integer status;   //书评状态：3代表审核通过，2代表审核未通过，1代表待审核，0代表待发布
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime;
+    private Date publishTime;
 
     private Integer views;      //浏览次数
 
@@ -124,20 +121,12 @@ public class BookReview {
         this.status = status;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getPublishTime() {
+        return publishTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setPublishTime(Date publishTime) {
+        this.publishTime = publishTime;
     }
 
     public User getUser() {
@@ -176,8 +165,7 @@ public class BookReview {
                 ", description='" + description + '\'' +
                 ", allowComment=" + allowComment +
                 ", status=" + status +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
+                ", publishTime=" + publishTime +
                 ", views=" + views +
                 ", user=" + user +
                 ", bookReviewVerifyRecords=" + bookReviewVerifyRecords +

@@ -29,20 +29,17 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Transactional
     @Override
     public BookReview saveBookReview(BookReview bookReview) {
-        bookReview.setCreateTime(new Date());   //创建时间
-        bookReview.setViews(0);
+        bookReview.setViews(0);  //创将时初始化一下后面才能进行加1操作
         return bookReviewRepository.save(bookReview);
     }
 
     @Transactional
     @Override
-    public BookReview updateBookReview(Long id, BookReview b) {
-        Optional<BookReview> bookReviewOptional = bookReviewRepository.findById(id);
-        if(!bookReviewOptional.isPresent()){
-            throw new NotFoundException("该书评不存在");   //此处在直接返回空对象在上层处理更人性化
+    public BookReview updateBookReview(Long id,User user, BookReview b) {
+        BookReview bookReview = bookReviewRepository.findByIdAndUser(id,user);
+        if(bookReview == null){
+            return null;            //为空就交给上层，让上层处理异常
         }else{
-            BookReview bookReview = bookReviewOptional.get();
-            b.setUpdateTime(new Date());   //修改时间
             BeanUtils.copyProperties(b,bookReview, MyBeanUtils.getNullPropertyNames(b));
             return bookReviewRepository.save(bookReview);
         }
@@ -55,24 +52,36 @@ public class BookReviewServiceImpl implements BookReviewService {
      */
     private BookReview bookReviewDispatcher(BookReview bookReview){
         if(bookReview == null){
-            return bookReview;              //为空就交给上层，让上层处理异常
+            return null;              //为空就交给上层，让上层处理异常
         }else{
-            BookReview b = new BookReview();
-            BeanUtils.copyProperties(bookReview,b);     //防止事务误操作，将数据库中取出的数据赋给新的对象
+//            BookReview b = new BookReview();
+//            BeanUtils.copyProperties(bookReview,b);     //防止事务误操作，将数据库中取出的数据赋给新的对象
 
-            String content = b.getContent();
-            b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+            String content = bookReview.getContent();
+            bookReview.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
 
-            return b;
+            return bookReview;
         }
     }
 
-    @Transactional
     @Override
     public BookReview getBookReviewAndConvert(Long id,Long userId) {
         BookReview bookReview = bookReviewRepository.findByIdAndUserId(id,userId);
         return bookReviewDispatcher(bookReview);
     }
+
+    /**
+     * 根据书评状态和id查询查询书评
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public BookReview getBookReviewAndConvert(Long id, Integer status) {
+        BookReview bookReview = bookReviewRepository.findByIdAndStatus(id,status);
+        return bookReviewDispatcher(bookReview);
+    }
+
 
     @Override
     public BookReview getBookReview(Long id, Long userId) {
@@ -94,8 +103,16 @@ public class BookReviewServiceImpl implements BookReviewService {
 
     @Transactional
     @Override
-    public void deleteSelfBookReview(Long id, User user) {
+    public Boolean deleteSelfBookReview(Long id, User user) {
+        BookReview bookReview = bookReviewRepository.findByIdAndUser(id,user);
+        if(bookReview == null){
+            return false;
+        }
+        for(BookReviewVerifyRecord bookReviewVerifyRecord : bookReview.getBookReviewVerifyRecords()){
+            bookReviewVerifyRecord.setBookReview(null);
+        }
         bookReviewRepository.deleteByIdAndUser(id,user);
+        return true;
     }
 
     /**
@@ -111,15 +128,5 @@ public class BookReviewServiceImpl implements BookReviewService {
         return bookReviewRepository.findAllByStatus(status,pageable);
     }
 
-    /**
-     * 根据书评状态和id查询查询书评
-     * @param id
-     * @param status
-     * @return
-     */
-    @Override
-    public BookReview getBookReviewAndConvert(Long id, Integer status) {
-        BookReview bookReview = bookReviewRepository.findByIdAndStatus(id,status);
-        return bookReviewDispatcher(bookReview);
-    }
+
 }

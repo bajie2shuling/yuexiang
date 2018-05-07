@@ -21,6 +21,10 @@ public class BookReviewVerifyRecord {
 
     private String nickName;
 
+    private String bookName;
+
+    private String authorName;
+
     private String title;
 
     @ManyToOne
@@ -64,6 +68,14 @@ public class BookReviewVerifyRecord {
         this.nickName = nickName;
     }
 
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -95,6 +107,7 @@ public class BookReviewVerifyRecord {
                 ", createTime=" + createTime +
                 ", result=" + result +
                 ", nickName='" + nickName + '\'' +
+                ", bookName='" + bookName + '\'' +
                 ", title='" + title + '\'' +
                 ", bookReview=" + bookReview +
                 ", admin=" + admin +

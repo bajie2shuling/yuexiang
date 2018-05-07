@@ -26,6 +26,8 @@ public interface BookReviewRepository extends JpaRepository<BookReview,Long>{
     @Query("select b from BookReview b where b.id = ?1 and b.user.id = ?2")
     BookReview findByIdAndUserId(Long id,Long userId);
 
+    BookReview findByIdAndUser(Long id,User user);  //与上面方法作用相同，参数不同而已
+
     @Transactional
     void deleteByIdAndUser(Long id,User user);
 
@@ -36,5 +38,7 @@ public interface BookReviewRepository extends JpaRepository<BookReview,Long>{
     Page<BookReview> findAllByStatus(Integer status, Pageable pageable);
 
     Page<BookReview> findAllByUser(User user, Pageable pageable);
+
+
 
 }

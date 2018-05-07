@@ -41,11 +41,18 @@ public class BookReviewController {
     public String bookReviewPost(BookReview bookReview,
                                  RedirectAttributes attributes,
                                  HttpSession session){
-        bookReview.setUser((User)session.getAttribute("user"));
+        User user = (User)session.getAttribute("user");
         if(bookReview.getId() == null){
-            bookReviewService.saveBookReview(bookReview);
+            bookReview.setUser(user);
+            if(bookReviewService.saveBookReview(bookReview) == null){
+                attributes.addFlashAttribute("lostMessage","书评操作失败");
+                return "redirect:/user/book_review_list";
+            }
         }else{
-            bookReviewService.updateBookReview(bookReview.getId(),bookReview);
+            if(bookReviewService.updateBookReview(bookReview.getId(),user,bookReview) == null){
+                attributes.addFlashAttribute("lostMessage","书评操作失败,该书评不存在");
+                return "redirect:/user/book_review_list";
+            }
         }
         attributes.addFlashAttribute("message","书评操作成功");
         return "redirect:/user/book_review_list";
@@ -55,7 +62,7 @@ public class BookReviewController {
      * 书评列表页面
      */
     @GetMapping("/book_review_list")
-    public String bookReviewList(@PageableDefault(size = 20,sort = {"updateTime","createTime"},direction = Sort.Direction.DESC) Pageable pageable,
+    public String bookReviewList(@PageableDefault(size = 15,sort = {"publishTime"},direction = Sort.Direction.DESC) Pageable pageable,
                                  HttpSession session,
                                  RedirectAttributes attributes,
                                  Model model){
@@ -120,8 +127,11 @@ public class BookReviewController {
                                  HttpSession session,
                                  RedirectAttributes attributes){
         User user = (User) session.getAttribute("user");
-        bookReviewService.deleteSelfBookReview(id,user);
-        attributes.addFlashAttribute("message","删除书评成功！");
+        if(bookReviewService.deleteSelfBookReview(id,user)){
+            attributes.addFlashAttribute("message","删除书评成功！");
+            return "redirect:/user/book_review_list";
+        }
+        attributes.addFlashAttribute("lostMessage","删除书评失败！");
         return "redirect:/user/book_review_list";
     }
 }
