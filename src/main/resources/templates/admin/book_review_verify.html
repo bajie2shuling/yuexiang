@@ -57,7 +57,7 @@
                         <i class="calendar icon"></i>
                         <span th:text="${#dates.format(bookReview.publishTime,'yyyy-MM-dd HH:mm')}">2017-10-01</span>
                     </div>
-                    <div class="item" th:if="${bookReview.views != 0}">
+                    <div class="item">
                         <i class="eye icon"></i>
                         <span th:text="${bookReview.views}">304</span>
                     </div>

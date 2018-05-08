@@ -37,6 +37,7 @@ public class IndexController {
             attributes.addFlashAttribute("nMessage","很遗憾，第" + page.getPageable().getPageNumber()+1 + "页不存在！");  //spring从0页开始
             return "redirect:/user/index";
         }
+        model.addAttribute("page",page);
         return "index";
     }
 }
