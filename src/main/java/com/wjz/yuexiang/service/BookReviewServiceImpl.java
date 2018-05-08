@@ -1,7 +1,6 @@
 package com.wjz.yuexiang.service;
 
 import com.wjz.yuexiang.dao.BookReviewRepository;
-import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.po.BookReviewVerifyRecord;
 import com.wjz.yuexiang.po.User;
@@ -13,8 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Date;
-import java.util.Optional;
+
 
 
 /**
@@ -96,6 +94,11 @@ public class BookReviewServiceImpl implements BookReviewService {
         //该方法也行，不过大材小用了
         //return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Long>get("user").get("id"),userId),pageable);
         return bookReviewRepository.findAllByUser(user,pageable);
+    }
+
+    @Override
+    public Page<BookReview> bookReviews(Pageable pageable) {
+        return bookReviewRepository.findAll(pageable);
     }
 
     @Transactional
