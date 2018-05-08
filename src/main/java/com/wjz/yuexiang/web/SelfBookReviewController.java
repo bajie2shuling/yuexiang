@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/user")
-public class BookReviewController {
+public class SelfBookReviewController {
 
     @Autowired
     private BookReviewService bookReviewService;
@@ -134,4 +134,5 @@ public class BookReviewController {
         attributes.addFlashAttribute("lostMessage","删除书评失败！");
         return "redirect:/user/book_review_list";
     }
+
 }

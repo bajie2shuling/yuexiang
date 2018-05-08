@@ -77,6 +77,29 @@ public class BookReviewServiceImpl implements BookReviewService {
         return bookReviewDispatcher(bookReview);
     }
 
+    /**
+     * 根据书评状态和id查询查询书评，并更新浏览次数
+     * @param id
+     * @param status
+     * @return
+     */
+    @Transactional
+    @Override
+    public BookReview getBookReviewSetViewsAndConvert(Long id, Integer status) {
+        BookReview bookReview = bookReviewRepository.findByIdAndStatus(id,status);
+        if(bookReview == null){
+            return null;              //为空就交给上层，让上层处理异常
+        }else{
+            bookReviewRepository.updateViews(id);
+            BookReview b = new BookReview();
+            BeanUtils.copyProperties(bookReview,b);
+            String content = b.getContent();
+            b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+
+            return b;
+        }
+    }
+
 
     @Override
     public BookReview getBookReview(Long id, Long userId) {
@@ -96,10 +119,6 @@ public class BookReviewServiceImpl implements BookReviewService {
         return bookReviewRepository.findAllByUser(user,pageable);
     }
 
-    @Override
-    public Page<BookReview> bookReviews(Pageable pageable) {
-        return bookReviewRepository.findAll(pageable);
-    }
 
     @Transactional
     @Override
@@ -127,6 +146,7 @@ public class BookReviewServiceImpl implements BookReviewService {
         // return bookReviewRepository.findAll((root, cq, cb) -> cb.equal(root.<Integer>get("status"),status),pageable);
         return bookReviewRepository.findAllByStatus(status,pageable);
     }
+
 
 
 }

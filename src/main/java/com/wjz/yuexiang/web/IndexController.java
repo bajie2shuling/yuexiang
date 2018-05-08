@@ -27,7 +27,7 @@ public class IndexController {
     public String indexPage(@PageableDefault(size = 5,sort = {"views"},direction = Sort.Direction.DESC)Pageable pageable,
                             RedirectAttributes attributes,
                             Model model){
-        Page<BookReview> page = bookReviewService.bookReviews(pageable);
+        Page<BookReview> page = bookReviewService.bookReviews(3,pageable);  //查看审核通过的
         if(page.getTotalPages() == 0){
             model.addAttribute("page",page);   //前端模版要取page
             model.addAttribute("nMessage","抱歉，还没有书评");
