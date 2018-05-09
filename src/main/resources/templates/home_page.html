@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>主页</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="_fragments :: menu(0)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted stackable menu secondary">
+            <h2 class="ui teal header item">RdShare</h2>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>探索</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini  book icon"></i>书林</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
+            <div class="right menu m-mobile-hide m-item">
+                <div class="ui input icon transparent inverted">
+                    <input type="text" placeholder="Search......">
+                    <i class="search icon link"></i>
+                </div>
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://source.unsplash.com/random/100x100">
+                        <span>吴晋子</span>
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item" target="_blank">
+                            <i class="file icon"></i>
+                            我的书评
+                        </a>
+                        <a href="#" class="item" target="_blank">
+                            <i class="book icon"></i>
+                            我的共享书籍
+                        </a>
+                        <a href="#" class="item" target="_blank">
+                            <i class="sign out alternate icon"></i>
+                            注销
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui icon black button m-right-top m-mobile-show m-menu-toggle">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+
+<!--中间内容-->
+<div class="m-padding-tb-big m-container">
+    <div class="ui container">
+        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${nMessage}">很遗憾，该页不存在！</p>
+        </div>
+        <div class="ui stackable grid">
+            <!--左边-->
+            <div class="eleven wide column">
+                <!--header-->
+                <div class="ui teal top attached segment">
+                    <div class="ui middle aligned two column grid">
+                        <div class="column">
+                            <h3 class="ui teal header">书评</h3>
+                        </div>
+                        <div class="right aligned column">
+                            共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${page.totalElements}"> 14 </h2> 篇
+                        </div>
+                    </div>
+                </div>
+                <!--content-->
+                <div class="ui segment attached">
+                    <div class="ui vertical padded segment  m-padding-lr-clear" th:each="bookReview : ${page.content}">
+                        <div class="ui stackable grid mobile reversed padded">
+                            <div class="eleven wide column">
+                                <div class="m-margin-bottom-small">
+                                    <a class="ui medium header" th:text="${bookReview.title}" href="#" th:href="@{/user/book_review/{id}/detail(id=${bookReview.id})}">无人知晓的孤独，是每个生命体的必修课</a>
+                                </div>
+                                <p class="m-text" th:text="${bookReview.description}">有人对我说，你拍的那些照片怎么总和别人不一样?就连你镜头下的猫，一点都不像平时可爱又萌萌的样子，反而给人一种能够说话的感觉。 记得有一次，朋友问我，你拍了这么多的照片，印象最...</p>
+                                <div class="m-margin-top-small">
+                                    <div class="ui labeled mini button">
+                                        <div class="ui basic orange button m-padding-tiny">
+                                            <span class="m-text-thin" th:text="${bookReview.bookName}">《逃离》</span>
+                                        </div>
+                                        <a class="ui basic left pointing orange label m-padding-tiny">
+                                            <span class="m-text-thin" th:text="${bookReview.bookAuthor}">爱丽丝门罗</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ui grid m-margin-top">
+                                    <div class="ui horizontal link list mini">
+                                        <div class="item">
+                                            <img src="https://source.unsplash.com/random/100x100"  class="ui avatar image">
+                                            <div class="content">
+                                                <a href="#" class="header" th:text="${bookReview.user.nickName}">吴晋子</a>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i>
+                                            <span th:text="${#dates.format(bookReview.publishTime,'yyyy-MM-dd HH:mm')}">2018-4-20 18:20</span>
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i>
+                                            <span th:text="${bookReview.views}">121</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="five wide column middle aligned">
+                                <a href="#">
+                                    <img src="https://source.unsplash.com/random/800x500" th:src="@{${bookReview.firstPicture}}"  class="ui medium rounded image">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--footer  bottom-->
+                <div class="ui segment bottom attached" th:if="${page.totalPages}>1">
+                    <div class="ui grid two column middle aligned">
+                        <div class="column">
+                            <a href="#" class="ui basic mini button teal" th:href="@{/user/index(page=${page.number}-1)}" th:unless="${page.first}">上一页</a>
+                        </div>
+                        <div class="right aligned column">
+                            <a href="#" class="ui basic mini button teal" th:href="@{/user/index(page=${page.number}+1)}" th:unless="${page.last}">下一页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--右边-->
+            <div class="five wide column">
+                <div class="ui teal top attached segment">
+                    <div class="ui card">
+                        <div class="image">
+                            <img src="https://source.unsplash.com/random/200x200">
+                        </div>
+                        <div class="content">
+                            <a class="header">wjz</a>
+                            <div class="meta">
+                                <span class="date">2013</span> 年加入
+                            </div>
+                            <div class="description">热爱文学的程序猿</div>
+                        </div>
+                        <div class="extra content">
+                            <a><i class="user icon"></i>
+                                <span>22</span> 关注
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部-->
+<footer class="ui segment inverted attached " th:replace="_fragments :: footer">
+    <div class="ui container center aligned m-padding-tb-max">
+        <div class="ui divided grid inverted stackable">
+            <div class="eight wide column">
+                <h4 class="ui header inverted">开发者推荐</h4>
+                <div class="ui link list inverted m-opacity-mini m-text-lined">
+                    <a href="#" class="item">用户故事(User Story)</a>
+                    <a href="#" class="item">关于刻意练习的清单</a>
+                    <a href="#" class="item">失败要趁早</a>
+                </div>
+            </div>
+            <div class="eight wide column">
+                <h4 class="ui header inverted">联系开发者</h4>
+                <div class="ui link list inverted m-opacity-mini m-text-lined">
+                    <a href="#" class="item">Email:279660577@qq.com</a>
+                    <a href="#" class="item">QQ:279660577</a>
+                </div>
+            </div>
+        </div>
+        <div class="ui section divider inverted"></div>
+        <P class="m-text-spaced m-opacity-tiny">Copyright © 2018 WuJinzi. All Rights Reserved!</P>
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script>
+    $('.m-menu-toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown')
+        .dropdown({
+            on: 'hover'
+        });
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+    $(document).attr("title","修改title的内容");
+</script>
+</body>
+</html>
