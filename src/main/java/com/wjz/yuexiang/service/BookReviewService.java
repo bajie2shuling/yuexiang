@@ -14,6 +14,7 @@ public interface BookReviewService {
 
     Page<BookReview> bookReviews(User user, Pageable pageable);
     Page<BookReview> bookReviews(Integer status, Pageable pageable);
+    Page<BookReview> bookReviews(User user,Integer status, Pageable pageable);
 
     BookReview getBookReviewAndConvert(Long id,Long userId);  //根据用户ID和文章ID一起查询（限定用户只能预览自己的书评）
     BookReview getBookReview(Long id,Long userId);  //根据用户ID和文章ID一起查询（限定用户只能编辑自己的书评）

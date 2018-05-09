@@ -147,6 +147,15 @@ public class BookReviewServiceImpl implements BookReviewService {
         return bookReviewRepository.findAllByStatus(status,pageable);
     }
 
-
-
+    /**
+     * 根据用户和书评状态查询
+     * @param user
+     * @param status
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<BookReview> bookReviews(User user, Integer status, Pageable pageable) {
+        return bookReviewRepository.findAllByUserAndStatus(user,status,pageable);
+    }
 }

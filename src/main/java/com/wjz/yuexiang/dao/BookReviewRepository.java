@@ -39,5 +39,7 @@ public interface BookReviewRepository extends JpaRepository<BookReview,Long>{
 
     Page<BookReview> findAllByUser(User user, Pageable pageable);
 
+    Page<BookReview> findAllByUserAndStatus(User user,Integer status, Pageable pageable);
+
 
 }

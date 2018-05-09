@@ -10,4 +10,5 @@ public interface UserService {
     Boolean isEmailExist(String email);
     Boolean isNickNameExist(String nickName);
     User saveUser(User user);
+    User getUser(Long id);
 }
