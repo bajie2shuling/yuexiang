@@ -58,50 +58,50 @@
     <div class="ui container">
         <table class="ui teal table">
             <thead>
-            <tr>
-                <th></th>
-                <th>书评标题</th>
-                <th>书名</th>
-                <th>作者</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
+                <tr>
+                    <th></th>
+                    <th>书评标题</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="bookReview,iterStat : ${page.content}">
-                <td th:text="${iterStat.count}">1</td>
-                <td th:text="${bookReview.title}">书有清香 | 莫以成败论英雄</td>
-                <td th:text="${bookReview.bookName}">《受戒》</td>
-                <td th:text="${bookReview.bookAuthor}">汪曾祺</td>
-                <td th:switch="${bookReview.status}" th:classappend="${bookReview.status == 3} ? 'positive' : 'negative'">
-                    <span th:case="0">待发布</span>
-                    <span th:case="1">待审核</span>
-                    <span th:case="2">审核未通过</span>
-                    <span th:case="3">审核通过</span>
-                </td>
-                <td>
-                    <a href="#" th:href="@{/user/book_review/{id}/change(id=${bookReview.id})}" class="ui teal basic mini button">编辑</a>
-                    <a href="#" th:href="@{/user/book_review/{id}/preview(id=${bookReview.id})}" class="ui purple basic mini button">预览</a>
-                    <a href="#" th:href="@{/user/book_review/{id}/delete(id=${bookReview.id})}" class="ui red basic mini button">删除</a>
-                    <a href="#" th:href="@{/user/book_review/{id}/add_book_forest(id=${bookReview.id})}" class="ui blue basic mini button">加入书林</a>
-                </td>
-            </tr>
+                <tr th:each="bookReview,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${bookReview.title}">书有清香 | 莫以成败论英雄</td>
+                    <td th:text="${bookReview.bookName}">《受戒》</td>
+                    <td th:text="${bookReview.bookAuthor}">汪曾祺</td>
+                    <td th:switch="${bookReview.status}" th:classappend="${bookReview.status == 3} ? 'positive' : 'negative'">
+                        <span th:case="0">待发布</span>
+                        <span th:case="1">待审核</span>
+                        <span th:case="2">审核未通过</span>
+                        <span th:case="3">审核通过</span>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/user/book_review/{id}/change(id=${bookReview.id})}" class="ui teal basic mini button">编辑</a>
+                        <a href="#" th:href="@{/user/book_review/{id}/preview(id=${bookReview.id})}" class="ui purple basic mini button">预览</a>
+                        <a href="#" th:href="@{/user/book_review/{id}/delete(id=${bookReview.id})}" class="ui red basic mini button">删除</a>
+                        <a href="#" th:href="@{/user/book_review/{id}/add_book_forest(id=${bookReview.id})}" class="ui blue basic mini button" th:if="${bookReview.status == 3}">加入书林</a>
+                    </td>
+                </tr>
             </tbody>
             <tfoot>
-            <tr>
-                <th colspan="6">
-                    <div class="ui segment" th:if="${page.totalPages}>1">
-                        <div class="ui middle aligned two column grid">
-                            <div class="column">
-                                <a href="#" th:href="@{/user/book_review_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
-                            </div>
-                            <div class="right aligned column">
-                                <a href="#" th:href="@{/user/book_review_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui segment" th:if="${page.totalPages}>1">
+                            <div class="ui middle aligned two column grid">
+                                <div class="column">
+                                    <a href="#" th:href="@{/user/book_review_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                                </div>
+                                <div class="right aligned column">
+                                    <a href="#" th:href="@{/user/book_review_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </th>
-            </tr>
+                    </th>
+                </tr>
             </tfoot>
         </table>
 

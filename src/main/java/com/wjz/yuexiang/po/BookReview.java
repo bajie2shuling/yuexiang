@@ -9,7 +9,6 @@ import java.util.List;
  * Created by Jinzi Wu at 16:16 on 2018/5/3.
  */
 @Entity
-@Table(name = "t_book_review")
 public class BookReview {
 
     @Id

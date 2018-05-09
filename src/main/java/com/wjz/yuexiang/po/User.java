@@ -10,20 +10,29 @@ import java.util.List;
  * Created by Jinzi Wu at 14:14 on 2018/5/2.
  */
 @Entity
-@Table(name = "t_user")
 public class User {
     @Id
     @GeneratedValue
     private Long id;
+
     private String nickName;
+
     private String email;
+
     private String password;
+
     private String avatar;
+
+    private String description;
+
     @Temporal(TemporalType.DATE)
     private Date createTime;
 
     @OneToMany(mappedBy = "user")
     private List<BookReview> bookReviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Book> books = new ArrayList<>();
 
     public User() {
     }
@@ -69,6 +78,14 @@ public class User {
         this.avatar = avatar;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -85,6 +102,14 @@ public class User {
         this.bookReviews = bookReviews;
     }
 
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -93,8 +118,10 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", description='" + description + '\'' +
                 ", createTime=" + createTime +
                 ", bookReviews=" + bookReviews +
+                ", books=" + books +
                 '}';
     }
 }

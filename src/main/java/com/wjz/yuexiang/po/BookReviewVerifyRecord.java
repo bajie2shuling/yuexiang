@@ -7,7 +7,6 @@ import java.util.Date;
  * Created by Jinzi Wu at 18:50 on 2018/5/6.
  */
 @Entity
-@Table(name = "t_verify_record")
 public class BookReviewVerifyRecord {
 
     @Id

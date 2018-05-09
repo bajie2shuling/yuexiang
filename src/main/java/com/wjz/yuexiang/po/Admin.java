@@ -9,7 +9,6 @@ import java.util.List;
  * Created by Jinzi Wu at 19:59 on 2018/5/5.
  */
 @Entity
-@Table(name = "t_admin")
 public class Admin {
 
     @Id
