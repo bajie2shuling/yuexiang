@@ -67,18 +67,21 @@
                     <label class="ui teal basic label">标题</label>
                     <input type="text" name="title" placeholder="书评标题" th:value="*{title}">
                 </div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">书评标题不能为空</div>
             </div>
             <div class="field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">书名</label>
                     <input type="text" name="bookName" placeholder="你阅读的书籍名称，如：《受戒》" th:value="*{bookName}">
                 </div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}">书籍名称不能为空</div>
             </div>
             <div class="field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">作者</label>
                     <input type="text" name="bookAuthor" placeholder="你阅读的书籍作者，如：汪曾祺" th:value="*{bookAuthor}">
                 </div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}">作者姓名不能为空</div>
             </div>
 
             <div class="field">
@@ -86,16 +89,19 @@
                     <label class="ui teal basic label">首图</label>
                     <input type="text" name="firstPicture" placeholder="首图引用地址" th:value="*{firstPicture}">
                 </div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('firstPicture')}" th:errors="*{firstPicture}">首图地址不能为空</div>
             </div>
 
             <div class="field">
                 <div id="md-content" style="z-index: 1 !important;">
-                        <textarea name="content" placeholder="请输入文章内容...." style="display:none;" th:text="*{content}"></textarea>
+                    <textarea name="content" placeholder="请输入文章内容...." style="display:none;" th:text="*{content}"></textarea>
                 </div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">书评内容不能为空</div>
             </div>
 
             <div class="field">
                 <textarea name="description"  placeholder="书评描述（不超过100字）..." maxlength="100" th:text="*{description}"></textarea>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">书评描述不能为空</div>
             </div>
 
             <div class="inline fields">

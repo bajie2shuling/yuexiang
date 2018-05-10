@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -87,7 +85,7 @@ public class UserController {
             model.addAttribute("userSignIn",userSignIn);
             return "sign_in";  //登录失败(数据输入不合法)
         }
-        User user = userService.signInCheckUser(userSignIn.getEmail(),userSignIn.getPassword());        //登录验证
+        User user = userService.getUser(userSignIn.getEmail(),userSignIn.getPassword());        //登录验证
         if(user != null){
             user.setPassword(null);
             session.setAttribute("user",user);

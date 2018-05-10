@@ -46,7 +46,7 @@ public class AdminController {
             model.addAttribute("adminSignIn",adminSignIn);
             return "admin/sign_in";
         }
-        Admin admin = adminService.signInCheckAdmin(adminSignIn.getIdNumber(),adminSignIn.getPassword());
+        Admin admin = adminService.getAdmin(adminSignIn.getIdNumber(),adminSignIn.getPassword());
         if(admin == null){
             model.addAttribute("adminSignIn",adminSignIn);
             model.addAttribute("signInMessage","用户名或密码输入错误");

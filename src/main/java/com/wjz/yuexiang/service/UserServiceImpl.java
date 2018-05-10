@@ -1,6 +1,7 @@
 package com.wjz.yuexiang.service;
 
 import com.wjz.yuexiang.dao.UserRepository;
+import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User signInCheckUser(String email, String password) {
+    public User getUser(String email, String password) {
 
         return userRepository.findByEmailAndPassword(email,password);
     }
@@ -47,10 +48,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()){
-            return optionalUser.get();
-        }else{
-            return null;
-        }
+        return optionalUser.orElseThrow(()-> new NotFoundException("抱歉，该用户不存在"));
     }
 }

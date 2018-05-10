@@ -2,6 +2,7 @@ package com.wjz.yuexiang.service;
 
 import com.wjz.yuexiang.dao.BookReviewRepository;
 import com.wjz.yuexiang.dao.BookReviewVerifyRecordRepository;
+import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.Admin;
 import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.po.BookReviewVerifyRecord;
@@ -31,7 +32,7 @@ public class BookReviewVerifyRecordServiceImpl implements BookReviewVerifyRecord
 
         BookReview bookReview = bookReviewRepository.findByIdAndStatus(bookReviewId,1);
         if(bookReview == null){
-            return null;
+            throw new NotFoundException("该篇书评不存在");
         }else{
             bookReview.setStatus(result);
             BookReviewVerifyRecord bookReviewVerifyRecord = new BookReviewVerifyRecord();
@@ -49,6 +50,13 @@ public class BookReviewVerifyRecordServiceImpl implements BookReviewVerifyRecord
 
     @Override
     public Page<BookReviewVerifyRecord> bookReviewVerifyRecords(Admin admin,Pageable pageable) {
-        return bookReviewVerifyRecordRepository.findAllByAdmin(admin,pageable);
+        Page<BookReviewVerifyRecord> page = bookReviewVerifyRecordRepository.findAllByAdmin(admin,pageable);
+        if(page.getTotalPages() == 0){
+            return page;
+        }
+        if(page.getPageable().getPageNumber() > page.getTotalPages()-1){
+            throw new NotFoundException("很遗憾，第" + page.getPageable().getPageNumber()+1 + "页不存在！");  //防止用户恶意在地址栏输入页码
+        }
+        return page;
     }
 }

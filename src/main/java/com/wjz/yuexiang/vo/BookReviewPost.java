@@ -1,8 +1,11 @@
 package com.wjz.yuexiang.vo;
 
 import com.wjz.yuexiang.po.BookReview;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -10,30 +13,43 @@ import javax.validation.constraints.NotBlank;
  */
 public class BookReviewPost {
 
-    @NotBlank(message = "用户名不能为空")
+    private Long id;
+
+    @NotBlank(message = "书评标题不能为空")
     private String title;
 
-    @NotBlank(message = "用户名不能为空")
+    @NotBlank(message = "书籍名称不能为空")
     private String bookName;
 
-    @NotBlank(message = "用户名不能为空")
+    @NotBlank(message = "作者姓名不能为空")
     private String bookAuthor;
 
-    @NotBlank(message = "用户名不能为空")
+    @NotBlank(message = "首图地址不能为空")
     private String firstPicture;
 
-    @NotBlank(message = "用户名不能为空")
+    @NotBlank(message = "书评内容不能为空")
     private String content;
 
-    @NotBlank(message = "用户名不能为空")
+    @Length(max = 100,message = "书评描述不能超过100个字符")
+    @NotBlank(message = "书评描述不能为空")
     private String description;
 
     private Boolean allowComment;   //允许评论：1代表允许，0代表保存
 
+    @Min(value = 0,message = "状态不能小于0")
+    @Max(value = 1,message = "状态不能大于1")
     private Integer status;   //书评状态：3代表审核通过，2代表审核未通过，1代表待审核，0代表待发布
 
 
     public BookReviewPost() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

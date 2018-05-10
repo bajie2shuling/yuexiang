@@ -34,13 +34,8 @@ public class CommonBookReviewController {
      */
     @GetMapping("/book_review/{id}/detail")
     public String bookReviewDetailPage(@PathVariable Long id,
-                                       RedirectAttributes attributes,
                                        Model model){
         BookReview bookReview = bookReviewService.getBookReviewSetViewsAndConvert(id,3);      //只能查看审核通过的书评,并更新浏览次数
-        if(bookReview == null){
-            attributes.addFlashAttribute("nMessage","该篇书评不存在");       //防止用户恶意在地址栏输入书评id
-            return "redirect:/user/index";
-        }
         model.addAttribute("bookReview",bookReview);
         return "book_review";
     }
@@ -48,15 +43,8 @@ public class CommonBookReviewController {
     @GetMapping("/{id}/homepage")
     public String homePage(@PageableDefault(size = 5,sort = {"publishTime"},direction = Sort.Direction.DESC) Pageable pageable,
                            @PathVariable Long id,
-                           RedirectAttributes attributes,
                            Model model){
         User user = userService.getUser(id);
-        user.setPassword(null);
-
-        if(user == null){
-            attributes.addFlashAttribute("nMessage","抱歉，该用户不存在");
-            return "redirect:/user/index";
-        }
 
         Page<BookReview> page = bookReviewService.bookReviews(user,3,pageable);
         if(page.getTotalPages() == 0){
@@ -64,10 +52,7 @@ public class CommonBookReviewController {
             model.addAttribute("nMessage","该用户还没有书评");
             return "home_page";
         }
-        if(page.getPageable().getPageNumber() > page.getTotalPages()-1){
-            attributes.addFlashAttribute("nMessage","很遗憾，第" + page.getPageable().getPageNumber()+1 + "页不存在！");  //spring从0页开始
-            return "redirect:/user/homepage/"+id;
-        }
+        user.setPassword(null);
         model.addAttribute("page",page);
         model.addAttribute("user",user);
         return "home_page";
