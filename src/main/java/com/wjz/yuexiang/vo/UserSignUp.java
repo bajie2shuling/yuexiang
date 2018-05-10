@@ -66,7 +66,6 @@ public class UserSignUp {
 
     public User convertToUser(){
         User user = new User();
-        user.setCreateTime(new Date());
         BeanUtils.copyProperties(this,user);  //此处做了服务器端验证，故直接copy
         return user;
     }

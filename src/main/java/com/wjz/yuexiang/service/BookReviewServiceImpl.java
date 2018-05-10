@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 
 
 /**
@@ -28,6 +29,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     @Override
     public BookReview saveBookReview(BookReview bookReview) {
         bookReview.setViews(0);  //创将时初始化一下后面才能进行加1操作
+        bookReview.setPublishTime(new Date());
         return bookReviewRepository.save(bookReview);
     }
 
@@ -39,6 +41,7 @@ public class BookReviewServiceImpl implements BookReviewService {
             return null;            //为空就交给上层，让上层处理异常
         }else{
             BeanUtils.copyProperties(b,bookReview, MyBeanUtils.getNullPropertyNames(b));
+            bookReview.setPublishTime(new Date());
             return bookReviewRepository.save(bookReview);
         }
     }
