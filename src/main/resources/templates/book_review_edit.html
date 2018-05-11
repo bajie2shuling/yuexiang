@@ -57,7 +57,7 @@
 <!--中间内容-->
 <div class="m-padding-tb-big m-container">
     <div class="ui container">
-        <form id="bookReview_form" action="#" th:action="@{/user/book_review_edit}" class="ui form" method="post" th:object="${bookReview}">
+        <form id="bookReview_form" action="#" th:action="@{/user/book_review_edit}" class="ui form" method="post" th:object="${bookReviewPost}">
 
             <input type="hidden" name="id" th:value="*{id}">
             <input type="hidden" name="status" th:value="*{status}">

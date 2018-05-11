@@ -32,8 +32,8 @@ public class SelfBookReviewController {
      */
     @GetMapping("/book_review_edit")
     public String bookReviewEditPage(Model model){
-        BookReview bookReview = new BookReview();
-        model.addAttribute("bookReview",bookReview);
+        BookReviewPost bookReviewPost = new BookReviewPost();
+        model.addAttribute("bookReviewPost",bookReviewPost);
         return "book_review_edit";
     }
 
@@ -44,14 +44,13 @@ public class SelfBookReviewController {
     public String bookReviewPost(@Valid BookReviewPost bookReviewPost,
                                  BindingResult result,
                                  RedirectAttributes attributes,
-                                 Model model,
                                  HttpSession session){
         User user = (User)session.getAttribute("user");
-        BookReview bookReview = bookReviewPost.convertToBookReview();
         if(result.hasErrors()){
-            model.addAttribute("bookReview",bookReview);
             return "book_review_edit";  //数据输入不合法
         }
+
+        BookReview bookReview = bookReviewPost.convertToBookReview();
         if(bookReview.getId() == null){
             bookReview.setUser(user);
             bookReviewService.saveBookReview(bookReview);
@@ -89,7 +88,7 @@ public class SelfBookReviewController {
                                    Model model){
         User user = (User) session.getAttribute("user");
         BookReview bookReview = bookReviewService.getBookReview(id,user.getId());
-        model.addAttribute("bookReview",bookReview);
+        model.addAttribute("bookReviewPost",bookReview);
         return "book_review_edit";
     }
 

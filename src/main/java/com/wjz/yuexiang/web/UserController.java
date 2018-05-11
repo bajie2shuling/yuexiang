@@ -42,8 +42,7 @@ public class UserController {
     @PostMapping("/sign_up")
     public String signUp(@Valid UserSignUp userSignUp,
                          BindingResult result,
-                         RedirectAttributes attributes,
-                         Model model){
+                         RedirectAttributes attributes){
 
         if(userService.isNickNameExist(userSignUp.getNickName())){
             result.rejectValue("nickName","nickNameError","用户名已存在");
@@ -55,7 +54,6 @@ public class UserController {
             result.rejectValue("confirmPwd","ConfirmError","两次密码不一致");
         }
         if(result.hasErrors()){
-            model.addAttribute("userSignUp",userSignUp);
             return "sign_up";       //注册失败
         }
         userService.saveUser(userSignUp.convertToUser());
@@ -82,7 +80,6 @@ public class UserController {
                          HttpSession session,
                          Model model){
         if(result.hasErrors()){
-            model.addAttribute("userSignIn",userSignIn);
             return "sign_in";  //登录失败(数据输入不合法)
         }
         User user = userService.getUser(userSignIn.getEmail(),userSignIn.getPassword());        //登录验证
@@ -92,7 +89,6 @@ public class UserController {
             return "redirect:/user/index";       //登陆成功
         }else {
             model.addAttribute("signInMessage","邮箱或密码输入错误");
-            model.addAttribute("userSignIn",userSignIn);
             return "sign_in";       //登录失败
         }
 
