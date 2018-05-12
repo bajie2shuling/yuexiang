@@ -22,7 +22,7 @@ public class BookForest {
 
     private String description;
 
-    @ManyToMany(mappedBy = "bookForests")
+    @OneToMany(mappedBy = "bookForest")
     private List<Book> books = new ArrayList<>();
 
     public BookForest() {

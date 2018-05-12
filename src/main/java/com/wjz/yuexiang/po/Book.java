@@ -23,6 +23,12 @@ public class Book {
 
     private String reviewTitle;
 
+    private Boolean status;     //是否已经交易完成，0就是未完成，1是完成
+
+    private Boolean shareWay;  //什么方式共享,0就是借，1就是卖
+
+    private String contactInfo;  //联系方式
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String review;
@@ -33,8 +39,8 @@ public class Book {
     @ManyToOne
     private User user;
 
-    @ManyToMany
-    private List<BookForest> bookForests = new ArrayList<>();
+    @ManyToOne
+    private BookForest bookForest;
 
     public Book() {
     }
@@ -79,6 +85,22 @@ public class Book {
         this.reviewTitle = reviewTitle;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Boolean getShareWay() {
+        return shareWay;
+    }
+
+    public void setShareWay(Boolean shareWay) {
+        this.shareWay = shareWay;
+    }
+
     public String getReview() {
         return review;
     }
@@ -103,12 +125,20 @@ public class Book {
         this.user = user;
     }
 
-    public List<BookForest> getBookForests() {
-        return bookForests;
+    public BookForest getBookForest() {
+        return bookForest;
     }
 
-    public void setBookForests(List<BookForest> bookForests) {
-        this.bookForests = bookForests;
+    public void setBookForest(BookForest bookForest) {
+        this.bookForest = bookForest;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
     }
 
     @Override
@@ -119,10 +149,13 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", remark='" + remark + '\'' +
                 ", reviewTitle='" + reviewTitle + '\'' +
+                ", status=" + status +
+                ", shareWay=" + shareWay +
+                ", contactInfo='" + contactInfo + '\'' +
                 ", review='" + review + '\'' +
                 ", createTime=" + createTime +
                 ", user=" + user +
-                ", bookForests=" + bookForests +
+                ", bookForest=" + bookForest +
                 '}';
     }
 }

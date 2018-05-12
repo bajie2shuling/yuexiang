@@ -25,6 +25,9 @@ body{
 .m-margin-bottom{
     margin-bottom: 1em !important;
 }
+.m-margin-bottom-large{
+    margin-bottom: 2em !important;
+}
 
 .m-margin-tb-mini{
     margin-top: 0.2em !important;
