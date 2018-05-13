@@ -16,11 +16,21 @@ public class FollowingUserInfoServiceImpl implements FollowingUserInfoService{
     @Autowired
     private FollowingUserInfoRepository followingUserInfoRepository;
 
+    /**
+     *有了就删除，还没有就保存
+     */
     @Transactional
     @Override
-    public FollowingUserInfo generateFollowingUserInfo(Long userId, User user) {
+    public FollowingUserInfo saveOrDelete(Long followingId, User user) {
+        if(followingUserInfoRepository.findByFollowingIdAndUser(followingId,user) != null){
+            followingUserInfoRepository.deleteByFollowingIdAndUser(followingId,user);
+            return null;
+        }
+        if(followingId == user.getId()){
+            throw new RuntimeException("不能关注自己");
+        }
         FollowingUserInfo followingUserInfo = new FollowingUserInfo();
-        followingUserInfo.setId(userId);
+        followingUserInfo.setFollowingId(followingId);
         followingUserInfo.setUser(user);
         return followingUserInfoRepository.save(followingUserInfo);
     }

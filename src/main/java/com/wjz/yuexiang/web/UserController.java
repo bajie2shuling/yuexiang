@@ -89,7 +89,7 @@ public class UserController {
         if(user != null){
             List<Long> followingIds = new ArrayList<>();
             for(FollowingUserInfo followingUserInfo : user.getFollowingUserInfos()){
-                followingIds.add(followingUserInfo.getUserId());
+                followingIds.add(followingUserInfo.getFollowingId());
             }
             user.setPassword(null);
             session.setAttribute("followingIds",followingIds);
@@ -108,6 +108,7 @@ public class UserController {
     @GetMapping("/sign_out")
     public String signOut(HttpSession session){
         session.removeAttribute("user");
+        session.removeAttribute("followingIds");
         return "redirect:/user/sign_in";
     }
 }

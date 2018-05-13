@@ -55,7 +55,7 @@
     <div class="ui container">
         <div class="right menu">
             <a href="#" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}" class="teal active item">书评</a>
-            <a href="#" th:href="@{/admin/homepage/{id}/book(id=${usr.id})" class="item">书籍</a>
+            <a href="#"  class="item">书籍</a>
         </div>
     </div>
 </div>
@@ -63,6 +63,12 @@
 <!--中间内容-->
 <div class="m-padding-tb-big m-container">
     <div class="ui container">
+
+        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${nMessage}">还没有书评</p>
+        </div>
 
         <div class="ui stackable grid">
             <!--左边-->
@@ -124,8 +130,8 @@
                 </div>
 
                 <!--footer  bottom-->
-                <div class="ui segment bottom attached" th:if="${page.totalPages}>1">
-                    <div class="ui grid two column middle aligned">
+                <div class="ui segment bottom attached">
+                    <div class="ui grid two column middle aligned" th:if="${page.totalPages}>1">
                         <div class="column">
                             <a href="#" class="ui basic mini button teal" th:href="@{/user/{id}/homepage(id=${user.id},page=${page.number}-1)}" th:unless="${page.first}">上一页</a>
                         </div>
@@ -135,6 +141,9 @@
                     </div>
                 </div>
             </div>
+
+            <input type="hidden" name="id" th:value="${user.id}">
+
             <!--右边-->
             <div class="five wide column">
                 <div class="ui teal top attached segment">
@@ -156,19 +165,15 @@
                                 <span>22</span> 关注
                             </a>
                         </div>
-                        <div id="following_container">
-                            <div class="extra content" th:fragment="following">
-                                <a href="#" class="ui animated fade green circular button" id="defollowing" th:if="${#lists.contains(session.user.followingIds, user.id)}" th:href="@{user/{id}/defollowing(id=${user.id})}">
-                                    <span class="hidden content" >取消关注</span>
-                                    <span class="visible content" >已关注</span>
-                                </a>
-                                <a href="#" class="ui green circular button" id="following" th:unless="${#lists.contains(session.user.followingIds, user.id)}" th:href="@{user/{id}/following(id=${user.id})}">
-                                    <span>关注</span>
+                        <div class="ui extra content" id="following_container" th:if="${session.user.id != user.id}">
+                            <div th:fragment="following">
+                                <a onclick="followingSwitch()" class="ui green circular button">
+                                    <span th:unless="${#lists.contains(session.followingIds, user.id)}">关注</span>
+                                    <span th:if="${#lists.contains(session.followingIds, user.id)}">已关注</span>
                                 </a>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -218,16 +223,9 @@
                 .closest('.message')
                 .transition('fade');
         });
-    $("#following").click(function () {
-        $("[name='page']").val(0);
-        loaddata();
-    });
-    function loaddata() {
-        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
-            title : $("[name='title']").val(),
-            typeId : $("[name='typeId']").val(),
-            recommend : $("[name='recommend']").prop('checked'),
-            page : $("[name='page']").val()
+    function followingSwitch() {
+        $("#following_container").load(/*[[@{/user/following_switch}]]*/"/user/following_switch",{
+            id : $("[name='id']").val()
         });
     }
 </script>

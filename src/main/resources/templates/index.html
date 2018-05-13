@@ -56,7 +56,11 @@
 <!--中间内容-->
 <div class="m-padding-tb-big m-container-tiny">
     <div class="ui container">
-
+        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${nMessage}">还没有书评</p>
+        </div>
         <div class="ui teal segment top attached">
             <h2 class="ui teal header">书评推荐</h2>
         </div>

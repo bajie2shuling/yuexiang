@@ -15,7 +15,7 @@ public class FollowingUserInfo {
     @GeneratedValue
     private Long id;
 
-    private Long userId;
+    private Long followingId;
 
     @ManyToOne
     private User user;
@@ -31,13 +31,14 @@ public class FollowingUserInfo {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getFollowingId() {
+        return followingId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setFollowingId(Long followingId) {
+        this.followingId = followingId;
     }
+
 
     public User getUser() {
         return user;
@@ -51,7 +52,7 @@ public class FollowingUserInfo {
     public String toString() {
         return "FollowingUserInfo{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", followingId=" + followingId +
                 ", user=" + user +
                 '}';
     }
