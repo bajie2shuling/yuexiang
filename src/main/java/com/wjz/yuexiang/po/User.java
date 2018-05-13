@@ -34,6 +34,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Book> books = new ArrayList<>();
 
+    @ManyToMany
+    private List<BookForest> forests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FollowingUserInfo> followingUserInfos = new ArrayList<>();
+
     public User() {
     }
 
@@ -110,6 +116,22 @@ public class User {
         this.books = books;
     }
 
+    public List<BookForest> getForests() {
+        return forests;
+    }
+
+    public void setForests(List<BookForest> forests) {
+        this.forests = forests;
+    }
+
+    public List<FollowingUserInfo> getFollowingUserInfos() {
+        return followingUserInfos;
+    }
+
+    public void setFollowingUserInfos(List<FollowingUserInfo> followingUserInfos) {
+        this.followingUserInfos = followingUserInfos;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -122,6 +144,8 @@ public class User {
                 ", createTime=" + createTime +
                 ", bookReviews=" + bookReviews +
                 ", books=" + books +
+                ", forests=" + forests +
+                ", followingUserInfos=" + followingUserInfos +
                 '}';
     }
 }

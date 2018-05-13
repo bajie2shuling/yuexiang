@@ -25,6 +25,9 @@ public class BookForest {
     @OneToMany(mappedBy = "bookForest")
     private List<Book> books = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "forests")
+    private List<User> users = new ArrayList<>();
+
     public BookForest() {
     }
 
@@ -68,6 +71,14 @@ public class BookForest {
         this.books = books;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "BookForest{" +
@@ -76,6 +87,7 @@ public class BookForest {
                 ", createTime=" + createTime +
                 ", description='" + description + '\'' +
                 ", books=" + books +
+                ", users=" + users +
                 '}';
     }
 }
