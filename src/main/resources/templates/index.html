@@ -80,7 +80,7 @@
                         <div class="ui grid m-margin-top">
                             <div class="ui horizontal link list mini">
                                 <div class="item">
-                                    <a href="#" class="header" th:href="@{/user/{id}/homepage(id=${bookReview.user.id})}">
+                                    <a href="#" class="header" th:href="@{/user/homepage/{id}/bookreview(id=${bookReview.user.id})}">
                                         <img src="https://source.unsplash.com/random/100x100"  class="ui avatar image">
                                         <span th:text="${bookReview.user.nickName}">吴晋子</span>
                                     </a>

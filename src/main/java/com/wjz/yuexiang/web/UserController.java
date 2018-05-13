@@ -1,5 +1,6 @@
 package com.wjz.yuexiang.web;
 
+import com.wjz.yuexiang.po.FollowingUserInfo;
 import com.wjz.yuexiang.po.User;
 import com.wjz.yuexiang.service.UserService;
 import com.wjz.yuexiang.vo.UserSignIn;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jinzi Wu at 17:10 on 2018/5/2.
@@ -84,7 +87,12 @@ public class UserController {
         }
         User user = userService.getUser(userSignIn.getEmail(),userSignIn.getPassword());        //登录验证
         if(user != null){
+            List<Long> followingIds = new ArrayList<>();
+            for(FollowingUserInfo followingUserInfo : user.getFollowingUserInfos()){
+                followingIds.add(followingUserInfo.getUserId());
+            }
             user.setPassword(null);
+            session.setAttribute("followingIds",followingIds);
             session.setAttribute("user",user);
             return "redirect:/user/index";       //登陆成功
         }else {

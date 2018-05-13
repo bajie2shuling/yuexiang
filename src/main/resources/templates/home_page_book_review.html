@@ -51,16 +51,19 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}" class="teal active item">书评</a>
+            <a href="#" th:href="@{/admin/homepage/{id}/book(id=${usr.id})" class="item">书籍</a>
+        </div>
+    </div>
+</div>
 
 <!--中间内容-->
 <div class="m-padding-tb-big m-container">
     <div class="ui container">
-        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
-            <i class="close icon"></i>
-            <div class="header">提示：</div>
-            <p th:text="${nMessage}">很遗憾，该页不存在！</p>
-        </div>
+
         <div class="ui stackable grid">
             <!--左边-->
             <div class="eleven wide column">
@@ -85,19 +88,17 @@
                                 </div>
                                 <p class="m-text" th:text="${bookReview.description}">有人对我说，你拍的那些照片怎么总和别人不一样?就连你镜头下的猫，一点都不像平时可爱又萌萌的样子，反而给人一种能够说话的感觉。 记得有一次，朋友问我，你拍了这么多的照片，印象最...</p>
                                 <div class="m-margin-top-small">
-                                    <div class="ui labeled mini button">
-                                        <div class="ui basic orange button m-padding-tiny">
-                                            <span class="m-text-thin" th:text="${bookReview.bookName}">《逃离》</span>
-                                        </div>
-                                        <a class="ui basic orange label m-padding-tiny">
-                                            <span class="m-text-thin" th:text="${bookReview.bookAuthor}">爱丽丝门罗</span>
-                                        </a>
+                                    <div class="ui basic orange large label m-padding-tiny">
+                                        <span class="m-text-thin" th:text="${bookReview.bookName}">《逃离》</span>
+                                    </div>
+                                    <div class="ui basic orange large label m-padding-tiny">
+                                        <span class="m-text-thin" th:text="${bookReview.bookAuthor}">爱丽丝门罗</span>
                                     </div>
                                 </div>
                                 <div class="ui grid m-margin-top">
                                     <div class="ui horizontal link list mini">
                                         <div class="item">
-                                            <a href="#" class="header" th:href="@{/user/{id}/homepage(id=${bookReview.user.id})}">
+                                            <a href="#" class="header" th:href="@{/user/homepage/{id}/bookreview(id=${bookReview.user.id})}">
                                                 <img src="https://source.unsplash.com/random/100x100"  class="ui avatar image">
                                                 <span th:text="${bookReview.user.nickName}">吴晋子</span>
                                             </a>
@@ -142,7 +143,7 @@
                             <img src="https://source.unsplash.com/random/200x200">
                         </div>
                         <div class="content">
-                            <a class="header" th:text="${user.nickName}" th:href="@{/user/{id}/homepage(id=${user.id})}">wjz</a>
+                            <a class="header" th:text="${user.nickName}" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}">wjz</a>
                             <div class="meta">
                                 <span class="date" th:text="${user.createTime}">2013</span> 年加入
                             </div>
@@ -155,7 +156,19 @@
                                 <span>22</span> 关注
                             </a>
                         </div>
+                        <div id="following_container">
+                            <div class="extra content" th:fragment="following">
+                                <a href="#" class="ui animated fade green circular button" id="defollowing" th:if="${#lists.contains(session.user.followingIds, user.id)}" th:href="@{user/{id}/defollowing(id=${user.id})}">
+                                    <span class="hidden content" >取消关注</span>
+                                    <span class="visible content" >已关注</span>
+                                </a>
+                                <a href="#" class="ui green circular button" id="following" th:unless="${#lists.contains(session.user.followingIds, user.id)}" th:href="@{user/{id}/following(id=${user.id})}">
+                                    <span>关注</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -205,6 +218,18 @@
                 .closest('.message')
                 .transition('fade');
         });
+    $("#following").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+    function loaddata() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+            title : $("[name='title']").val(),
+            typeId : $("[name='typeId']").val(),
+            recommend : $("[name='recommend']").prop('checked'),
+            page : $("[name='page']").val()
+        });
+    }
 </script>
 </body>
 </html>

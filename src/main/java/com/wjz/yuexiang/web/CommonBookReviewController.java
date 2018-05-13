@@ -40,7 +40,7 @@ public class CommonBookReviewController {
         return "book_review";
     }
 
-    @GetMapping("/{id}/homepage")
+    @GetMapping("/homepage/{id}/bookreview")
     public String homePage(@PageableDefault(size = 5,sort = {"publishTime"},direction = Sort.Direction.DESC) Pageable pageable,
                            @PathVariable Long id,
                            Model model){
@@ -50,11 +50,11 @@ public class CommonBookReviewController {
         if(page.getTotalPages() == 0){
             model.addAttribute("page",page);   //前端模版要取page
             model.addAttribute("nMessage","该用户还没有书评");
-            return "home_page";
+            return "home_page_book_review";
         }
         user.setPassword(null);
         model.addAttribute("page",page);
         model.addAttribute("user",user);
-        return "home_page";
+        return "home_page_book_review";
     }
 }
