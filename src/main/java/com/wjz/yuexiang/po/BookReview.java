@@ -45,6 +45,9 @@ public class BookReview {
     @OneToMany(mappedBy = "bookReview")
     private List<BookReviewVerifyRecord> bookReviewVerifyRecords = new ArrayList<>();
 
+    @OneToMany(mappedBy = "bookReview")
+    private List<Comment> comments = new ArrayList<>();
+
     public BookReview() {
     }
 
@@ -152,6 +155,14 @@ public class BookReview {
         this.bookReviewVerifyRecords = bookReviewVerifyRecords;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "BookReview{" +
@@ -168,6 +179,7 @@ public class BookReview {
                 ", views=" + views +
                 ", user=" + user +
                 ", bookReviewVerifyRecords=" + bookReviewVerifyRecords +
+                ", comments=" + comments +
                 '}';
     }
 }
