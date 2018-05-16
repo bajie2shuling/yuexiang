@@ -17,7 +17,7 @@ public class FollowingUserInfoServiceImpl implements FollowingUserInfoService{
     private FollowingUserInfoRepository followingUserInfoRepository;
 
     /**
-     *有了就删除，还没有就保存
+     *有了就删除，还没有就保存，但是在保存之前判断了是不是保存的自己
      */
     @Transactional
     @Override
