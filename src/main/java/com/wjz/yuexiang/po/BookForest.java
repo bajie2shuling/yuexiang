@@ -22,11 +22,16 @@ public class BookForest {
 
     private String description;
 
+    private Integer status;
+
     @OneToMany(mappedBy = "bookForest")
     private List<Book> books = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "forests")
+    @ManyToMany
     private List<User> users = new ArrayList<>();
+
+    @ManyToOne
+    private Admin admin;
 
     public BookForest() {
     }
@@ -55,6 +60,14 @@ public class BookForest {
         this.createTime = createTime;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -79,6 +92,14 @@ public class BookForest {
         this.users = users;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
         return "BookForest{" +
@@ -86,8 +107,10 @@ public class BookForest {
                 ", name='" + name + '\'' +
                 ", createTime=" + createTime +
                 ", description='" + description + '\'' +
+                ", status=" + status +
                 ", books=" + books +
                 ", users=" + users +
+                ", admin=" + admin +
                 '}';
     }
 }

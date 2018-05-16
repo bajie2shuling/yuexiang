@@ -27,6 +27,12 @@ public class Admin {
     @OneToMany(mappedBy = "admin")
     private List<BookReviewVerifyRecord> bookReviewVerifyRecords = new ArrayList<>();
 
+    @OneToMany(mappedBy = "admin")
+    private List<BookForest> bookForests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "admin")
+    private List<BookForestApplyVerifyRecord> bookForestApplyVerifyRecords = new ArrayList<>();
+
     public Admin() {
     }
 
@@ -102,6 +108,22 @@ public class Admin {
         this.bookReviewVerifyRecords = bookReviewVerifyRecords;
     }
 
+    public List<BookForest> getBookForests() {
+        return bookForests;
+    }
+
+    public void setBookForests(List<BookForest> bookForests) {
+        this.bookForests = bookForests;
+    }
+
+    public List<BookForestApplyVerifyRecord> getBookForestApplyVerifyRecords() {
+        return bookForestApplyVerifyRecords;
+    }
+
+    public void setBookForestApplyVerifyRecords(List<BookForestApplyVerifyRecord> bookForestApplyVerifyRecords) {
+        this.bookForestApplyVerifyRecords = bookForestApplyVerifyRecords;
+    }
+
     @Override
     public String toString() {
         return "Admin{" +
@@ -114,6 +136,8 @@ public class Admin {
                 ", address='" + address + '\'' +
                 ", createTime=" + createTime +
                 ", bookReviewVerifyRecords=" + bookReviewVerifyRecords +
+                ", bookForests=" + bookForests +
+                ", bookForestApplyVerifyRecords=" + bookForestApplyVerifyRecords +
                 '}';
     }
 }

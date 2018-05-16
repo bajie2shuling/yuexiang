@@ -31,14 +31,17 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<BookReview> bookReviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Book> books = new ArrayList<>();
 
-    @ManyToMany
-    private List<BookForest> forests = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    private List<BookForest> bookForests = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<FollowingUserInfo> followingUserInfos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<BookForestApply> bookForestApplies = new ArrayList<>();
 
     public User() {
     }
@@ -116,12 +119,12 @@ public class User {
         this.books = books;
     }
 
-    public List<BookForest> getForests() {
-        return forests;
+    public List<BookForest> getBookForests() {
+        return bookForests;
     }
 
-    public void setForests(List<BookForest> forests) {
-        this.forests = forests;
+    public void setBookForests(List<BookForest> bookForests) {
+        this.bookForests = bookForests;
     }
 
     public List<FollowingUserInfo> getFollowingUserInfos() {
@@ -130,6 +133,14 @@ public class User {
 
     public void setFollowingUserInfos(List<FollowingUserInfo> followingUserInfos) {
         this.followingUserInfos = followingUserInfos;
+    }
+
+    public List<BookForestApply> getBookForestApplies() {
+        return bookForestApplies;
+    }
+
+    public void setBookForestApplies(List<BookForestApply> bookForestApplies) {
+        this.bookForestApplies = bookForestApplies;
     }
 
     @Override
@@ -144,8 +155,9 @@ public class User {
                 ", createTime=" + createTime +
                 ", bookReviews=" + bookReviews +
                 ", books=" + books +
-                ", forests=" + forests +
+                ", bookForests=" + bookForests +
                 ", followingUserInfos=" + followingUserInfos +
+                ", bookForestApplies=" + bookForestApplies +
                 '}';
     }
 }
