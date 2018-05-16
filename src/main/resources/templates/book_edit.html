@@ -68,14 +68,16 @@
             <div class="two fields">
                 <div class="field">
                     <label>共享方式</label>
-                    <input placeholder="First Name" name="name" type="text">
+                    <select class="ui dropdown" name="shareWay">
+                        <option value="0">借</option>
+                        <option value="1">卖</option>
+                    </select>
                 </div>
                 <div class="field">
                     <label>书林</label>
-                    <select class="ui dropdown" name="gender">
-                        <option value="">Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                    <select class="ui dropdown" name="bookForestId">
+                        <option value="0">成都信息工程大学航空港校区书林</option>
+                        <option value="1">成都信息工程大学龙泉校区书林</option>
                     </select>
                 </div>
             </div>

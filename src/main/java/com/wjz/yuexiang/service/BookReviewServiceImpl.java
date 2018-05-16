@@ -3,8 +3,8 @@ package com.wjz.yuexiang.service;
 import com.wjz.yuexiang.dao.BookReviewRepository;
 import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.BookReview;
-import com.wjz.yuexiang.po.BookReviewVerifyRecord;
 import com.wjz.yuexiang.po.User;
+import com.wjz.yuexiang.po.VerifyRecord;
 import com.wjz.yuexiang.utils.MarkdownUtils;
 import com.wjz.yuexiang.utils.MyBeanUtils;
 import org.springframework.beans.BeanUtils;
@@ -137,8 +137,8 @@ public class BookReviewServiceImpl implements BookReviewService {
         if(bookReview == null){
             throw new NotFoundException("很遗憾,该篇书评不存在!");
         }
-        for(BookReviewVerifyRecord bookReviewVerifyRecord : bookReview.getBookReviewVerifyRecords()){
-            bookReviewVerifyRecord.setBookReview(null);
+        for(VerifyRecord verifyRecord : bookReview.getVerifyRecords()){
+            verifyRecord.setBookReview(null);
         }
         bookReviewRepository.deleteByIdAndUser(id,user);
     }

@@ -31,7 +31,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<BookReview> bookReviews = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Book> books = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
@@ -41,11 +41,10 @@ public class User {
     private List<FollowingUserInfo> followingUserInfos = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<BookForestApply> bookForestApplies = new ArrayList<>();
+    private List<BookForestCreateApply> bookForestCreateApplies = new ArrayList<>();
 
     public User() {
     }
-
 
     public Long getId() {
         return id;
@@ -135,12 +134,12 @@ public class User {
         this.followingUserInfos = followingUserInfos;
     }
 
-    public List<BookForestApply> getBookForestApplies() {
-        return bookForestApplies;
+    public List<BookForestCreateApply> getBookForestCreateApplies() {
+        return bookForestCreateApplies;
     }
 
-    public void setBookForestApplies(List<BookForestApply> bookForestApplies) {
-        this.bookForestApplies = bookForestApplies;
+    public void setBookForestCreateApplies(List<BookForestCreateApply> bookForestCreateApplies) {
+        this.bookForestCreateApplies = bookForestCreateApplies;
     }
 
     @Override
@@ -157,7 +156,7 @@ public class User {
                 ", books=" + books +
                 ", bookForests=" + bookForests +
                 ", followingUserInfos=" + followingUserInfos +
-                ", bookForestApplies=" + bookForestApplies +
+                ", bookForestCreateApplies=" + bookForestCreateApplies +
                 '}';
     }
 }

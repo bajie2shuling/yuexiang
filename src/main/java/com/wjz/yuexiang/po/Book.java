@@ -29,18 +29,22 @@ public class Book {
 
     private String contactInfo;  //联系方式
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private String review;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
+
+    private Long bookReviewId;
 
     @ManyToOne
     private User user;
 
     @ManyToOne
     private BookForest bookForest;
+
+
+    @OneToMany(mappedBy = "book")
+    private List<VerifyRecord> verifyRecords = new ArrayList<>();
+
+
 
     public Book() {
     }
@@ -101,14 +105,6 @@ public class Book {
         this.shareWay = shareWay;
     }
 
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -141,6 +137,22 @@ public class Book {
         this.contactInfo = contactInfo;
     }
 
+    public Long getBookReviewId() {
+        return bookReviewId;
+    }
+
+    public void setBookReviewId(Long bookReviewId) {
+        this.bookReviewId = bookReviewId;
+    }
+
+    public List<VerifyRecord> getVerifyRecords() {
+        return verifyRecords;
+    }
+
+    public void setVerifyRecords(List<VerifyRecord> verifyRecords) {
+        this.verifyRecords = verifyRecords;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -152,10 +164,11 @@ public class Book {
                 ", status=" + status +
                 ", shareWay=" + shareWay +
                 ", contactInfo='" + contactInfo + '\'' +
-                ", review='" + review + '\'' +
                 ", createTime=" + createTime +
                 ", user=" + user +
                 ", bookForest=" + bookForest +
+                ", bookReviewId=" + bookReviewId +
+                ", verifyRecords=" + verifyRecords +
                 '}';
     }
 }

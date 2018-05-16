@@ -2,9 +2,9 @@ package com.wjz.yuexiang.web.admin;
 
 import com.wjz.yuexiang.po.Admin;
 import com.wjz.yuexiang.po.BookReview;
-import com.wjz.yuexiang.po.BookReviewVerifyRecord;
+import com.wjz.yuexiang.po.VerifyRecord;
 import com.wjz.yuexiang.service.BookReviewService;
-import com.wjz.yuexiang.service.BookReviewVerifyRecordService;
+import com.wjz.yuexiang.service.VerifyRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,13 +25,13 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/admin")
-public class BookReviewVerifyController {
+public class VerifyController {
 
     @Autowired
     private BookReviewService bookReviewService;
 
     @Autowired
-    private BookReviewVerifyRecordService bookReviewVerifyRecordService;
+    private VerifyRecordService verifyRecordService;
 
     /**
      * 书评审核列表页面
@@ -71,7 +71,7 @@ public class BookReviewVerifyController {
                                        HttpSession session,
                                        RedirectAttributes attributes){
         Admin admin = (Admin) session.getAttribute("admin");
-        bookReviewVerifyRecordService.generateBookReviewVerifyRecord(3,id,admin);
+        verifyRecordService.generateBookReviewVerifyRecord(1,3,id,admin);
         attributes.addFlashAttribute("pMessage","操作成功");
         return "redirect:/admin/book_review_verify_list";
     }
@@ -84,26 +84,26 @@ public class BookReviewVerifyController {
                                          HttpSession session,
                                          RedirectAttributes attributes){
         Admin admin = (Admin) session.getAttribute("admin");
-        bookReviewVerifyRecordService.generateBookReviewVerifyRecord(2,id,admin);
+        verifyRecordService.generateBookReviewVerifyRecord(0,2,id,admin);
         attributes.addFlashAttribute("pMessage","操作成功");
         return "redirect:/admin/book_review_verify_list";
     }
 
     /**
-     * 书评审核记录列表页面
+     * 审核记录列表页面
      */
-    @GetMapping("/book_review_verify_record_list")
+    @GetMapping("/verify_record_list")
     public String bookReviewVerifyRecordList(@PageableDefault(size = 15,sort = {"createTime"},direction = Sort.Direction.DESC) Pageable pageable,
                                              HttpSession session,
                                              Model model){
         Admin admin = (Admin) session.getAttribute("admin");
-        Page<BookReviewVerifyRecord> page = bookReviewVerifyRecordService.bookReviewVerifyRecords(admin,pageable);
+        Page<VerifyRecord> page = verifyRecordService.verifyRecords(admin,pageable);
         if(page.getTotalPages() == 0){
             model.addAttribute("page",page);   //前端模版要取page
             model.addAttribute("nMessage","还没有书评审核记录，抓紧行动吧");
-            return "admin/book_review_verify_record_list";
+            return "admin/verify_record_list";
         }
         model.addAttribute("page",page);
-        return "admin/book_review_verify_record_list";
+        return "admin/verify_record_list";
     }
 }

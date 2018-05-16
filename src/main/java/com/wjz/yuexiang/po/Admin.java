@@ -25,13 +25,11 @@ public class Admin {
     private Date createTime;
 
     @OneToMany(mappedBy = "admin")
-    private List<BookReviewVerifyRecord> bookReviewVerifyRecords = new ArrayList<>();
-
-    @OneToMany(mappedBy = "admin")
     private List<BookForest> bookForests = new ArrayList<>();
 
     @OneToMany(mappedBy = "admin")
-    private List<BookForestApplyVerifyRecord> bookForestApplyVerifyRecords = new ArrayList<>();
+    private List<VerifyRecord> verifyRecords = new ArrayList<>();
+
 
     public Admin() {
     }
@@ -100,14 +98,6 @@ public class Admin {
         this.createTime = createTime;
     }
 
-    public List<BookReviewVerifyRecord> getBookReviewVerifyRecords() {
-        return bookReviewVerifyRecords;
-    }
-
-    public void setBookReviewVerifyRecords(List<BookReviewVerifyRecord> bookReviewVerifyRecords) {
-        this.bookReviewVerifyRecords = bookReviewVerifyRecords;
-    }
-
     public List<BookForest> getBookForests() {
         return bookForests;
     }
@@ -116,12 +106,12 @@ public class Admin {
         this.bookForests = bookForests;
     }
 
-    public List<BookForestApplyVerifyRecord> getBookForestApplyVerifyRecords() {
-        return bookForestApplyVerifyRecords;
+    public List<VerifyRecord> getVerifyRecords() {
+        return verifyRecords;
     }
 
-    public void setBookForestApplyVerifyRecords(List<BookForestApplyVerifyRecord> bookForestApplyVerifyRecords) {
-        this.bookForestApplyVerifyRecords = bookForestApplyVerifyRecords;
+    public void setVerifyRecords(List<VerifyRecord> verifyRecords) {
+        this.verifyRecords = verifyRecords;
     }
 
     @Override
@@ -135,9 +125,8 @@ public class Admin {
                 ", Phone='" + Phone + '\'' +
                 ", address='" + address + '\'' +
                 ", createTime=" + createTime +
-                ", bookReviewVerifyRecords=" + bookReviewVerifyRecords +
                 ", bookForests=" + bookForests +
-                ", bookForestApplyVerifyRecords=" + bookForestApplyVerifyRecords +
+                ", verifyRecords=" + verifyRecords +
                 '}';
     }
 }

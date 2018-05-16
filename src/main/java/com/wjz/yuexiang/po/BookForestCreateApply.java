@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Jinzi Wu at 12:22 on 2018/5/16.
  */
 @Entity
-public class BookForestApply {
+public class BookForestCreateApply {
     @Id
     @GeneratedValue
     private Long id;
@@ -27,10 +27,10 @@ public class BookForestApply {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "bookForestApply")
-    private List<BookForestApplyVerifyRecord> bookForestApplyVerifyRecords = new ArrayList<>();
+    @OneToMany(mappedBy = "bookForestCreateApply")
+    private List<VerifyRecord> verifyRecords = new ArrayList<>();
 
-    public BookForestApply() {
+    public BookForestCreateApply() {
     }
 
     public Long getId() {
@@ -81,24 +81,24 @@ public class BookForestApply {
         this.user = user;
     }
 
-    public List<BookForestApplyVerifyRecord> getBookForestApplyVerifyRecords() {
-        return bookForestApplyVerifyRecords;
+    public List<VerifyRecord> getVerifyRecords() {
+        return verifyRecords;
     }
 
-    public void setBookForestApplyVerifyRecords(List<BookForestApplyVerifyRecord> bookForestApplyVerifyRecords) {
-        this.bookForestApplyVerifyRecords = bookForestApplyVerifyRecords;
+    public void setVerifyRecords(List<VerifyRecord> verifyRecords) {
+        this.verifyRecords = verifyRecords;
     }
 
     @Override
     public String toString() {
-        return "BookForestApply{" +
+        return "BookForestCreateApply{" +
                 "id=" + id +
                 ", bookForestName='" + bookForestName + '\'' +
                 ", bookForestDescription='" + bookForestDescription + '\'' +
                 ", createTime=" + createTime +
                 ", status=" + status +
                 ", user=" + user +
-                ", bookForestApplyVerifyRecords=" + bookForestApplyVerifyRecords +
+                ", verifyRecords=" + verifyRecords +
                 '}';
     }
 }

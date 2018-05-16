@@ -43,7 +43,7 @@ public class BookReview {
     private User user;
 
     @OneToMany(mappedBy = "bookReview")
-    private List<BookReviewVerifyRecord> bookReviewVerifyRecords = new ArrayList<>();
+    private List<VerifyRecord> verifyRecords = new ArrayList<>();
 
     @OneToMany(mappedBy = "bookReview")
     private List<Comment> comments = new ArrayList<>();
@@ -147,12 +147,12 @@ public class BookReview {
         this.views = views;
     }
 
-    public List<BookReviewVerifyRecord> getBookReviewVerifyRecords() {
-        return bookReviewVerifyRecords;
+    public List<VerifyRecord> getVerifyRecords() {
+        return verifyRecords;
     }
 
-    public void setBookReviewVerifyRecords(List<BookReviewVerifyRecord> bookReviewVerifyRecords) {
-        this.bookReviewVerifyRecords = bookReviewVerifyRecords;
+    public void setVerifyRecords(List<VerifyRecord> verifyRecords) {
+        this.verifyRecords = verifyRecords;
     }
 
     public List<Comment> getComments() {
@@ -178,7 +178,7 @@ public class BookReview {
                 ", publishTime=" + publishTime +
                 ", views=" + views +
                 ", user=" + user +
-                ", bookReviewVerifyRecords=" + bookReviewVerifyRecords +
+                ", verifyRecords=" + verifyRecords +
                 ", comments=" + comments +
                 '}';
     }
