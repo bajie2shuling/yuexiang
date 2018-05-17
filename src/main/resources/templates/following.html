@@ -10,7 +10,7 @@
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(1)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(2)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
@@ -62,19 +62,19 @@
             <div class="header">提示：</div>
             <p th:text="${nMessage}">还没有关注任何人</p>
         </div>
-
-        <div class="ui cards">
-            <div class="card" th:each="user : ${users}">
-                <div class="image">
-                    <img src="https://source.unsplash.com/random/200x200">
-                </div>
-                <div class="content">
-                    <a class="header" th:text="${user.nickName}" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}">wjz</a>
-                    <div class="description">Matthew is an interior designer living in New York. </div>
-                </div>
-                <div class="extra content">
-                    <span class="right floated">2013年加入 </span>
-                    <span><i class="user icon"></i> 75 粉丝 </span>
+        <div class="ui top attached teal segment m-padding-lr-clear" style="padding-left: 4em">
+            <div class="ui cards">
+                <div class="card" th:each="user : ${users}">
+                    <div class="image">
+                        <img src="https://source.unsplash.com/random/400x400">
+                    </div>
+                    <div class="content">
+                        <a class="header" th:text="${user.nickName}" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}">wjz</a>
+                        <div class="description">Matthew is an interior designer living in New York. </div>
+                    </div>
+                    <div class="extra content">
+                        <span class="date">2013</span> 年加入
+                    </div>
                 </div>
             </div>
         </div>

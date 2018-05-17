@@ -52,98 +52,41 @@
     </a>
 </nav>
 
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#"  class="teal active item">书林</a>
+            <a href="#" th:href="@{/user/bookforest/apply" class="item">申请创建书林</a>
+        </div>
+    </div>
+</div>
 
 <!--中间内容-->
 <div class="m-container m-padding-tb-big">
     <div class="ui container">
-        <div class="ui stackable grid">
-            <!--左边-->
-            <div class="eleven wide column">
-                <div class="ui teal segment top attached">
-                    <h2 class="ui teal header">书籍共享</h2>
-                </div>
-                <!--content-->
-                <div class="ui segment attached">
-                    <div class="ui vertical padded segment  m-padding-lr-clear" th:each="book : ${page.content}">
-                        <div class="ui stackable grid mobile reversed padded">
-                            <div class="seven wide column middle aligned">
-                                <a href="#">
-                                    <img src="https://source.unsplash.com/random/800x500" th:src="@{${bookReview.firstPicture}}"  class="ui medium rounded image">
-                                </a>
-                            </div>
-                            <div class="nine wide column">
-                                <div>
-                                    <a class="ui  teal massive label m-padding-tiny m-text-thin" th:text="${book.name}">《逃离》</a>
-                                    <div class="ui orange big label m-padding-tiny m-text-thin" th:text="${book.author}">爱丽丝门罗</div>
-                                </div>
-                                <div class="m-margin-top">
-                                    <p class="m-text" th:text="${book.remark}">天津人民出版社，第二版</p>
-                                </div>
-                                <div class="m-margin-top">
-                                    <div class="ui big label m-padding-tiny" th:classappend="${book.shareWay == 0} ? 'green' : 'red'" th:switch="${book.shareWay}">
-                                        <span th:case="1">卖</span>
-                                        <span th:case="0">借</span>
-                                    </div>
-                                    <div class="ui big blue label m-padding-tiny m-text-thin">
-                                        <span th:text="${bookReview.contactInfo}">微信：bajie2shuling</span>
-                                    </div>
-                                </div>
 
-                                <div class="ui grid m-margin-top">
-                                    <div class="ui horizontal link list mini">
-                                        <div class="item">
-                                            <a href="#" class="header" th:href="@{/user/{id}/homepage(id=${bookReview.user.id})}">
-                                                <img src="https://source.unsplash.com/random/100x100"  class="ui avatar image">
-                                                <span th:text="${book.user.nickName}">吴晋子</span>
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i>
-                                            <span th:text="${#dates.format(book.createTime,'yyyy-MM-dd HH:mm')}">2018-4-20 18:20</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${nMessage}">还没有加入任何书林，点击右上角申请创建书林</p>
+        </div>
+
+        <div class="ui top attached teal segment m-padding-lr-clear" style="padding-left: 4em">
+            <div class="ui cards">
+                <div class="card" th:each="bookForest : ${bookForests}">
+                    <div class="image">
+                        <img src="https://source.unsplash.com/random/400x400">
                     </div>
-                </div>
-
-                <div class="ui segment bottom attached" th:if="${page.totalPages}>1">
-                    <div class="ui grid two column middle aligned">
-                        <div class="column">
-                            <a href="#" class="ui basic mini button teal" th:href="@{/user/index(page=${page.number}-1)}" th:unless="${page.first}">上一页</a>
-                        </div>
-                        <div class="right aligned column">
-                            <a href="#" class="ui basic mini button teal" th:href="@{/user/index(page=${page.number}+1)}" th:unless="${page.last}">下一页</a>
-                        </div>
+                    <div class="content">
+                        <a class="header" th:text="${bookForest.name}" th:href="@{/user/{id}/bookForest(id=${bookForest.id})}">成都信息工程大学航空港书林</a>
+                        <div class="description">Matthew is an interior designer living in New York. </div>
                     </div>
-                </div>
-            </div>
-
-            <!--右边-->
-            <div class="five wide column">
-                <div class="ui teal top attached segment ">
-                    <h2 class="ui teal header">书林</h2>
-                </div>
-                <div class="ui attached segment" th:each="blog : ${recommendBlogs}">
-                    <a href="#" th:href="@{/blog/{id}(id=${blog.id})}"  class="m-black m-text" th:text="${blog.title}">
-                        <img class="ui avatar image" src="https://source.unsplash.com/random/100x100">
-                        <span>成都信息工程大学</span>
-                    </a>
-                </div>
-                <div class="ui segment bottom attached" th:if="${page.totalPages}>1">
-                    <div class="ui grid two column middle aligned">
-                        <div class="column">
-                            <a href="#" class="ui basic mini button teal m-padding-tiny" th:href="@{/user/index(page=${page.number}-1)}" th:unless="${page.first}">上一页</a>
-                        </div>
-                        <div class="right aligned column">
-                            <a href="#" class="ui basic mini button teal m-padding-tiny" th:href="@{/user/index(page=${page.number}+1)}" th:unless="${page.last}">下一页</a>
-                        </div>
+                    <div class="extra content">
+                        <span class="date">2013</span> 年加入
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 

@@ -63,7 +63,6 @@
 <!--中间内容-->
 <div class="m-padding-tb-big m-container">
     <div class="ui container">
-
         <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>
@@ -159,11 +158,6 @@
                             <div class="description">
                                 热爱文学的程序猿
                             </div>
-                        </div>
-                        <div class="extra content">
-                            <a><i class="user icon"></i>
-                                <span>22</span> 关注
-                            </a>
                         </div>
                         <div class="ui extra content" id="following_container" th:if="${session.user.id != user.id}">
                             <div th:fragment="following">
