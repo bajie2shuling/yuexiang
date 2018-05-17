@@ -60,6 +60,7 @@
                     <span th:if="${verifyRecord.bookReview != null}">书评</span>
                     <span th:if="${verifyRecord.book != null}">书籍</span>
                     <span th:if="${verifyRecord.bookForestCreateApply != null}">书林创建申请</span>
+                    <span th:if="${verifyRecord.bookReview == null  && verifyRecord.book == null && verifyRecord.bookForestCreateApply == null}">已删除</span>
                 </td>
                 <td th:text="${verifyRecord.verifyContentBriefInfo}">书有清香 | 莫以成败论英雄——《逃离》——爱丽丝门罗</td>
                 <td th:text="${#dates.format(verifyRecord.createTime,'yyyy-MM-dd HH:mm:ss')}">2018-05-05 17:26:10</td>

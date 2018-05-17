@@ -1,6 +1,8 @@
 package com.wjz.yuexiang.web;
 
+import com.wjz.yuexiang.po.BookForest;
 import com.wjz.yuexiang.po.User;
+import com.wjz.yuexiang.service.BookForestService;
 import com.wjz.yuexiang.service.BookReviewService;
 import com.wjz.yuexiang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by Jinzi Wu at 11:20 on 2018/5/17.
@@ -26,6 +29,9 @@ public class SelfBookController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BookForestService bookForestService;
+
     /**
      * 书籍编辑页面
      */
@@ -36,13 +42,14 @@ public class SelfBookController {
                                 Model model){
         User user = (User) session.getAttribute("user");
         userService.getUser(user.getId());
-        if(user.getBookForests() == null || user.getBookForests().isEmpty()){
+        List<BookForest> bookForests = bookForestService.getBookForestsByUser(user.getId());
+        if(bookForests == null || bookForests.isEmpty()){
             attributes.addFlashAttribute("lostMessage","你还没有加入任何书林，赶紧去加入吧！");
             return "redirect:/user/book_review_list";
         }
         //bookReviewService.getBookReview(id,3,user);  //确定该书评是当前登录用户的，并且是通过审核的(不合法会在下层报错)
         model.addAttribute("bookReviewId",id);
-        model.addAttribute("bookForests",user.getBookForests());
+        model.addAttribute("bookForests",bookForests);
         return "book_edit";
     }
 }

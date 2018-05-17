@@ -56,86 +56,25 @@
 <!--中间内容-->
 <div class="m-padding-tb-big m-container">
     <div class="ui container">
-        <div class="ui stackable grid">
-            <!--左边-->
-            <div class="five wide column">
-                <div class="ui teal top attached segment ">
-                    <h2 class="ui teal header">关注</h2>
-                </div>
-                <div class="ui attached segment" th:each="blog : ${recommendBlogs}">
-                    <img class="ui avatar image" src="https://source.unsplash.com/random/100x100">
-                    <a href="#" th:href="@{/blog/{id}(id=${blog.id})}"  class="m-black m-text" th:text="${blog.title}">bajie2shuling</a>
-                </div>
-                <div class="ui segment bottom attached" th:if="${page.totalPages}>1">
-                    <div class="ui grid two column middle aligned">
-                        <div class="column">
-                            <a href="#" class="ui basic mini button teal m-padding-tiny" th:href="@{/user/index(page=${page.number}-1)}" th:unless="${page.first}">上一页</a>
-                        </div>
-                        <div class="right aligned column">
-                            <a href="#" class="ui basic mini button teal m-padding-tiny" th:href="@{/user/index(page=${page.number}+1)}" th:unless="${page.last}">下一页</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!--右边-->
-            <div class="eleven wide column">
-                <div class="ui teal segment top attached">
-                    <h2 class="ui teal header">书评推荐</h2>
+        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${nMessage}">还没有关注任何人</p>
+        </div>
+
+        <div class="ui cards">
+            <div class="card" th:each="user : ${users}">
+                <div class="image">
+                    <img src="https://source.unsplash.com/random/200x200">
                 </div>
-                <!--content-->
-                <div class="ui segment attached">
-                    <div class="ui vertical padded segment  m-padding-lr-clear" th:each="bookReview : ${page.content}">
-                        <div class="ui stackable grid mobile reversed padded">
-                            <div class="eleven wide column">
-                                <div class="m-margin-bottom-small">
-                                    <a class="ui medium header" th:text="${bookReview.title}" href="#" th:href="@{/user/book_review/{id}/detail(id=${bookReview.id})}">无人知晓的孤独，是每个生命体的必修课</a>
-                                </div>
-                                <p class="m-text" th:text="${bookReview.description}">有人对我说，你拍的那些照片怎么总和别人不一样?就连你镜头下的猫，一点都不像平时可爱又萌萌的样子，反而给人一种能够说话的感觉。 记得有一次，朋友问我，你拍了这么多的照片，印象最...</p>
-                                <div class="m-margin-top-small">
-                                    <div class="ui basic orange large label m-padding-tiny">
-                                        <span class="m-text-thin" th:text="${bookReview.bookName}">《逃离》</span>
-                                    </div>
-                                    <div class="ui basic orange large label m-padding-tiny">
-                                        <span class="m-text-thin" th:text="${bookReview.bookAuthor}">爱丽丝门罗</span>
-                                    </div>
-                                </div>
-                                <div class="ui grid m-margin-top">
-                                    <div class="ui horizontal link list mini">
-                                        <div class="item">
-                                            <a href="#" class="header" th:href="@{/user/{id}/homepage(id=${bookReview.user.id})}">
-                                                <img src="https://source.unsplash.com/random/100x100"  class="ui avatar image">
-                                                <span th:text="${bookReview.user.nickName}">吴晋子</span>
-                                            </a>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i>
-                                            <span th:text="${#dates.format(bookReview.publishTime,'yyyy-MM-dd HH:mm')}">2018-4-20 18:20</span>
-                                        </div>
-                                        <div class="item">
-                                            <i class="eye icon"></i>
-                                            <span th:text="${bookReview.views}">121</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="five wide column middle aligned">
-                                <a href="#">
-                                    <img src="https://source.unsplash.com/random/800x500" th:src="@{${bookReview.firstPicture}}"  class="ui medium rounded image">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="content">
+                    <a class="header" th:text="${user.nickName}" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}">wjz</a>
+                    <div class="description">Matthew is an interior designer living in New York. </div>
                 </div>
-                <div class="ui segment bottom attached" th:if="${page.totalPages}>1">
-                    <div class="ui grid two column middle aligned">
-                        <div class="column">
-                            <a href="#" class="ui basic mini button teal" th:href="@{/user/index(page=${page.number}-1)}" th:unless="${page.first}">上一页</a>
-                        </div>
-                        <div class="right aligned column">
-                            <a href="#" class="ui basic mini button teal" th:href="@{/user/index(page=${page.number}+1)}" th:unless="${page.last}">下一页</a>
-                        </div>
-                    </div>
+                <div class="extra content">
+                    <span class="right floated">2013年加入 </span>
+                    <span><i class="user icon"></i> 75 粉丝 </span>
                 </div>
             </div>
         </div>

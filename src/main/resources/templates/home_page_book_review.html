@@ -90,7 +90,7 @@
                         <div class="ui stackable grid mobile reversed padded">
                             <div class="eleven wide column">
                                 <div class="m-margin-bottom-small">
-                                    <a class="ui medium header" th:text="${bookReview.title}" href="#" th:href="@{/user/book_review/{id}/detail(id=${bookReview.id})}">无人知晓的孤独，是每个生命体的必修课</a>
+                                    <a class="ui medium header" target="_blank" th:text="${bookReview.title}" href="#" th:href="@{/user/book_review/{id}/detail(id=${bookReview.id})}">无人知晓的孤独，是每个生命体的必修课</a>
                                 </div>
                                 <p class="m-text" th:text="${bookReview.description}">有人对我说，你拍的那些照片怎么总和别人不一样?就连你镜头下的猫，一点都不像平时可爱又萌萌的样子，反而给人一种能够说话的感觉。 记得有一次，朋友问我，你拍了这么多的照片，印象最...</p>
                                 <div class="m-margin-top-small">
@@ -122,7 +122,7 @@
                             </div>
                             <div class="five wide column middle aligned">
                                 <a href="#">
-                                    <img src="https://source.unsplash.com/random/800x500" th:src="@{${bookReview.firstPicture}}"  class="ui medium rounded image">
+                                    <img src="https://source.unsplash.com/random/800x600" th:src="@{${bookReview.firstPicture}}"  class="ui medium rounded image">
                                 </a>
                             </div>
                         </div>

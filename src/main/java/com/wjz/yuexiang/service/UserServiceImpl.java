@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -49,5 +50,11 @@ public class UserServiceImpl implements UserService {
     public User getUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElseThrow(()-> new NotFoundException("抱歉，该用户不存在"));
+    }
+
+    @Override
+    public List<User> users(List<Long> userIds) {
+        List<User> users = userRepository.findAllById(userIds);
+        return users;
     }
 }
