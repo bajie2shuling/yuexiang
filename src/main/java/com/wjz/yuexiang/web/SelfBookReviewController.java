@@ -83,7 +83,7 @@ public class SelfBookReviewController {
      * 书评修改页面
      */
     @GetMapping("/book_review/{id}/change")
-    public String bookReviewChange(@PathVariable Long id,
+    public String bookReviewChangePage(@PathVariable Long id,
                                    HttpSession session,
                                    Model model){
         User user = (User) session.getAttribute("user");
@@ -109,7 +109,7 @@ public class SelfBookReviewController {
      * 删除书评
      */
     @GetMapping("/book_review/{id}/delete")
-    public String bookReviewPage(@PathVariable Long id,
+    public String deleteBookReview(@PathVariable Long id,
                                  HttpSession session,
                                  RedirectAttributes attributes){
         User user = (User) session.getAttribute("user");

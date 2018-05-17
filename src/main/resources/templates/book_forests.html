@@ -56,7 +56,7 @@
     <div class="ui container">
         <div class="right menu">
             <a href="#"  class="teal active item">书林</a>
-            <a href="#" th:href="@{/user/bookforest/apply" class="item">申请创建书林</a>
+            <a href="#" th:href="@{/user/bookforest/create/apply}" class="item">书林申请创建</a>
         </div>
     </div>
 </div>
@@ -71,18 +71,22 @@
             <p th:text="${nMessage}">还没有加入任何书林，点击右上角申请创建书林</p>
         </div>
 
-        <div class="ui top attached teal segment m-padding-lr-clear" style="padding-left: 4em">
+        <div class="ui teal segment top attached">
+            <h2 class="ui teal header">我加入的书林</h2>
+        </div>
+
+        <div class="ui attached segment m-padding-lr-clear" style="padding-left: 4em">
             <div class="ui cards">
                 <div class="card" th:each="bookForest : ${bookForests}">
                     <div class="image">
                         <img src="https://source.unsplash.com/random/400x400">
                     </div>
                     <div class="content">
-                        <a class="header" th:text="${bookForest.name}" th:href="@{/user/{id}/bookForest(id=${bookForest.id})}">成都信息工程大学航空港书林</a>
-                        <div class="description">Matthew is an interior designer living in New York. </div>
+                        <a class="header" th:text="${bookForest.name}" th:href="@{/user/{id}/bookForest(id=${bookForest.id})}">成都信息工程大学航空港校区书林</a>
+                        <div class="description">成都信息工程大学航空港校区书林是为了方便校内学生书籍共享而创建</div>
                     </div>
                     <div class="extra content">
-                        <span class="date">2013</span> 年加入
+                        <span class="date" th:text="${#dates.format(bookForest.createTime,'yyyy')}">2013</span> 年加入
                     </div>
                 </div>
             </div>

@@ -3,21 +3,21 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>关注</title>
+    <title>书林创建申请列表</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../static/css/me.css">
 </head>
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(2)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(0)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>探索</a>
-            <a href="#" class="active item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini  book icon"></i>书林</a>
-            <a href="#" class="item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
+            <a href="#" class="active item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
             <div class="right menu m-mobile-hide m-item">
                 <div class="ui input icon transparent inverted">
                     <input type="text" placeholder="Search......">
@@ -26,7 +26,7 @@
                 <div class="ui dropdown item">
                     <div class="text">
                         <img class="ui avatar image" src="https://source.unsplash.com/random/100x100">
-                        <span>吴晋子</span>
+                        吴晋子
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -54,38 +54,69 @@
 
 
 <!--中间内容-->
-<div class="m-padding-tb-big m-container">
+<div class="m-padding-tb-max m-container">
     <div class="ui container">
+        <div class="ui teal segment top attached">
+            <h2 class="ui teal header">书林创建申请列表</h2>
+        </div>
+        <div class="ui attached segment">
+            <table class="ui table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>书林名称</th>
+                    <th>书林描述</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="bookForestCreateApply,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${bookForestCreateApply.bookForestName}">成都信息工程大学航空港校区书林</td>
+                    <td th:text="${bookForestCreateApply.bookForestDescription}">成都信息工程大学航空港校区书林是为了方便校内学生书籍共享而创建</td>
+                    <td th:switch="${bookForestCreateApply.status}" th:classappend="${bookForestCreateApply.status == 2} ? 'positive' : 'negative'">
+                        <span th:case="0">待审核</span>
+                        <span th:case="1">审核未通过</span>
+                        <span th:case="2">审核通过</span>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/user/book_forest_create_apply/{id}/change(id=${bookForestCreateApply.id})}" class="ui teal basic mini button">编辑</a>
+                        <a href="#" th:href="@{/user/book_forest_create_apply/{id}/delete(id=${bookForestCreateApply.id})}" class="ui red basic mini button">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui segment" th:if="${page.totalPages}>1">
+                            <div class="ui middle aligned two column grid">
+                                <div class="column">
+                                    <a href="#" th:href="@{/user//book_forest_create_apply_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                                </div>
+                                <div class="right aligned column">
+                                    <a href="#" th:href="@{/user//book_forest_create_apply_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
 
+        <div class="ui positive message" th:unless="${#strings.isEmpty(pMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${pMessage}">恭喜，操作成功！</p>
+        </div>
         <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>
-            <p th:text="${nMessage}">还没有关注任何人</p>
-        </div>
-
-        <div class="ui teal segment top attached">
-            <h2 class="ui teal header">我的关注</h2>
-        </div>
-
-        <div class="ui attached  segment m-padding-lr-clear" style="padding-left: 4em">
-            <div class="ui cards">
-                <div class="card" th:each="user : ${users}">
-                    <div class="image">
-                        <img src="https://source.unsplash.com/random/400x400">
-                    </div>
-                    <div class="content">
-                        <a class="header" th:text="${user.nickName}" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}">wjz</a>
-                        <div class="description">Matthew is an interior designer living in New York. </div>
-                    </div>
-                    <div class="extra content">
-                        <span class="date">2013</span> 年加入
-                    </div>
-                </div>
-            </div>
+            <p th:text="${nMessage}">很遗憾，该页不存在！</p>
         </div>
     </div>
 </div>
-
 <!--底部-->
 <footer class="ui segment inverted attached " th:replace="_fragments :: footer">
     <div class="ui container center aligned m-padding-tb-max">

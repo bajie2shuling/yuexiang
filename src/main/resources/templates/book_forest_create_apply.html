@@ -3,19 +3,19 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>关注</title>
+    <title>书林创建申请</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../static/css/me.css">
 </head>
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(2)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(3)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>探索</a>
-            <a href="#" class="active item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
+            <a href="#" class="item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini  book icon"></i>书林</a>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
             <div class="right menu m-mobile-hide m-item">
@@ -52,37 +52,45 @@
     </a>
 </nav>
 
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/user/book_forests}"  class="item">书林</a>
+            <a href="#" class="teal active item">书林申请创建</a>
+        </div>
+    </div>
+</div>
 
 <!--中间内容-->
-<div class="m-padding-tb-big m-container">
+<div class="m-padding-tb-max m-container-tiny">
     <div class="ui container">
-
-        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
-            <i class="close icon"></i>
-            <div class="header">提示：</div>
-            <p th:text="${nMessage}">还没有关注任何人</p>
-        </div>
-
         <div class="ui teal segment top attached">
-            <h2 class="ui teal header">我的关注</h2>
+            <h2 class="ui teal header">书林创建申请</h2>
         </div>
 
-        <div class="ui attached  segment m-padding-lr-clear" style="padding-left: 4em">
-            <div class="ui cards">
-                <div class="card" th:each="user : ${users}">
-                    <div class="image">
-                        <img src="https://source.unsplash.com/random/400x400">
-                    </div>
-                    <div class="content">
-                        <a class="header" th:text="${user.nickName}" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}">wjz</a>
-                        <div class="description">Matthew is an interior designer living in New York. </div>
-                    </div>
-                    <div class="extra content">
-                        <span class="date">2013</span> 年加入
-                    </div>
+        <form class="ui form attached segment" action="#" th:action="@{/user/bookforest/create/apply}"  method="post" th:object="${bookForestCreateApplyPost}">
+
+            <input type="hidden" name="id" th:value="*{id}">
+
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">书林名称</label>
+                    <input type="text" name="bookForestName" placeholder="一般以地名开始，如：成都信息工程大学航空港校区书林" th:value="*{bookForestName}">
                 </div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('bookForestName')}" th:errors="*{bookForestName}">书林名称不能为空</div>
             </div>
-        </div>
+
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">书评描述</label>
+                    <input type="text" name="bookForestDescription" placeholder="书评描述...." th:value="*{bookForestDescription}">
+                </div>
+                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('bookForestDescription')}" th:errors="*{bookForestDescription}">书林描述不能为空</div>
+            </div>
+            <button class="ui orange basic button">提交</button>
+            <div class="ui error message"></div>
+        </form>
+
     </div>
 </div>
 

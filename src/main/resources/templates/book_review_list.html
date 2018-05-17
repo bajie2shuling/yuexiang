@@ -56,7 +56,11 @@
 <!--中间内容-->
 <div class="m-padding-tb-max m-container">
     <div class="ui container">
-        <table class="ui teal table">
+        <div class="ui teal segment top attached">
+            <h2 class="ui teal header">我的书评列表</h2>
+        </div>
+        <div class="ui attached segment">
+            <table class="ui table">
             <thead>
                 <tr>
                     <th></th>
@@ -104,7 +108,7 @@
                 </tr>
             </tfoot>
         </table>
-
+        </div>
         <div class="ui positive message" th:unless="${#strings.isEmpty(message)}">
             <i class="close icon"></i>
             <div class="header">提示：</div>

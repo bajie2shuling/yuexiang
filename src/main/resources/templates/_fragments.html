@@ -17,7 +17,7 @@
                 <h2 class="ui teal header item">RdShare</h2>
                 <a href="#" class="item m-mobile-hide m-item" target="_blank" th:href="@{/user/index}" th:classappend="${index == 1} ? 'active'"><i class="mini idea icon"></i>探索</a>
                 <a href="#" class="item m-mobile-hide m-item" target="_blank" th:href="@{/user/following}" th:classappend="${index == 2} ? 'active'"><i class="mini  eye icon"></i>关注</a>
-                <a href="#" class="item m-mobile-hide m-item" target="_blank" th:href="@{/user/book_forest}" th:classappend="${index == 3} ? 'active'"><i class="mini  book icon"></i>书林</a>
+                <a href="#" class="item m-mobile-hide m-item" target="_blank" th:href="@{/user/book_forests}" th:classappend="${index == 3} ? 'active'"><i class="mini  book icon"></i>书林</a>
                 <a href="#" class="item m-mobile-hide m-item" target="_blank" th:href="@{/user/book_review_edit}" th:classappend="${index == 4} ? 'active'"><i class="mini  edit icon"></i>写书评</a>
                 <div class="right menu m-mobile-hide m-item">
                     <div class="ui input icon transparent inverted">
@@ -35,9 +35,13 @@
                                 <i class="file icon"></i>
                                 我的书评
                             </a>
+                            <a href="#" class="item" target="_blank" th:href="@{/user/book_forest_create_apply_list}" >
+                                <i class="book icon"></i>
+                                书林创建申请
+                            </a>
                             <a href="#" class="item" target="_blank" >
                                 <i class="book icon"></i>
-                                我的共享书籍
+                                我的书籍
                             </a>
                             <a href="#" class="item" th:href="@{/user/sign_out}">
                                 <i class="sign out alternate icon"></i>
