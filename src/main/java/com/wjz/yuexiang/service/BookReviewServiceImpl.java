@@ -182,4 +182,13 @@ public class BookReviewServiceImpl implements BookReviewService {
         }
         return page;
     }
+
+    @Override
+    public BookReview getBookReview(Long id, Integer status, User user) {
+        BookReview bookReview = bookReviewRepository.findByIdAndStatusAndUser(id,status,user);
+        if(bookReview == null){
+            throw new NotFoundException("很遗憾,该篇书评不存在!");
+        }
+        return bookReview;
+    }
 }

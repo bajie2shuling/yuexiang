@@ -83,7 +83,7 @@
                         <a href="#" th:href="@{/user/book_review/{id}/change(id=${bookReview.id})}" class="ui teal basic mini button">编辑</a>
                         <a href="#" th:href="@{/user/book_review/{id}/preview(id=${bookReview.id})}" class="ui purple basic mini button">预览</a>
                         <a href="#" th:href="@{/user/book_review/{id}/delete(id=${bookReview.id})}" class="ui red basic mini button">删除</a>
-                        <a href="#" th:href="@{/user/book_review/{id}/add_book_forest(id=${bookReview.id})}" class="ui blue basic mini button" th:if="${bookReview.status == 3}">加入书林</a>
+                        <a href="#" th:href="@{/user/{id}/book_edit(id=${bookReview.id})}" class="ui blue basic mini button" th:if="${bookReview.status == 3}">加入书林</a>
                     </td>
                 </tr>
             </tbody>

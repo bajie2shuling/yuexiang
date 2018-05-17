@@ -1,5 +1,6 @@
 package com.wjz.yuexiang.dao;
 
+import com.wjz.yuexiang.po.Book;
 import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.po.User;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,8 @@ public interface BookReviewRepository extends JpaRepository<BookReview,Long>{
     Page<BookReview> findAllByUser(User user, Pageable pageable);
 
     Page<BookReview> findAllByUserAndStatus(User user,Integer status, Pageable pageable);
+
+    BookReview findByIdAndStatusAndUser(Long id,Integer status,User user);
 
 
 }

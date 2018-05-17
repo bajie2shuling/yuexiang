@@ -26,4 +26,7 @@ public interface BookReviewService {
     BookReview getBookReviewSetViewsAndConvert(Long id, Integer status);
 
 
+    BookReview getBookReview(Long id,Integer status,User user);
+
+
 }
