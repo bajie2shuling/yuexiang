@@ -11,4 +11,6 @@ import org.springframework.data.domain.Pageable;
 public interface VerifyRecordService {
     VerifyRecord generateBookReviewVerifyRecord(Integer verifyResult, Integer bookReviewStatus, Long bookReviewId, Admin admin);
     Page<VerifyRecord> verifyRecords(Admin admin, Pageable pageable);
+
+    VerifyRecord generateBookForestCreateApplyVerifyRecord(Integer verifyResult, Integer bookForestCreateApplyStatus, Long bookForestCreateApplyId, Admin admin);
 }

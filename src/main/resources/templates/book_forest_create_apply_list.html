@@ -81,14 +81,14 @@
                         <span th:case="2">审核通过</span>
                     </td>
                     <td>
-                        <a href="#" th:href="@{/user/book_forest_create_apply/{id}/change(id=${bookForestCreateApply.id})}" class="ui teal basic mini button">编辑</a>
+                        <a href="#" th:href="@{/user/book_forest_create_apply/{id}/change(id=${bookForestCreateApply.id})}" class="ui teal basic mini button m-margin-bottom-small">编辑</a>
                         <a href="#" th:href="@{/user/book_forest_create_apply/{id}/delete(id=${bookForestCreateApply.id})}" class="ui red basic mini button">删除</a>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="6">
+                    <th colspan="5">
                         <div class="ui segment" th:if="${page.totalPages}>1">
                             <div class="ui middle aligned two column grid">
                                 <div class="column">

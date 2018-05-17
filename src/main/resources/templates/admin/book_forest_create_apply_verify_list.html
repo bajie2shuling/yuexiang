@@ -3,7 +3,7 @@
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>书评审核</title>
+    <title>书林创建申请审核</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
 </head>
@@ -14,7 +14,7 @@
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
-            <a href="#" class="active item m-mobile-hide m-item"><i class="mini filter icon"></i>书评审核</a>
+            <a href="#" class="active item m-mobile-hide m-item"><i class="mini filter icon"></i>审核</a>
             <div class="right menu m-mobile-hide m-item">
                 <div class="ui dropdown item">
                     <div class="text">
@@ -36,11 +36,12 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
+
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" th:href="@{/admin/book_review_verify_list}" class="teal active item">书评审核列表</a>
-            <a href="#" th:href="@{/admin/book_forest_create_apply_verify_list}"  class="item">书林创建申请审核列表</a>
+            <a href="#" th:href="@{/admin/book_review_verify_list}" class="item">书评审核列表</a>
+            <a href="#" th:href="@{/admin/book_forest_create_apply_verify_list}" class="teal active item">书林创建申请审核列表</a>
             <a href="#" th:href="@{/user/book_forests}" class="item">书籍审核列表</a>
         </div>
     </div>
@@ -50,27 +51,26 @@
 <div class="m-padding-tb-max m-container">
     <div class="ui container">
         <div class="ui teal segment top attached">
-            <h2 class="ui teal header">书评审核列表</h2>
+            <h2 class="ui teal header">书林创建申请审核列表</h2>
         </div>
         <div class="ui attached segment">
             <table class="ui table">
             <thead>
             <tr>
                 <th></th>
-                <th>书评标题</th>
-                <th>书名</th>
-                <th>作者</th>
+                <th>书林名称</th>
+                <th>书林描述</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="bookReview,iterStat : ${page.content}">
+            <tr th:each="bookForestCreateApply,iterStat : ${page.content}">
                 <td th:text="${iterStat.count}">1</td>
-                <td th:text="${bookReview.title}">书有清香 | 莫以成败论英雄</td>
-                <td th:text="${bookReview.bookName}">《受戒》</td>
-                <td th:text="${bookReview.bookAuthor}">汪曾祺</td>
+                <td th:text="${bookForestCreateApply.bookForestName}">成都信息工程大学航空港校区书林</td>
+                <td th:text="${bookForestCreateApply.bookForestDescription}">成都信息工程大学航空港校区书林是为了方便校内学生书籍共享而创建</td>
                 <td>
-                    <a href="#" th:href="@{/admin/book_review/{id}/verify(id=${bookReview.id})}" class="ui orange basic mini button">审核</a>
+                    <a href="#" th:href="@{/admin/bookForestCreateApply/{id}/verify/pass(id=${bookForestCreateApply.id})}" class="ui teal basic mini button">通过</a>
+                    <a href="#" th:href="@{/admin/bookForestCreateApply/{id}/verify/npass(id=${bookForestCreateApply.id})}" class="ui orange basic mini button">未通过</a>
                 </td>
             </tr>
             </tbody>
@@ -80,10 +80,10 @@
                     <div class="ui segment" th:if="${page.totalPages}>1">
                         <div class="ui middle aligned two column grid">
                             <div class="column">
-                                <a href="#" th:href="@{/admin/book_review_verify_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                                <a href="#" th:href="@{/admin/book_forest_create_apply_verify_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
                             </div>
                             <div class="right aligned column">
-                                <a href="#" th:href="@{/admin/book_review_verify_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                                <a href="#" th:href="@{/admin/book_forest_create_apply_verify_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
                             </div>
                         </div>
                     </div>

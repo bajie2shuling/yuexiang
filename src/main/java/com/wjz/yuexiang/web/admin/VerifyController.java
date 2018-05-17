@@ -1,8 +1,10 @@
 package com.wjz.yuexiang.web.admin;
 
 import com.wjz.yuexiang.po.Admin;
+import com.wjz.yuexiang.po.BookForestCreateApply;
 import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.po.VerifyRecord;
+import com.wjz.yuexiang.service.BookForestCreateApplyService;
 import com.wjz.yuexiang.service.BookReviewService;
 import com.wjz.yuexiang.service.VerifyRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class VerifyController {
 
     @Autowired
     private VerifyRecordService verifyRecordService;
+
+    @Autowired
+    private BookForestCreateApplyService bookForestCreateApplyService;
 
     /**
      * 书评审核列表页面
@@ -105,5 +110,39 @@ public class VerifyController {
         }
         model.addAttribute("page",page);
         return "admin/verify_record_list";
+    }
+
+
+    @GetMapping("/book_forest_create_apply_verify_list")
+    public String bookForestCreateApplyVerifyList(@PageableDefault(size = 15,sort = {"createTime"},direction = Sort.Direction.ASC) Pageable pageable,
+                                                  Model model) {
+        Page<BookForestCreateApply> page = bookForestCreateApplyService.bookForestCreateApplies(0, pageable);   //只取待审核状态的书林创建申请
+        if (page.getTotalPages() == 0) {
+            model.addAttribute("page", page);   //前端模版要取page
+            model.addAttribute("pMessage", "还没有待审核的书林创建申请");
+            return "admin/book_forest_create_apply_verify_list";
+        }
+        model.addAttribute("page", page);
+        return "admin/book_forest_create_apply_verify_list";
+    }
+
+    @GetMapping("/bookForestCreateApply/{id}/verify/pass")
+    public String bookForestCreateApplyVerifyPass(@PathVariable Long id,
+                                                  HttpSession session,
+                                                  RedirectAttributes attributes){
+        Admin admin = (Admin) session.getAttribute("admin");
+        verifyRecordService.generateBookForestCreateApplyVerifyRecord(1,2,id,admin);
+        attributes.addFlashAttribute("pMessage","操作成功");
+        return "redirect:/admin/book_forest_create_apply_verify_list";
+    }
+
+    @GetMapping("/bookForestCreateApply/{id}/verify/npass")
+    public String bookForestCreateApplyVerifyNoPass(@PathVariable Long id,
+                                                    HttpSession session,
+                                                    RedirectAttributes attributes){
+        Admin admin = (Admin) session.getAttribute("admin");
+        verifyRecordService.generateBookForestCreateApplyVerifyRecord(0,1,id,admin);
+        attributes.addFlashAttribute("pMessage","操作成功");
+        return "redirect:/admin/book_forest_create_apply_verify_list";
     }
 }

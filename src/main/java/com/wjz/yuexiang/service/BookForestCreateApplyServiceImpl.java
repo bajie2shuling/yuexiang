@@ -54,7 +54,7 @@ public class BookForestCreateApplyServiceImpl implements BookForestCreateApplySe
             throw new NotFoundException("很遗憾，该条书林创建申请不存在！");
         }
         for(VerifyRecord verifyRecord : bookForestCreateApply.getVerifyRecords()){
-            verifyRecord.setBookReview(null);
+            verifyRecord.setBookForestCreateApply(null);
         }
         bookForestCreateApplyRepository.deleteByIdAndUser(id,user);
     }
@@ -78,5 +78,17 @@ public class BookForestCreateApplyServiceImpl implements BookForestCreateApplySe
             throw new NotFoundException("很遗憾，该条书林创建申请不存在！");         //防止恶意用户在地址栏随意输入id
         }
         return bookForestCreateApply;
+    }
+
+    @Override
+    public Page<BookForestCreateApply> bookForestCreateApplies(Integer status, Pageable pageable) {
+        Page<BookForestCreateApply> page = bookForestCreateApplyRepository.findAllByStatus(status,pageable);
+        if(page.getTotalPages() == 0){
+            return page;
+        }
+        if(page.getPageable().getPageNumber() > page.getTotalPages()-1){
+            throw new NotFoundException("很遗憾，第" + page.getPageable().getPageNumber()+1 + "页不存在！");  //防止用户恶意在地址栏输入页码
+        }
+        return page;
     }
 }

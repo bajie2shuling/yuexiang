@@ -16,4 +16,6 @@ public interface BookForestCreateApplyService {
     Page<BookForestCreateApply> bookForestCreateApplies(User user, Pageable pageable);
 
     BookForestCreateApply getBookForestCreateApply(Long id,User user);
+
+    Page<BookForestCreateApply> bookForestCreateApplies(Integer status, Pageable pageable);
 }

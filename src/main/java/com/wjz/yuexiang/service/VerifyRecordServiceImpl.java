@@ -1,9 +1,11 @@
 package com.wjz.yuexiang.service;
 
+import com.wjz.yuexiang.dao.BookForestCreateApplyRepository;
 import com.wjz.yuexiang.dao.BookReviewRepository;
 import com.wjz.yuexiang.dao.VerifyRecordRepository;
 import com.wjz.yuexiang.exception.NotFoundException;
 import com.wjz.yuexiang.po.Admin;
+import com.wjz.yuexiang.po.BookForestCreateApply;
 import com.wjz.yuexiang.po.BookReview;
 import com.wjz.yuexiang.po.VerifyRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class VerifyRecordServiceImpl implements VerifyRecordService {
 
     @Autowired
     private BookReviewRepository bookReviewRepository;
+
+    @Autowired
+    private BookForestCreateApplyRepository bookForestCreateApplyRepository;
 
     @Transactional
     @Override
@@ -57,5 +62,25 @@ public class VerifyRecordServiceImpl implements VerifyRecordService {
             throw new NotFoundException("很遗憾，第" + page.getPageable().getPageNumber()+1 + "页不存在！");  //防止用户恶意在地址栏输入页码
         }
         return page;
+    }
+
+    @Transactional
+    @Override
+    public VerifyRecord generateBookForestCreateApplyVerifyRecord(Integer verifyResult, Integer bookForestCreateApplyStatus, Long bookForestCreateApplyId, Admin admin) {
+        BookForestCreateApply bookForestCreateApply = bookForestCreateApplyRepository.findByIdAndStatus(bookForestCreateApplyId,0);  //只查待审核的书林创建申请
+        if(bookForestCreateApply == null){
+            throw new NotFoundException("该条书林创建申请不存在");
+        }else{
+            bookForestCreateApply.setStatus(bookForestCreateApplyStatus);
+            VerifyRecord verifyRecord = new VerifyRecord();
+            verifyRecord.setUserId(bookForestCreateApply.getUser().getId());
+            verifyRecord.setNickName(bookForestCreateApply.getUser().getNickName());
+            verifyRecord.setAdmin(admin);
+            verifyRecord.setBookForestCreateApply(bookForestCreateApply);
+            verifyRecord.setCreateTime(new Date());
+            verifyRecord.setVerifyContentBriefInfo(bookForestCreateApply.getBookForestName() + "——" + bookForestCreateApply.getBookForestDescription());
+            verifyRecord.setResult(verifyResult);
+            return verifyRecordRepository.save(verifyRecord);
+        }
     }
 }

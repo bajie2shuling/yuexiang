@@ -60,7 +60,7 @@
             <tr th:each="verifyRecord,iterStat : ${page.content}">
                 <td th:text="${iterStat.count}">1</td>
                 <td th:text="${verifyRecord.nickName}">lsl</td>
-                <td>
+                <td th:classappend="${verifyRecord.bookReview == null  && verifyRecord.book == null && verifyRecord.bookForestCreateApply == null} ? 'negative' : 'positive'">
                     <span th:if="${verifyRecord.bookReview != null}">书评</span>
                     <span th:if="${verifyRecord.book != null}">书籍</span>
                     <span th:if="${verifyRecord.bookForestCreateApply != null}">书林创建申请</span>

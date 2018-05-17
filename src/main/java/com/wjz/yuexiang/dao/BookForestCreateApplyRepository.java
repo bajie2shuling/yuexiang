@@ -14,4 +14,6 @@ public interface BookForestCreateApplyRepository extends JpaRepository<BookFores
     BookForestCreateApply findByIdAndUser(Long id,User user);
     void deleteByIdAndUser(Long id,User user);
     Page<BookForestCreateApply> findAllByUser(User user, Pageable pageable);
+    Page<BookForestCreateApply> findAllByStatus(Integer status, Pageable pageable);
+    BookForestCreateApply findByIdAndStatus(Long id,Integer status);
 }
