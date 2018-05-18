@@ -3,7 +3,7 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>书林</title>
+    <title>书林搜索</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../static/css/me.css">
 </head>
@@ -55,8 +55,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" th:href="@{/user/book_forests}" class="teal active item">书林</a>
-            <a href="#" th:href="@{/user/book_forest/search}" class="item">搜索</a>
+            <a href="#" th:href="@{/user/book_forests}" class="item">书林</a>
+            <a href="#" th:href="@{/user/book_forest/search}" class="teal active item">搜索</a>
             <a href="#" th:href="@{/user/bookforest/create/apply}" class="item">申请创建书林</a>
         </div>
     </div>
@@ -66,29 +66,61 @@
 <div class="m-container m-padding-tb-big">
     <div class="ui container">
 
-        <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
-            <i class="close icon"></i>
-            <div class="header">提示：</div>
-            <p th:text="${nMessage}">还没有加入任何书林，点击右上角申请创建书林</p>
+        <div class="ui form teal segment">
+
+            <input type="hidden" name="page">
+
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">书林搜索</label>
+                    <input type="text" name="query" placeholder="输入书林名称">
+                </div>
+            </div>
+            <div class="ui right aligned container">
+                <button class="ui orange basic mini button" id="search-btn">搜索</button>
+                <div class="ui error message"></div>
+            </div>
         </div>
 
-        <div class="ui teal segment top attached">
-            <h2 class="ui teal header">我加入的书林</h2>
+        <div class="ui  top attached segment">
+            <div class="column">
+                <h3 class="ui teal header">书林搜索结果</h3>
+            </div>
         </div>
 
-        <div class="ui attached segment m-padding-lr-clear" style="padding-left: 4em">
-            <div class="ui cards">
-                <div class="card" th:each="bookForest : ${bookForests}">
-                    <div class="image">
-                        <img src="https://source.unsplash.com/random/400x400">
+        <div class="ui attached segment" id="book_forest_container">
+            <div th:fragment="bookForests">
+                <div  class="ui attached segment m-padding-lr-clear" style="padding-left: 4em">
+                    <div class="ui cards">
+                        <div class="card" th:each="bookForest : ${page.content}">
+                            <div class="image">
+                                <img src="https://source.unsplash.com/random/400x400">
+                            </div>
+                            <div class="content">
+                                <a class="header" th:text="${bookForest.name}" th:href="@{/user/{id}/bookForest(id=${bookForest.id})}">成都信息工程大学航空港校区书林</a>
+                                <div class="description">成都信息工程大学航空港校区书林是为了方便校内学生书籍共享而创建</div>
+                            </div>
+                            <div class="extra content">
+                                <span class="date" th:text="${#dates.format(bookForest.createTime,'yyyy-MM-dd')}">2013</span> 创建
+                            </div>
+                        </div>
                     </div>
-                    <div class="content">
-                        <a class="header" th:text="${bookForest.name}" th:href="@{/user/{id}/bookForest(id=${bookForest.id})}">成都信息工程大学航空港校区书林</a>
-                        <div class="description">成都信息工程大学航空港校区书林是为了方便校内学生书籍共享而创建</div>
+                </div>
+                <!--footer  bottom-->
+                <div class="ui segment attached" th:if="${page.totalPages}>1">
+                    <div class="ui grid two column middle aligned">
+                        <div class="column">
+                            <a href="#" class="ui basic mini button teal" onclick="page(this)" th:attr="data-page=${page.number}-1"  th:unless="${page.first}">上一页</a>
+                        </div>
+                        <div class="right aligned column">
+                            <a href="#" class="ui basic mini button teal" onclick="page(this)" th:attr="data-page=${page.number}+1"  th:unless="${page.last}">下一页</a>
+                        </div>
                     </div>
-                    <div class="extra content">
-                        <span class="date" th:text="${#dates.format(bookForest.createTime,'yyyy')}">2013</span> 年加入
-                    </div>
+                </div>
+                <div class="ui negative message" th:unless="${#strings.isEmpty(nMessage)}">
+                    <i class="close icon"></i>
+                    <div class="header">提示：</div>
+                    <p th:text="${nMessage}">抱歉，没有结果</p>
                 </div>
             </div>
         </div>
@@ -138,6 +170,22 @@
                 .closest('.message')
                 .transition('fade');
         });
+
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+    function loaddata() {
+        $("#book_forest_container").load(/*[[@{/user/book_forest/search}]]*/"/user/book_forest/search",{
+            query : $("[name='query']").val(),
+            page : $("[name='page']").val()
+        });
+    }
 </script>
 </body>
 </html>

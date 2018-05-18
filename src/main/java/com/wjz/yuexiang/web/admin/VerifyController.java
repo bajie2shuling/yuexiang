@@ -112,7 +112,9 @@ public class VerifyController {
         return "admin/verify_record_list";
     }
 
-
+    /**
+     * 书林创建申请审核列表页面
+     */
     @GetMapping("/book_forest_create_apply_verify_list")
     public String bookForestCreateApplyVerifyList(@PageableDefault(size = 15,sort = {"createTime"},direction = Sort.Direction.ASC) Pageable pageable,
                                                   Model model) {
@@ -126,6 +128,9 @@ public class VerifyController {
         return "admin/book_forest_create_apply_verify_list";
     }
 
+    /**
+     * 书林创建申请审核通过
+     */
     @GetMapping("/bookForestCreateApply/{id}/verify/pass")
     public String bookForestCreateApplyVerifyPass(@PathVariable Long id,
                                                   HttpSession session,
@@ -136,6 +141,9 @@ public class VerifyController {
         return "redirect:/admin/book_forest_create_apply_verify_list";
     }
 
+    /**
+     * 书林创建申请未审核通过
+     */
     @GetMapping("/bookForestCreateApply/{id}/verify/npass")
     public String bookForestCreateApplyVerifyNoPass(@PathVariable Long id,
                                                     HttpSession session,

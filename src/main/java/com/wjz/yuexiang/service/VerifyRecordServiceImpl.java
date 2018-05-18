@@ -1,13 +1,11 @@
 package com.wjz.yuexiang.service;
 
 import com.wjz.yuexiang.dao.BookForestCreateApplyRepository;
+import com.wjz.yuexiang.dao.BookForestRepository;
 import com.wjz.yuexiang.dao.BookReviewRepository;
 import com.wjz.yuexiang.dao.VerifyRecordRepository;
 import com.wjz.yuexiang.exception.NotFoundException;
-import com.wjz.yuexiang.po.Admin;
-import com.wjz.yuexiang.po.BookForestCreateApply;
-import com.wjz.yuexiang.po.BookReview;
-import com.wjz.yuexiang.po.VerifyRecord;
+import com.wjz.yuexiang.po.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +28,9 @@ public class VerifyRecordServiceImpl implements VerifyRecordService {
 
     @Autowired
     private BookForestCreateApplyRepository bookForestCreateApplyRepository;
+
+    @Autowired
+    private BookForestRepository bookForestRepository;
 
     @Transactional
     @Override
@@ -72,6 +73,18 @@ public class VerifyRecordServiceImpl implements VerifyRecordService {
             throw new NotFoundException("该条书林创建申请不存在");
         }else{
             bookForestCreateApply.setStatus(bookForestCreateApplyStatus);
+
+            if(verifyResult == 1){
+                //审核通过则创建书林
+                BookForest bookForest = new BookForest();
+                bookForest.setName(bookForestCreateApply.getBookForestName());
+                bookForest.setDescription(bookForestCreateApply.getBookForestDescription());
+                bookForest.setAdmin(admin);
+                bookForest.setCreateTime(new Date());
+                bookForestRepository.save(bookForest);
+            }
+
+            //生成审核记录
             VerifyRecord verifyRecord = new VerifyRecord();
             verifyRecord.setUserId(bookForestCreateApply.getUser().getId());
             verifyRecord.setNickName(bookForestCreateApply.getUser().getNickName());

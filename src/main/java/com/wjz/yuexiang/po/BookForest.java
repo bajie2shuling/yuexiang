@@ -22,8 +22,6 @@ public class BookForest {
 
     private String description;
 
-    private Integer status;
-
     @OneToMany(mappedBy = "bookForest")
     private List<Book> books = new ArrayList<>();
 
@@ -58,14 +56,6 @@ public class BookForest {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public String getDescription() {
@@ -107,7 +97,6 @@ public class BookForest {
                 ", name='" + name + '\'' +
                 ", createTime=" + createTime +
                 ", description='" + description + '\'' +
-                ", status=" + status +
                 ", books=" + books +
                 ", users=" + users +
                 ", admin=" + admin +
