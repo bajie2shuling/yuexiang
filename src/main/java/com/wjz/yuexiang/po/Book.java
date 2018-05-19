@@ -21,8 +21,6 @@ public class Book {
 
     private String remark;      //备注版本和出版社信息
 
-    private String reviewTitle;
-
     private Boolean status;     //是否已经交易完成，0就是未完成，1是完成
 
     private Boolean shareWay;  //什么方式共享,0就是借，1就是卖
@@ -79,14 +77,6 @@ public class Book {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public String getReviewTitle() {
-        return reviewTitle;
-    }
-
-    public void setReviewTitle(String reviewTitle) {
-        this.reviewTitle = reviewTitle;
     }
 
     public Boolean getStatus() {
@@ -160,7 +150,6 @@ public class Book {
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
                 ", remark='" + remark + '\'' +
-                ", reviewTitle='" + reviewTitle + '\'' +
                 ", status=" + status +
                 ", shareWay=" + shareWay +
                 ", contactInfo='" + contactInfo + '\'' +
