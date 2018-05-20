@@ -75,10 +75,10 @@
                     </div>
                     <div class="content">
                         <a class="header" th:text="${user.nickName}" th:href="@{/user/homepage/{id}/bookreview(id=${user.id})}">wjz</a>
-                        <div class="description">Matthew is an interior designer living in New York. </div>
+                        <div class="description" th:text="${user.description}">Matthew is an interior designer living in New York. </div>
                     </div>
                     <div class="extra content">
-                        <span class="date">2013</span> 年加入
+                        <span class="date" th:text="${#dates.format(user.createTime,'yyyy')}">2013</span> 年加入
                     </div>
                 </div>
             </div>
