@@ -228,12 +228,12 @@
                                 <img src="https://source.unsplash.com/random/100x100">
                             </a>
                             <div class="content">
-                                <a class="author">小吴</a>
+                                <a class="author">bajie</a>
                                 <div class="metadata">
-                                    <span class="date">今天 5:42PM</span>
+                                    <span class="date">2018-05-20 21:37</span>
                                 </div>
                                 <div class="text">
-                                    How artistic!
+                                    分析的很透彻，学习了！
                                 </div>
                                 <div class="actions">
                                     <a class="reply">回复</a>
@@ -245,12 +245,12 @@
                                 <img src="https://source.unsplash.com/random/100x100">
                             </a>
                             <div class="content">
-                                <a class="author">小王</a>
+                                <a class="author">lsl</a>
                                 <div class="metadata">
-                                    <span class="date">昨天 12:30AM</span>
+                                    <span class="date">2018-05-20 21:40</span>
                                 </div>
                                 <div class="text">
-                                    <p>This has been very useful for my research. Thanks as well!</p>
+                                    <p>写的好好啊</p>
                                 </div>
                                 <div class="actions">
                                     <a class="reply">回复</a>
@@ -262,34 +262,20 @@
                                         <img src="https://source.unsplash.com/random/100x100">
                                     </a>
                                     <div class="content">
-                                        <a class="author">小张</a>
+                                        <a class="author">
+                                            <span th:text="${reply.nickname}">wjz</span>
+                                            &nbsp;<span th:text="|@ ${reply.parentComment.nickname}|" class="m-teal">@ lsl</span>
+                                        </a>
                                         <div class="metadata">
-                                            <span class="date">刚刚</span>
+                                            <span class="date">2018-05-20 21:42</span>
                                         </div>
                                         <div class="text">
-                                            Elliot you are always so right :)
+                                            他写的好是必须的
                                         </div>
                                         <div class="actions">
                                             <a class="reply">回复</a>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://source.unsplash.com/random/100x100">
-                            </a>
-                            <div class="content">
-                                <a class="author">小黄</a>
-                                <div class="metadata">
-                                    <span class="date">5天前</span>
-                                </div>
-                                <div class="text">
-                                    Dude, this is awesome. Thanks so much
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
                                 </div>
                             </div>
                         </div>
@@ -300,23 +286,11 @@
                     <div class="field">
                         <textarea name="comment" placeholder="请输入评论...."></textarea>
                     </div>
-                    <div class="fields">
-                        <div class="field m-mobile-wide m-mobile-margin-bottom-small">
-                            <div class="ui left icon input">
-                                <i class="user icon"></i>
-                                <input type="text" name="name" placeholder="姓名">
-                            </div>
-                        </div>
-                        <div class="field m-mobile-wide m-mobile-margin-bottom-small">
-                            <div class="ui left icon input">
-                                <i class="mail icon"></i>
-                                <input type="text" name="email" placeholder="邮箱">
-                            </div>
-                        </div>
-                        <div class="field m-mobile-wide m-mobile-margin-bottom-small">
-                            <button class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
-                        </div>
+
+                    <div class="field m-mobile-wide m-mobile-margin-bottom-small">
+                        <button class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
                     </div>
+
                 </div>
             </div>
         </div>
