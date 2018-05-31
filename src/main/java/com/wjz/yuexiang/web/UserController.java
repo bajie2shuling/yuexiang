@@ -1,7 +1,9 @@
 package com.wjz.yuexiang.web;
 
+import com.wjz.yuexiang.po.BookForest;
 import com.wjz.yuexiang.po.FollowingUserInfo;
 import com.wjz.yuexiang.po.User;
+import com.wjz.yuexiang.service.BookForestService;
 import com.wjz.yuexiang.service.UserService;
 import com.wjz.yuexiang.vo.UserSignIn;
 import com.wjz.yuexiang.vo.UserSignUp;
@@ -28,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BookForestService bookForestService;
 
     /**
      * 注册页面
@@ -88,11 +93,16 @@ public class UserController {
         User user = userService.getUser(userSignIn.getEmail(),userSignIn.getPassword());        //登录验证
         if(user != null){
             List<Long> followingIds = new ArrayList<>();
+            List<Long> bookForestIds = new ArrayList<>();
             for(FollowingUserInfo followingUserInfo : user.getFollowingUserInfos()){
                 followingIds.add(followingUserInfo.getFollowingId());
             }
+            for(BookForest bookForest : bookForestService.getBookForestsByUser(user.getId())){
+                bookForestIds.add(bookForest.getId());
+            }
             user.setPassword(null);
             session.setAttribute("followingIds",followingIds);
+            session.setAttribute("bookForestIds",bookForestIds);
             session.setAttribute("user",user);
             return "redirect:/user/index";       //登陆成功
         }else {
@@ -109,6 +119,7 @@ public class UserController {
     public String signOut(HttpSession session){
         session.removeAttribute("user");
         session.removeAttribute("followingIds");
+        session.removeAttribute("bookForestIds");
         return "redirect:/user/sign_in";
     }
 }

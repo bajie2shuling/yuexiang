@@ -49,6 +49,8 @@ public class CommonBookReviewController {
         Page<BookReview> page = bookReviewService.bookReviews(user,3,pageable);
         if(page.getTotalPages() == 0){
             model.addAttribute("page",page);   //前端模版要取page
+            user.setPassword(null);
+            model.addAttribute("user",user);
             model.addAttribute("nMessage","该用户还没有书评");
             return "home_page_book_review";
         }

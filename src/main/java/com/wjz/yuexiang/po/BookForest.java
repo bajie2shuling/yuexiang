@@ -25,7 +25,7 @@ public class BookForest {
     @OneToMany(mappedBy = "bookForest")
     private List<Book> books = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "bookForests")
     private List<User> users = new ArrayList<>();
 
     @ManyToOne

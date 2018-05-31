@@ -34,7 +34,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Book> books = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
     private List<BookForest> bookForests = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")

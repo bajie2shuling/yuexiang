@@ -47,20 +47,29 @@ public class BookForestServiceImpl implements BookForestService {
     }
 
     /**
-     *有了就删除，还没有就保存，但是在保存之前判断了是不是保存的自己
+     *有了就删除，还没有就保存
      */
     @Transactional
     @Override
-    public Boolean saveOrDelete(Long bookForestId, User user) {
+    public Boolean saveOrDelete(Long bookForestId, Long userId) {
         Optional<BookForest> optionalBookForest = bookForestRepository.findById(bookForestId);
         BookForest bookForest = optionalBookForest.orElseThrow(()-> new NotFoundException("对不起，该书林不存在！"));
+        Optional<User> optionalUser = userRepository.findById(userId);
+        User user = optionalUser.orElseThrow(()-> new NotFoundException("对不起，该书籍不存在！"));
         if(user.getBookForests().contains(bookForest)){
             user.getBookForests().remove(bookForest); //删除
+            userRepository.save(user);
             return false;
         }else{
             user.getBookForests().add(bookForest);  //保存
+            userRepository.save(user);
             return true;
         }
 
+    }
+
+    public BookForest getBookForest(Long id){
+        Optional<BookForest> optionalBookForest = bookForestRepository.findById(id);
+        return optionalBookForest.orElseThrow(()-> new NotFoundException("对不起，该书林不存在！"));
     }
 }

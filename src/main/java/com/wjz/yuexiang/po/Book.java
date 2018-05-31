@@ -23,9 +23,13 @@ public class Book {
 
     private Boolean status;     //是否已经交易完成，0就是未完成，1是完成
 
+    private Integer verifyStatus;  //审核状态，0待审核，1审核不通过，2审核通过
+
     private Boolean shareWay;  //什么方式共享,0就是借，1就是卖
 
     private String contactInfo;  //联系方式
+
+    private String firstPicture;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
@@ -91,8 +95,24 @@ public class Book {
         return shareWay;
     }
 
+    public Integer getVerifyStatus() {
+        return verifyStatus;
+    }
+
+    public void setVerifyStatus(Integer verifyStatus) {
+        this.verifyStatus = verifyStatus;
+    }
+
     public void setShareWay(Boolean shareWay) {
         this.shareWay = shareWay;
+    }
+
+    public String getFirstPicture() {
+        return firstPicture;
+    }
+
+    public void setFirstPicture(String firstPicture) {
+        this.firstPicture = firstPicture;
     }
 
     public Date getCreateTime() {
@@ -151,12 +171,14 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", remark='" + remark + '\'' +
                 ", status=" + status +
+                ", verifyStatus=" + verifyStatus +
                 ", shareWay=" + shareWay +
                 ", contactInfo='" + contactInfo + '\'' +
+                ", firstPicture='" + firstPicture + '\'' +
                 ", createTime=" + createTime +
+                ", bookReviewId=" + bookReviewId +
                 ", user=" + user +
                 ", bookForest=" + bookForest +
-                ", bookReviewId=" + bookReviewId +
                 ", verifyRecords=" + verifyRecords +
                 '}';
     }

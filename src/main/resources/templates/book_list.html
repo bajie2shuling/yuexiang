@@ -3,21 +3,21 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>书籍编辑</title>
+    <title>我的书评</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../static/css/me.css">
 </head>
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(1)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
+<nav th:replace="_fragments :: menu(0)" class="ui segment inverted attached m-padding-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted stackable menu secondary">
             <h2 class="ui teal header item">RdShare</h2>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini idea icon"></i>探索</a>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini  eye icon"></i>关注</a>
             <a href="#" class="item m-mobile-hide m-item"><i class="mini  book icon"></i>书林</a>
-            <a href="#" class="item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
+            <a href="#" class="active item m-mobile-hide m-item"><i class="mini  edit icon"></i>写书评</a>
             <div class="right menu m-mobile-hide m-item">
                 <div class="ui input icon transparent inverted">
                     <input type="text" placeholder="Search......">
@@ -26,7 +26,7 @@
                 <div class="ui dropdown item">
                     <div class="text">
                         <img class="ui avatar image" src="https://source.unsplash.com/random/100x100">
-                        <span>吴晋子</span>
+                        吴晋子
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -54,59 +54,73 @@
 
 
 <!--中间内容-->
-<div class="m-padding-tb-max m-container-tiny">
+<div class="m-padding-tb-max m-container">
     <div class="ui container">
-
         <div class="ui teal segment top attached">
-            <h2 class="ui teal header">书籍创建</h2>
+            <h2 class="ui teal header">我的书评列表</h2>
         </div>
-
-        <form class="ui form attached segment"  action="#" th:action="@{/user/book_edit}"  method="post" th:object="${bookPost}">
-
-            <input type="hidden" name="bookReviewId" th:value="${bookReviewId}">
-
-            <div class="field">
-                <div class="ui left labeled input">
-                    <label class="ui teal basic label">联系方式</label>
-                    <input type="text" name="contactInfo" placeholder="手机、微信、QQ...." th:value="*{contactInfo}">
-                </div>
-                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('contactInfo')}" th:errors="*{contactInfo}">联系方式不能为空</div>
-            </div>
-
-            <div class="two fields">
-                <div class="field">
-                    <div class="ui left labeled input">
-                        <label class="ui teal basic label">共享方式</label>
-                        <select class="ui dropdown" name="shareWay">
-                            <option value="0">借</option>
-                            <option value="1">卖</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui left labeled input">
-                        <label class="ui teal basic label">书林</label>
-                        <select class="ui dropdown" name="bookForestId">
-                            <option value="0" th:each="bookForest : ${bookForests}" th:value="${bookForest.id}" th:text="${bookForest.name}">成都信息工程大学航空港校区书林</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="ui left labeled input">
-                    <label class="ui teal basic label">书籍备注</label>
-                    <input type="text" name="remark" placeholder="书籍出版社以及版本等信息...." th:value="*{remark}">
-                </div>
-                <div class="ui pointing red basic label" th:if="${#fields.hasErrors('remark')}" th:errors="*{remark}">书林名称不能为空</div>
-            </div>
-            <button class="ui basic orange button">提交</button>
-            <div class="ui error message"></div>
-        </form>
-
+        <div class="ui attached segment">
+            <table class="ui table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>书评标题</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="bookReview,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${bookReview.title}">书有清香 | 莫以成败论英雄</td>
+                    <td th:text="${bookReview.bookName}">《受戒》</td>
+                    <td th:text="${bookReview.bookAuthor}">汪曾祺</td>
+                    <td th:switch="${bookReview.status}" th:classappend="${bookReview.status == 3} ? 'positive' : 'negative'">
+                        <span th:case="0">待发布</span>
+                        <span th:case="1">待审核</span>
+                        <span th:case="2">审核未通过</span>
+                        <span th:case="3">审核通过</span>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/user/book_review/{id}/change(id=${bookReview.id})}" class="ui teal basic mini button">编辑</a>
+                        <a href="#" th:href="@{/user/book_review/{id}/preview(id=${bookReview.id})}" class="ui purple basic mini button">预览</a>
+                        <a href="#" th:href="@{/user/book_review/{id}/delete(id=${bookReview.id})}" class="ui red basic mini button">删除</a>
+                        <a href="#" th:href="@{/user/{id}/book_edit(id=${bookReview.id})}" class="ui blue basic mini button" th:if="${bookReview.status == 3}">发布到书林</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui segment" th:if="${page.totalPages}>1">
+                            <div class="ui middle aligned two column grid">
+                                <div class="column">
+                                    <a href="#" th:href="@{/user/book_review_list(page=${page.number}-1)}"  th:unless="${page.first}" class="ui mini teal basic button">上一页</a>
+                                </div>
+                                <div class="right aligned column">
+                                    <a href="#" th:href="@{/user/book_review_list(page=${page.number}+1)}"  th:unless="${page.last}" class="ui mini teal basic button">下一页</a>
+                                </div>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+        <div class="ui positive message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${message}">恭喜，操作成功！</p>
+        </div>
+        <div class="ui negative message" th:unless="${#strings.isEmpty(lostMessage)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${lostMessage}">很遗憾，该页不存在！</p>
+        </div>
     </div>
 </div>
-
 <!--底部-->
 <footer class="ui segment inverted attached " th:replace="_fragments :: footer">
     <div class="ui container center aligned m-padding-tb-max">

@@ -1,8 +1,10 @@
 package com.wjz.yuexiang.web;
 
+import com.wjz.yuexiang.po.Book;
 import com.wjz.yuexiang.po.BookForest;
 import com.wjz.yuexiang.po.User;
 import com.wjz.yuexiang.service.BookForestService;
+import com.wjz.yuexiang.service.BookService;
 import com.wjz.yuexiang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,10 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Iterator;
@@ -34,6 +33,9 @@ public class BookForestController {
 
     @Autowired
     private BookForestService bookForestService;
+
+    @Autowired
+    private BookService bookService;
 
     @GetMapping("/book_forests")
     public String bookForestsPage(HttpSession session,
@@ -150,4 +152,42 @@ public class BookForestController {
         return "book_forest_search :: bookForests";
     }
 
+    @GetMapping("/{id}/bookForest")
+    public String bookForestHomePage(@PageableDefault(size = 5,sort = {"createTime"},direction = Sort.Direction.DESC) Pageable pageable,
+                           @PathVariable Long id,
+                           Model model){
+
+        BookForest bookForest = bookForestService.getBookForest(id);
+        Page<Book> page = bookService.books(id,pageable);
+        if(page.getTotalPages() == 0){
+            model.addAttribute("page",page);   //前端模版要取page
+            model.addAttribute("bookForest",bookForest);
+            model.addAttribute("nMessage","该书林还没有书籍");
+            return "book_forest_home_page";
+        }
+        model.addAttribute("page",page);
+        model.addAttribute("bookForest",bookForest);
+        return "book_forest_home_page";
+    }
+
+    /**
+     * 加入或退出书林
+     */
+    @PostMapping("/join_switch")
+    public String joinSwitch(@RequestParam Long id,
+                                  HttpSession session,
+                                  Model model){
+        User user = (User) session.getAttribute("user");
+        List<Long> bookForestIds =(List<Long>) session.getAttribute("bookForestIds");
+        if(!bookForestService.saveOrDelete(id,user.getId())){  //返回true表示保存，false表示删除
+            bookForestIds.remove(id);
+            session.setAttribute("bookForestIds",bookForestIds);
+        }else {
+            bookForestIds.add(id);
+            session.setAttribute("bookForestIds",bookForestIds);
+        }
+        BookForest bookForestBuf = bookForestService.getBookForest(id);
+        model.addAttribute("bookForest",bookForestBuf);
+        return "book_forest_home_page :: join";
+    }
 }
